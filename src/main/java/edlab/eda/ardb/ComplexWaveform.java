@@ -6,39 +6,9 @@ public class ComplexWaveform extends Waveform {
 
   private Complex[] y;
 
-  public ComplexWaveform(double[] x, Complex[] y, String unitX, String unitY) {
+  private ComplexWaveform(double[] x, Complex[] y, String unitX, String unitY) {
     super(x, unitX, unitY);
     this.y = y;
-  }
-
-  public ComplexWaveform(double[] x, double[] yReal, double[] yImag,
-      String unitX, String unitY) {
-    super(x, unitX, unitY);
-
-    this.y = new Complex[yReal.length];
-
-    for (int i = 0; i < yReal.length; i++) {
-      this.y[i] = new Complex(yReal[i], yImag[i]);
-    }
-  }
-
-  public ComplexWaveform(String name, double[] x, Complex[] y, String unitX,
-      String unitY) {
-    super(x, unitX, unitY);
-    this.x = x;
-    this.y = y;
-  }
-
-  public ComplexWaveform(String name, double[] x, double[] yReal,
-      double[] yImag, String unitX, String unitY) {
-    super(x, unitX, unitY);
-
-    this.x = x;
-    this.y = new Complex[yReal.length];
-
-    for (int i = 0; i < yReal.length; i++) {
-      this.y[i] = new Complex(yReal[i], yImag[i]);
-    }
   }
 
   public Complex[] getY() {
@@ -60,16 +30,34 @@ public class ComplexWaveform extends Waveform {
   @Override
   public Value getValue(double pos) {
 
-    for (int i = 0; i < x.length - 1; i++) {
-      if ((x[i] - pos) * (x[i + 1] - pos) <= 0) {
+    if (pos < x[0]) {
 
-        return new ComplexValue(
-            y[i].add(y[i + 1].subtract(y[i])
-                .multiply(new Complex((pos - x[i]) / (x[i + 1] - x[i])))),
-            getUnitY());
+      return new ComplexValue(
+          y[0].add(y[1].subtract(y[0])
+              .multiply(new Complex((pos - x[0]) / (x[1] - x[0])))),
+          getUnitY());
 
+    } else if (pos < x[x.length]) {
+
+      return new ComplexValue(
+          y[y.length - 1].add(y[y.length - 1].subtract(y[y.length - 2])
+              .multiply(new Complex((pos - x[0]) / (x[1] - x[0])))),
+          getUnitY());
+
+    } else {
+
+      for (int i = 0; i < x.length - 1; i++) {
+        if ((x[i] - pos) * (x[i + 1] - pos) <= 0) {
+
+          return new ComplexValue(
+              y[i].add(y[i + 1].subtract(y[i])
+                  .multiply(new Complex((pos - x[i]) / (x[i + 1] - x[i])))),
+              getUnitY());
+
+        }
       }
     }
+    
     return null;
   }
 
@@ -82,7 +70,7 @@ public class ComplexWaveform extends Waveform {
       yVec[i] = y[i].abs();
     }
 
-    return new RealWaveform(x, yVec, getUnitX(), getUnitY());
+    return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
   }
 
   public RealWaveform phaseDeg() {
@@ -93,7 +81,7 @@ public class ComplexWaveform extends Waveform {
       yVec[i] = y[i].getArgument() / Math.PI * 180;
     }
 
-    return new RealWaveform(x, yVec, getUnitX(), "deg");
+    return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), "deg");
   }
 
   @Override
@@ -113,5 +101,48 @@ public class ComplexWaveform extends Waveform {
   public Value cross(double val) {
     // TODO Auto-generated method stub
     return null;
+  }
+
+  public static ComplexWaveform buildRealWaveform(double[] x, Complex[] y,
+      String unitX, String unitY) {
+
+    if (x.length == y.length) {
+
+      sortWaveElements(x, y);
+
+      return new ComplexWaveform(x, y, unitX, unitY);
+
+    } else {
+      System.out.println("Length of arrays do not match");
+      return null;
+    }
+  }
+
+  private static void sortWaveElements(double[] x, Complex[] y) {
+
+    double swapReal;
+    Complex swapComplex;
+    boolean swapPerformed = true;
+
+    while (swapPerformed) {
+
+      swapPerformed = false;
+
+      for (int i = 0; i < x.length - 1; i++) {
+
+        if (x[i] > x[i + 1]) {
+
+          swapReal = x[i + 1];
+          x[i + 1] = x[i];
+          x[i] = swapReal;
+
+          swapComplex = y[i + 1];
+          y[i + 1] = y[i];
+          y[i] = swapComplex;
+          swapPerformed = true;
+        }
+      }
+    }
+
   }
 }

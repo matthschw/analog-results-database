@@ -9,7 +9,7 @@ import org.apache.commons.math3.complex.Complex;
 
 import edlab.eda.reader.nutmeg.NutmegComplexPlot;
 
-public class ComplexResultsDatabase extends ResultsDatabse{
+public class ComplexResultsDatabase extends ResultsDatabse {
 
   private Map<String, ComplexValue> values = null;
   private Map<String, ComplexWaveform> waves = null;
@@ -84,8 +84,9 @@ public class ComplexResultsDatabase extends ResultsDatabse{
 
       for (String wave : plot.getWaves()) {
         if (!wave.equals(refWave)) {
-          retval.waves.put(wave, new ComplexWaveform(x, plot.getWave(wave),
-              refWaveUnit, plot.getUnit(wave)));
+
+          retval.waves.put(wave, ComplexWaveform.buildRealWaveform(x,
+              plot.getWave(wave), refWaveUnit, plot.getUnit(wave)));
         }
       }
     }

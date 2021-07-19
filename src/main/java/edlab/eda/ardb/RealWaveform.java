@@ -6,7 +6,7 @@ public class RealWaveform extends Waveform {
 
   private double[] y;
 
-  public RealWaveform(double[] x, double[] y, String unitX, String unitY) {
+  private RealWaveform(double[] x, double[] y, String unitX, String unitY) {
     super(x, unitX, unitY);
     this.y = y;
   }
@@ -57,17 +57,35 @@ public class RealWaveform extends Waveform {
 
   @Override
   public RealValue getValue(double pos) {
+
     double m;
 
-    for (int i = 0; i < x.length - 1; i++) {
-      if ((x[i] - pos) * (x[i + 1] - pos) < 0) {
+    if (pos < x[0]) {
 
-        m = (y[i + 1] - y[i]) / (x[i + 1] - x[i]);
+      m = (y[1] - y[0]) / (x[1] - x[0]);
 
-        return new RealValue(y[i] + m * (pos - x[i]), this.getUnitY());
+      return new RealValue(y[0] + m * (pos - x[0]), this.getUnitY());
 
+    } else if (pos < x[x.length]) {
+
+      m = (y[y.length - 1] - y[y.length - 2])
+          / (x[x.length - 1] - x[x.length - 2]);
+
+      return new RealValue(y[y.length - 1] + m * (pos - x[x.length - 1]),
+          this.getUnitY());
+    } else {
+
+      for (int i = 0; i < x.length - 1; i++) {
+        if ((x[i] - pos) * (x[i + 1] - pos) < 0) {
+
+          m = (y[i + 1] - y[i]) / (x[i + 1] - x[i]);
+
+          return new RealValue(y[i] + m * (pos - x[i]), this.getUnitY());
+
+        }
       }
     }
+
     return new RealValue();
   }
 
@@ -146,4 +164,47 @@ public class RealWaveform extends Waveform {
 
     return new RealValue(max, getUnitY());
   }
+
+  public static RealWaveform buildRealWaveform(double[] x, double[] y,
+      String unitX, String unitY) {
+
+    if (x.length == y.length) {
+
+      sortWaveElements(x, y);
+
+      return new RealWaveform(x, y, unitX, unitY);
+
+    } else {
+      System.out.println("Length of arrays do not match");
+      return null;
+    }
+  }
+
+  private static void sortWaveElements(double[] x, double[] y) {
+
+    double swap;
+    boolean swapPerformed = true;
+
+    while (swapPerformed) {
+
+      swapPerformed = false;
+
+      for (int i = 0; i < x.length - 1; i++) {
+
+        if (x[i] > x[i + 1]) {
+
+          swap = x[i + 1];
+          x[i + 1] = x[i];
+          x[i] = swap;
+
+          swap = y[i + 1];
+          y[i + 1] = y[i];
+          y[i] = swap;
+          swapPerformed = true;
+        }
+      }
+    }
+
+  }
+
 }
