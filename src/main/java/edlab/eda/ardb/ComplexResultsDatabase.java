@@ -18,7 +18,7 @@ public class ComplexResultsDatabase extends ResultsDatabse {
 
   }
 
-  public ComplexValue getRealValue(String name) {
+  public ComplexValue getComplexValue(String name) {
     if (values != null) {
       return values.get(name);
     } else {
@@ -27,7 +27,7 @@ public class ComplexResultsDatabase extends ResultsDatabse {
     }
   }
 
-  public ComplexWaveform getRealWaveform(String name) {
+  public ComplexWaveform getComplexWaveform(String name) {
     if (waves != null) {
       return waves.get(name);
     } else {

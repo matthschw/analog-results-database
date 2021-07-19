@@ -11,6 +11,10 @@ public class ComplexWaveform extends Waveform {
     this.y = y;
   }
 
+  public ComplexWaveform() {
+    super();
+  }
+
   public Complex[] getY() {
     return y;
   }
@@ -57,7 +61,7 @@ public class ComplexWaveform extends Waveform {
         }
       }
     }
-    
+
     return null;
   }
 
@@ -143,6 +147,5 @@ public class ComplexWaveform extends Waveform {
         }
       }
     }
-
   }
 }

@@ -22,6 +22,10 @@ public abstract class Waveform {
     this.unitY = unitY;
   }
 
+  public Waveform() {
+    this.invalid = true;
+  }
+
   public String getUnitX() {
     return unitX;
   }
@@ -36,6 +40,19 @@ public abstract class Waveform {
 
   public double[] getX() {
     return x;
+  }
+
+  public boolean isInvalid() {
+    return invalid;
+  }
+
+  public RealValue xmin() {
+
+    return new RealValue(x[0], getUnitX());
+  }
+
+  public RealValue xmax() {
+    return new RealValue(x[x.length - 1], getUnitX());
   }
 
   public abstract int noOfVals();
