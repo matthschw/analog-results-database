@@ -37,7 +37,7 @@ public class ComplexResultsDatabase extends ResultsDatabse {
   }
 
   public Set<String> getValueNames() {
-    if (waves != null) {
+    if (values != null) {
       return values.keySet();
     } else {
       System.err.println("Database does not contain waveforms, only values");
@@ -90,7 +90,7 @@ public class ComplexResultsDatabase extends ResultsDatabse {
         }
       }
     }
-    return null;
+    return retval;
   }
 
 }

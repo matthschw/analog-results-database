@@ -35,7 +35,7 @@ public class RealResultsDatabase extends ResultsDatabse {
   }
 
   public Set<String> getValueNames() {
-    if (waves != null) {
+    if (values != null) {
       return values.keySet();
     } else {
       System.err.println("Database does not contain waveforms, only values");
@@ -61,6 +61,7 @@ public class RealResultsDatabase extends ResultsDatabse {
       retval.values = new HashMap<String, RealValue>();
 
       for (String wave : plot.getWaves()) {
+
         retval.values.put(wave,
             new RealValue(plot.getWave(wave)[0], plot.getUnit(wave)));
       }
@@ -84,7 +85,7 @@ public class RealResultsDatabase extends ResultsDatabse {
         }
       }
     }
-    return null;
+    return retval;
   }
 
 }

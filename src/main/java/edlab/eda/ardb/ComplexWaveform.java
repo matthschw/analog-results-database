@@ -34,14 +34,14 @@ public class ComplexWaveform extends Waveform {
   @Override
   public Value getValue(double pos) {
 
-    if (pos < x[0]) {
+    if (pos <= x[0]) {
 
       return new ComplexValue(
           y[0].add(y[1].subtract(y[0])
               .multiply(new Complex((pos - x[0]) / (x[1] - x[0])))),
           getUnitY());
 
-    } else if (pos < x[x.length]) {
+    } else if (pos >= x[x.length-1]) {
 
       return new ComplexValue(
           y[y.length - 1].add(y[y.length - 1].subtract(y[y.length - 2])
