@@ -77,6 +77,7 @@ public class RealWaveform extends Waveform {
 
       return new RealWaveform(newX, newY, getUnitX(), getUnitY());
     } else {
+
       return new RealWaveform();
     }
   }
@@ -495,6 +496,16 @@ public class RealWaveform extends Waveform {
     } else {
       return this.cross(val.getValue());
     }
+  }
+
+  public RealWaveform waveVsWave(RealWaveform wave) {
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this);
+    }
+
+    return new RealWaveform(this.getX(), wave.getY(), this.getUnitX(),
+        wave.getUnitY());
   }
 
   public RealValue ymin() {

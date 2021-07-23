@@ -9,6 +9,10 @@ import org.apache.commons.math3.complex.Complex;
 
 import edlab.eda.reader.nutmeg.NutmegComplexPlot;
 
+/**
+ * Container consisting of complex waves and values
+ *
+ */
 public class ComplexResultsDatabase extends ResultsDatabse {
 
   private Map<String, ComplexValue> values = null;
@@ -18,6 +22,12 @@ public class ComplexResultsDatabase extends ResultsDatabse {
 
   }
 
+  /**
+   * Returns a complex value with a given name
+   * 
+   * @param name of value
+   * @return Complex Value
+   */
   public ComplexValue getComplexValue(String name) {
     if (values != null) {
       return values.get(name);
@@ -27,6 +37,12 @@ public class ComplexResultsDatabase extends ResultsDatabse {
     }
   }
 
+  /**
+   * Returns a complex wave with a given name
+   * 
+   * @param name of wave
+   * @return Complex Wave
+   */
   public ComplexWaveform getComplexWaveform(String name) {
     if (waves != null) {
       return waves.get(name);
@@ -36,6 +52,11 @@ public class ComplexResultsDatabase extends ResultsDatabse {
     }
   }
 
+  /**
+   * Returns a set of all value names in the container
+   * 
+   * @return set of names
+   */
   public Set<String> getValueNames() {
     if (values != null) {
       return values.keySet();
@@ -45,6 +66,11 @@ public class ComplexResultsDatabase extends ResultsDatabse {
     }
   }
 
+  /**
+   * Returns a set of all wave names in the container
+   * 
+   * @return set of names
+   */
   public Set<String> getWaveNames() {
     if (waves != null) {
       return waves.keySet();
@@ -54,6 +80,12 @@ public class ComplexResultsDatabase extends ResultsDatabse {
     }
   }
 
+  /**
+   * Builds a ComplexResultsResultDatabase from a NutmegComplexPlot
+   * 
+   * @param plot, NutmegComplexPlot
+   * @return ComplexResultsDatabase
+   */
   public static ComplexResultsDatabase buildResultDatabase(
       NutmegComplexPlot plot) {
 
