@@ -41,7 +41,7 @@ public class ComplexWaveform extends Waveform {
               .multiply(new Complex((pos - x[0]) / (x[1] - x[0])))),
           getUnitY());
 
-    } else if (pos >= x[x.length-1]) {
+    } else if (pos >= x[x.length - 1]) {
 
       return new ComplexValue(
           y[y.length - 1].add(y[y.length - 1].subtract(y[y.length - 2])
@@ -65,6 +65,17 @@ public class ComplexWaveform extends Waveform {
     return null;
   }
 
+  public ComplexWaveform conjugate() {
+
+    Complex[] yVec = new Complex[this.y.length];
+
+    for (int i = 0; i < yVec.length; i++) {
+      yVec[i] = y[i].conjugate();
+    }
+
+    return ComplexWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
+  }
+
   @Override
   public RealWaveform abs() {
 
@@ -72,6 +83,28 @@ public class ComplexWaveform extends Waveform {
 
     for (int i = 0; i < yVec.length; i++) {
       yVec[i] = y[i].abs();
+    }
+
+    return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
+  }
+
+  public RealWaveform real() {
+
+    double[] yVec = new double[this.x.length];
+
+    for (int i = 0; i < yVec.length; i++) {
+      yVec[i] = y[i].getReal();
+    }
+
+    return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
+  }
+
+  public RealWaveform imag() {
+
+    double[] yVec = new double[this.x.length];
+
+    for (int i = 0; i < yVec.length; i++) {
+      yVec[i] = y[i].getImaginary();
     }
 
     return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
@@ -99,12 +132,6 @@ public class ComplexWaveform extends Waveform {
   @Override
   public int noOfVals() {
     return x.length;
-  }
-
-  @Override
-  public Value cross(double val) {
-    // TODO Auto-generated method stub
-    return null;
   }
 
   public static ComplexWaveform buildRealWaveform(double[] x, Complex[] y,

@@ -63,6 +63,4 @@ public abstract class Waveform {
 
   public abstract RealWaveform db20();
 
-  public abstract Value cross(double val);
-
 }

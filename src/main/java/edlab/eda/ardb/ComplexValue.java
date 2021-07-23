@@ -15,6 +15,10 @@ public class ComplexValue extends Value {
     return value;
   }
 
+  public Complex conjugate() {
+    return value.conjugate();
+  }
+
   public String toString() {
     if (getUnit() == null) {
       return "" + getValue().getReal() + " + j*" + getValue().getImaginary();

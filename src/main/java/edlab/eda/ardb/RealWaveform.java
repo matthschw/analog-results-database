@@ -1,6 +1,7 @@
 package edlab.eda.ardb;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class RealWaveform extends Waveform {
 
@@ -38,25 +39,46 @@ public class RealWaveform extends Waveform {
 
   public RealWaveform clip(double left, double right) {
 
-    ArrayList<Double> newXVals = new ArrayList<Double>();
-    ArrayList<Double> newYVals = new ArrayList<Double>();
+    LinkedList<Double> newXVals = new LinkedList<Double>();
+    LinkedList<Double> newYVals = new LinkedList<Double>();
 
     for (int i = 0; i < x.length; i++) {
       if (left <= x[i] && x[i] <= right) {
-        newXVals.add(x[i]);
-        newYVals.add(y[i]);
+        newXVals.addLast(x[i]);
+        newYVals.addLast(y[i]);
       }
     }
 
-    double[] newX = new double[newXVals.size()];
-    double[] newY = new double[newYVals.size()];
+    RealValue leftValue = this.getValue(left);
 
-    for (int i = 0; i < newY.length; i++) {
-      newX[i] = newXVals.get(i);
-      newY[i] = newYVals.get(i);
+    if (!leftValue.isInvalid()) {
+      if (newXVals.get(0) != leftValue.getValue()) {
+        newXVals.addFirst(leftValue.getValue());
+      }
     }
 
-    return new RealWaveform(newX, newY, getUnitX(), getUnitY());
+    RealValue rightValue = this.getValue(right);
+
+    if (!rightValue.isInvalid()) {
+      if (newXVals.get(newXVals.size() - 1) != rightValue.getValue()) {
+        newXVals.addLast(rightValue.getValue());
+      }
+    }
+
+    if (newXVals.size() > 0) {
+
+      double[] newX = new double[newXVals.size()];
+      double[] newY = new double[newYVals.size()];
+
+      for (int i = 0; i < newY.length; i++) {
+        newX[i] = newXVals.get(i);
+        newY[i] = newYVals.get(i);
+      }
+
+      return new RealWaveform(newX, newY, getUnitX(), getUnitY());
+    } else {
+      return new RealWaveform();
+    }
   }
 
   public RealWaveform add(double value) {
@@ -82,6 +104,10 @@ public class RealWaveform extends Waveform {
   }
 
   public RealWaveform add(RealWaveform wave) {
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this);
+    }
 
     double[] newX = new double[x.length];
     double[] newY = new double[y.length];
@@ -118,6 +144,10 @@ public class RealWaveform extends Waveform {
 
   public RealWaveform subtract(RealWaveform wave) {
 
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this);
+    }
+
     double[] newX = new double[x.length];
     double[] newY = new double[y.length];
 
@@ -153,6 +183,10 @@ public class RealWaveform extends Waveform {
 
   public RealWaveform multiply(RealWaveform wave) {
 
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this);
+    }
+
     double[] newX = new double[x.length];
     double[] newY = new double[y.length];
 
@@ -187,6 +221,10 @@ public class RealWaveform extends Waveform {
   }
 
   public RealWaveform divide(RealWaveform wave) {
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this);
+    }
 
     double[] newX = new double[x.length];
     double[] newY = new double[y.length];
@@ -232,6 +270,40 @@ public class RealWaveform extends Waveform {
     return new RealValue();
   }
 
+  public RealWaveform resample(double[] newX) {
+
+    double[] yNew = new double[this.x.length];
+
+    for (int i = 0; i < newX.length; i++) {
+      yNew[i] = this.getValue(newX[i]).getValue();
+    }
+
+    return new RealWaveform(x, yNew, getUnitX(), getUnitY());
+  }
+
+  public RealWaveform resample(RealWaveform wave) {
+
+    return this.resample(wave.x);
+  }
+
+  public boolean sameAxis(RealWaveform wave) {
+
+    if (this.y.length == wave.x.length) {
+
+      for (int i = 0; i < x.length; i++) {
+        if (x[i] != wave.x[i]) {
+          return false;
+        }
+      }
+
+      return true;
+
+    } else {
+
+      return false;
+    }
+  }
+
   public RealValue getValue(RealValue val) {
 
     if (val.isInvalid()) {
@@ -253,6 +325,39 @@ public class RealWaveform extends Waveform {
     return new RealWaveform(x, yVec, getUnitX(), getUnitY());
   }
 
+  public RealWaveform pow(double exponent) {
+
+    double[] pow = new double[y.length];
+
+    for (int i = 0; i < pow.length; i++) {
+      pow[i] = 10 * Math.pow(y[i], exponent);
+    }
+
+    return new RealWaveform(this.getX(), pow, this.getUnitX(), "");
+  }
+
+  public RealWaveform ln() {
+
+    double[] ln = new double[y.length];
+
+    for (int i = 0; i < ln.length; i++) {
+      ln[i] = 10 * Math.log(y[i]);
+    }
+
+    return new RealWaveform(this.getX(), ln, this.getUnitX(), "");
+  }
+
+  public RealWaveform db10() {
+
+    double[] db10 = new double[y.length];
+
+    for (int i = 0; i < db10.length; i++) {
+      db10[i] = 10 * Math.log10(y[i]);
+    }
+
+    return new RealWaveform(this.getX(), db10, this.getUnitX(), "");
+  }
+
   @Override
   public RealWaveform db20() {
 
@@ -265,23 +370,128 @@ public class RealWaveform extends Waveform {
     return new RealWaveform(this.getX(), db20, this.getUnitX(), "");
   }
 
-  public RealValue cross(double val) {
+  public RealWaveform sin() {
+
+    double[] sin = new double[y.length];
+
+    for (int i = 0; i < sin.length; i++) {
+      sin[i] = 10 * Math.sin(y[i]);
+    }
+
+    return new RealWaveform(this.getX(), sin, this.getUnitX(), "");
+  }
+
+  public RealWaveform asin() {
+
+    double[] asin = new double[y.length];
+
+    for (int i = 0; i < asin.length; i++) {
+      asin[i] = 10 * Math.asin(y[i]);
+    }
+
+    return new RealWaveform(this.getX(), asin, this.getUnitX(), "");
+  }
+
+  public RealWaveform cos() {
+
+    double[] cos = new double[y.length];
+
+    for (int i = 0; i < cos.length; i++) {
+      cos[i] = 10 * Math.sin(y[i]);
+    }
+
+    return new RealWaveform(this.getX(), cos, this.getUnitX(), "");
+  }
+
+  public RealWaveform acos() {
+
+    double[] acos = new double[y.length];
+
+    for (int i = 0; i < acos.length; i++) {
+      acos[i] = 10 * Math.acos(y[i]);
+    }
+
+    return new RealWaveform(this.getX(), acos, this.getUnitX(), "");
+  }
+
+  public RealWaveform tan() {
+
+    double[] tan = new double[y.length];
+
+    for (int i = 0; i < tan.length; i++) {
+      tan[i] = 10 * Math.tan(y[i]);
+    }
+
+    return new RealWaveform(this.getX(), tan, this.getUnitX(), "");
+  }
+
+  public RealWaveform atan() {
+
+    double[] atan = new double[y.length];
+
+    for (int i = 0; i < atan.length; i++) {
+      atan[i] = 10 * Math.atan(y[i]);
+    }
+
+    return new RealWaveform(this.getX(), atan, this.getUnitX(), "");
+  }
+
+  public RealValue cross(double val, int edge) {
+
+    int counter = 1;
 
     for (int i = 0; i < x.length - 1; i++) {
 
       if ((y[i] - val) * (y[i + 1] - val) <= 0) {
-        return new RealValue(
-            x[i] + (val - y[i]) / (y[i + 1] - y[i]) * (x[i + 1] - x[i]),
-            getUnitX());
+
+        if (counter == edge) {
+          return new RealValue(
+              x[i] + (val - y[i]) / (y[i + 1] - y[i]) * (x[i + 1] - x[i]),
+              getUnitX());
+        }
+
       }
     }
     return new RealValue();
   }
 
-  public RealValue cross(RealValue val) {
+  public RealValue cross(RealValue val, int edge) {
 
     if (val.isInvalid()) {
       return new RealValue();
+    } else {
+      return this.cross(val.getValue(), edge);
+    }
+  }
+
+  public RealWaveform cross(double val) {
+
+    ArrayList<Double> newXVals = new ArrayList<Double>();
+    ArrayList<Double> newYVals = new ArrayList<Double>();
+
+    for (int i = 0; i < x.length - 1; i++) {
+      if ((y[i] - val) * (y[i + 1] - val) <= 0) {
+        newXVals
+            .add(x[i] + (val - y[i]) / (y[i + 1] - y[i]) * (x[i + 1] - x[i]));
+        newYVals.add(val);
+      }
+    }
+
+    double[] newX = new double[newXVals.size()];
+    double[] newY = new double[newYVals.size()];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = newXVals.get(i);
+      newY[i] = newYVals.get(i);
+    }
+
+    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  public RealWaveform cross(RealValue val) {
+
+    if (val.isInvalid()) {
+      return new RealWaveform();
     } else {
       return this.cross(val.getValue());
     }
