@@ -443,8 +443,6 @@ public class RealWaveform extends Waveform {
 
     int counter = 1;
 
-    System.out.println("A:" + x.length);
-    System.out.println("B:" + y.length);
     for (int i = 0; i < x.length - 1; i++) {
 
       if ((y[i] - val) * (y[i + 1] - val) <= 0) {
