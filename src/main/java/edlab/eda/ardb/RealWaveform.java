@@ -53,7 +53,8 @@ public class RealWaveform extends Waveform {
 
     if (!leftValue.isInvalid()) {
       if (newXVals.get(0) != leftValue.getValue()) {
-        newXVals.addFirst(leftValue.getValue());
+        newYVals.addFirst(leftValue.getValue());
+        newXVals.addFirst(left);
       }
     }
 
@@ -61,7 +62,8 @@ public class RealWaveform extends Waveform {
 
     if (!rightValue.isInvalid()) {
       if (newXVals.get(newXVals.size() - 1) != rightValue.getValue()) {
-        newXVals.addLast(rightValue.getValue());
+        newYVals.addLast(rightValue.getValue());
+        newXVals.addLast(right);
       }
     }
 
@@ -441,6 +443,8 @@ public class RealWaveform extends Waveform {
 
     int counter = 1;
 
+    System.out.println("A:" + x.length);
+    System.out.println("B:" + y.length);
     for (int i = 0; i < x.length - 1; i++) {
 
       if ((y[i] - val) * (y[i + 1] - val) <= 0) {
@@ -450,6 +454,8 @@ public class RealWaveform extends Waveform {
               x[i] + (val - y[i]) / (y[i + 1] - y[i]) * (x[i + 1] - x[i]),
               getUnitX());
         }
+
+        counter++;
 
       }
     }
