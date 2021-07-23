@@ -13,11 +13,43 @@ Clone the corresponding repositories, enter the directory and execute
 ```bash
 $ mvn install
 ```
+## Setup
+
+### Java
+Add the dependency to your project
+
+```xml
+<dependency>
+  <groupId>edlab.eda</groupId>
+  <artifactId>analog-results-database</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
+
+Import the corresponding package to your code
+```java
+import edlab.eda.ardb.*;
+```
+
+## Example
+
+### Java
+
+```java
+
+```
+
+## API
+
+### Java
+
+The [JavaDoc](https://matthschw.github.io/analog-results-database/)
+is stored on the Github-Pages (branch *gh-pages*).
 
 ## TODO
 
-- add JavaDoc
-- add more waveform processing functions
+- Finish [JavaDoc](https://matthschw.github.io/analog-results-database/)
+- Add more waveform processing functions
 
 ## License
 
