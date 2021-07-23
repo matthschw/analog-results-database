@@ -5,6 +5,11 @@
 	<groupId>edlab.eda</groupId>
 	<artifactId>analog-results-database</artifactId>
 	<version>0.0.1</version>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
@@ -91,4 +96,18 @@
 			<version>0.0.1</version>
 		</dependency>
 	</dependencies>
+
+	<organization>
+		<name>Electronics &amp; Drives</name>
+		<url>https://www.electronics-and-drives.de/</url>
+	</organization>
+	<developers>
+		<developer>
+			<id>schweikardt</id>
+			<name>Matthias Schweikardt</name>
+			<email>matthias.schweikardt at reutlingen-university.de</email>
+			<organization>Electronics &amp; Drives</organization>
+			<organizationUrl>https://www.electronics-and-drives.de/</organizationUrl>
+		</developer>
+	</developers>
 </project>
