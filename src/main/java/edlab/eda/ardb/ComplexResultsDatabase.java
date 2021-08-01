@@ -52,11 +52,7 @@ public class ComplexResultsDatabase extends ResultsDatabse {
     }
   }
 
-  /**
-   * Returns a set of all value names in the container
-   * 
-   * @return set of names
-   */
+  @Override
   public Set<String> getValueNames() {
     if (values != null) {
       return values.keySet();
@@ -66,11 +62,7 @@ public class ComplexResultsDatabase extends ResultsDatabse {
     }
   }
 
-  /**
-   * Returns a set of all wave names in the container
-   * 
-   * @return set of names
-   */
+  @Override
   public Set<String> getWaveNames() {
     if (waves != null) {
       return waves.keySet();
@@ -81,9 +73,9 @@ public class ComplexResultsDatabase extends ResultsDatabse {
   }
 
   /**
-   * Builds a ComplexResultsResultDatabase from a NutmegComplexPlot
+   * Builds a {@link ComplexResultsDatabase} from a {@link NutmegComplexPlot}
    * 
-   * @param plot, NutmegComplexPlot
+   * @param plot {@link NutmegComplexPlot}
    * @return ComplexResultsDatabase
    */
   public static ComplexResultsDatabase buildResultDatabase(

@@ -7,6 +7,10 @@ import java.util.Set;
 
 import edlab.eda.reader.nutmeg.NutmegRealPlot;
 
+/**
+ * Container consisting of real waves and values
+ *
+ */
 public class RealResultsDatabase extends ResultsDatabse {
 
   private Map<String, RealValue> values = null;
@@ -16,6 +20,12 @@ public class RealResultsDatabase extends ResultsDatabse {
 
   }
 
+  /**
+   * Returns a real value with a given name
+   * 
+   * @param name of value
+   * @return Real Value
+   */
   public RealValue getRealValue(String name) {
     if (values != null) {
       return values.get(name);
@@ -25,6 +35,12 @@ public class RealResultsDatabase extends ResultsDatabse {
     }
   }
 
+  /**
+   * Returns a real wave with a given name
+   * 
+   * @param name of wave
+   * @return Real Wave
+   */
   public RealWaveform getRealWaveform(String name) {
     if (waves != null) {
       return waves.get(name);
@@ -34,6 +50,7 @@ public class RealResultsDatabase extends ResultsDatabse {
     }
   }
 
+  @Override
   public Set<String> getValueNames() {
     if (values != null) {
       return values.keySet();
@@ -43,6 +60,7 @@ public class RealResultsDatabase extends ResultsDatabse {
     }
   }
 
+  @Override
   public Set<String> getWaveNames() {
     if (waves != null) {
       return waves.keySet();
@@ -52,6 +70,12 @@ public class RealResultsDatabase extends ResultsDatabse {
     }
   }
 
+  /**
+   * Builds a {@link RealResultsDatabase} from a {@link NutmegRealPlot}
+   * 
+   * @param plot {@link NutmegRealPlot}
+   * @return ComplexResultsDatabase
+   */
   public static RealResultsDatabase buildResultDatabase(NutmegRealPlot plot) {
 
     RealResultsDatabase retval = new RealResultsDatabase();
@@ -87,5 +111,4 @@ public class RealResultsDatabase extends ResultsDatabse {
     }
     return retval;
   }
-
 }

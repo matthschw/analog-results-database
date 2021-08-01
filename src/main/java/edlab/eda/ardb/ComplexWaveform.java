@@ -2,6 +2,10 @@ package edlab.eda.ardb;
 
 import org.apache.commons.math3.complex.Complex;
 
+/**
+ * Class for representing a complex waveform. Both axes and the units are
+ * covered by the object.
+ */
 public class ComplexWaveform extends Waveform {
 
   private Complex[] y;
@@ -11,14 +15,23 @@ public class ComplexWaveform extends Waveform {
     this.y = y;
   }
 
+  /**
+   * Create an empty complex waveform
+   */
   public ComplexWaveform() {
     super();
   }
 
+  /**
+   * Get the y-values of a complex waveform
+   * 
+   * @return y-values
+   */
   public Complex[] getY() {
     return y;
   }
 
+  @Override
   public String toString() {
     String res = "";
     for (int i = 0; i < x.length; i++) {
@@ -32,7 +45,7 @@ public class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public Value getValue(double pos) {
+  public ComplexValue getValue(double pos) {
 
     if (pos <= x[0]) {
 
@@ -65,6 +78,11 @@ public class ComplexWaveform extends Waveform {
     return null;
   }
 
+  /**
+   * Calculate the complex conjugate of a waveform
+   * 
+   * @return Waveform
+   */
   public ComplexWaveform conjugate() {
 
     Complex[] yVec = new Complex[this.y.length];
@@ -88,6 +106,11 @@ public class ComplexWaveform extends Waveform {
     return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
   }
 
+  /**
+   * Extract the real-part of a waveform
+   * 
+   * @return Waveform
+   */
   public RealWaveform real() {
 
     double[] yVec = new double[this.x.length];
@@ -99,6 +122,11 @@ public class ComplexWaveform extends Waveform {
     return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
   }
 
+  /**
+   * Extract the imaginary-part of a waveform
+   * 
+   * @return Waveform
+   */
   public RealWaveform imag() {
 
     double[] yVec = new double[this.x.length];
@@ -110,6 +138,11 @@ public class ComplexWaveform extends Waveform {
     return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
   }
 
+  /**
+   * Extract the phase of a {@link ComplexWaveform}
+   * 
+   * @return Waveform
+   */
   public RealWaveform phaseDeg() {
 
     double[] yVec = new double[this.x.length];
@@ -122,6 +155,14 @@ public class ComplexWaveform extends Waveform {
   }
 
   @Override
+  public RealWaveform db10() {
+
+    RealWaveform realWave = this.abs();
+
+    return realWave.db10();
+  }
+
+  @Override
   public RealWaveform db20() {
 
     RealWaveform realWave = this.abs();
@@ -129,11 +170,15 @@ public class ComplexWaveform extends Waveform {
     return realWave.db20();
   }
 
-  @Override
-  public int noOfVals() {
-    return x.length;
-  }
-
+  /**
+   * Create a new {@link RealWaveform}
+   * 
+   * @param x     x-values
+   * @param y     y-values
+   * @param unitX unit of x-values
+   * @param unitY unit of y-values
+   * @return {@link ComplexWaveform}
+   */
   public static ComplexWaveform buildRealWaveform(double[] x, Complex[] y,
       String unitX, String unitY) {
 
@@ -149,6 +194,13 @@ public class ComplexWaveform extends Waveform {
     }
   }
 
+  /**
+   * Sort both <code>x</code> and <code>y</code> that <code>x</code> is sorted
+   * in ascending order
+   * 
+   * @param x x-values
+   * @param y y-values
+   */
   private static void sortWaveElements(double[] x, Complex[] y) {
 
     double swapReal;
