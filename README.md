@@ -31,14 +31,6 @@ Import the corresponding package to your code
 import edlab.eda.ardb.*;
 ```
 
-## Example
-
-### Java
-
-```java
-
-```
-
 ## API
 
 ### Java
