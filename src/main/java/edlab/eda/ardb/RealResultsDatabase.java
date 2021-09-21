@@ -9,7 +9,6 @@ import edlab.eda.reader.nutmeg.NutmegRealPlot;
 
 /**
  * Container consisting of real waves and values
- *
  */
 public class RealResultsDatabase extends ResultsDatabse {
 
@@ -17,11 +16,10 @@ public class RealResultsDatabase extends ResultsDatabse {
   private Map<String, RealWaveform> waves = null;
 
   private RealResultsDatabase() {
-
   }
 
   /**
-   * Returns a real value with a given name
+   * Returns a real value for a given electrical reference
    * 
    * @param name of value
    * @return Real Value
@@ -33,6 +31,16 @@ public class RealResultsDatabase extends ResultsDatabse {
       System.err.println("Database does not contain values, only waveforms");
       return null;
     }
+  }
+
+  /**
+   * Returns a real value with a given name
+   * 
+   * @param electrical Reference
+   * @return Reference
+   */
+  public RealValue getRealValue(ReferenceableElectrical electrical) {
+    return this.getRealValue(electrical.getIdentifier());
   }
 
   /**
@@ -48,6 +56,16 @@ public class RealResultsDatabase extends ResultsDatabse {
       System.err.println("Database does not contain waveforms, only values");
       return null;
     }
+  }
+
+  /**
+   * Returns a real wave for a given electrical reference
+   * 
+   * @param electrical Reference
+   * @return Real Wave
+   */
+  public RealWaveform getRealWaveform(ReferenceableElectrical electrical) {
+    return this.getRealWaveform(electrical.getIdentifier());
   }
 
   @Override

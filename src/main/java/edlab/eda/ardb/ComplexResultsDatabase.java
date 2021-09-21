@@ -19,7 +19,6 @@ public class ComplexResultsDatabase extends ResultsDatabse {
   private Map<String, ComplexWaveform> waves = null;
 
   private ComplexResultsDatabase() {
-
   }
 
   /**
@@ -38,6 +37,16 @@ public class ComplexResultsDatabase extends ResultsDatabse {
   }
 
   /**
+   * Returns a complex value for a given electrical reference
+   * 
+   * @param electrical Reference
+   * @return Complex Value
+   */
+  public ComplexValue getComplexValue(ReferenceableElectrical electrical) {
+    return this.getComplexValue(electrical.getIdentifier());
+  }
+
+  /**
    * Returns a complex wave with a given name
    * 
    * @param name of wave
@@ -50,6 +59,17 @@ public class ComplexResultsDatabase extends ResultsDatabse {
       System.err.println("Database does not contain waveforms, only values");
       return null;
     }
+  }
+
+  /**
+   * Returns a complex value for a given electrical reference
+   * 
+   * @param electrical Reference
+   * @return Complex Wave
+   */
+  public ComplexWaveform getComplexWaveform(
+      ReferenceableElectrical electrical) {
+    return this.getComplexWaveform(electrical.getIdentifier());
   }
 
   @Override
@@ -116,5 +136,4 @@ public class ComplexResultsDatabase extends ResultsDatabse {
     }
     return retval;
   }
-
 }

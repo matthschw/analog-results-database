@@ -8,7 +8,6 @@ import edlab.eda.reader.nutmeg.NutmegRealPlot;
 
 /**
  * Container consisting of waves and values
- *
  */
 public abstract class ResultsDatabse {
 
