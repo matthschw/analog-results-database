@@ -136,4 +136,44 @@ public class ComplexResultsDatabase extends ResultsDatabse {
     }
     return retval;
   }
+
+  @Override
+  public String toString() {
+
+    String retval = "";
+
+    boolean firstIteration = true;
+
+    if (this.values.keySet() != null && !this.values.isEmpty()) {
+
+      retval += "Values:";
+
+      firstIteration = false;
+
+      for (String name : this.values.keySet()) {
+
+        retval += "\n- " + name + " = " + this.values.get(name) + " "
+            + this.values.get(name).getUnit();
+      }
+    }
+
+    if (this.waves.keySet() != null && !this.waves.isEmpty()) {
+
+      if (!firstIteration) {
+        retval += "\n";
+      }
+
+      retval += "Waves:";
+
+      firstIteration = false;
+
+      for (String name : this.waves.keySet()) {
+
+        retval += "\n- " + name + " X=" + this.waves.get(name).getUnitX() + "/"
+            + " X=" + this.waves.get(name).getUnitY();
+      }
+    }
+
+    return retval;
+  }
 }
