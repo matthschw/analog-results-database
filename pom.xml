@@ -79,7 +79,7 @@
 				<version>3.1.0</version>
 				<configuration>
 					<serverId>github</serverId>
-					<pubScmUrl>scm:git:https://github.com/matthschw/analog-results-database.git</pubScmUrl>
+					<pubScmUrl>scm:git:https://github.com/electronics-and-drives/analog-results-database.git</pubScmUrl>
 					<scmBranch>gh-pages</scmBranch>
 					<checkinComment>Updated JavaDocs via Maven</checkinComment>
 					<content>${project.build.directory}/apidocs</content>
