@@ -19,7 +19,7 @@
 		</repository>
 		<repository>
 			<id>github</id>
-			<url>https://maven.pkg.github.com/OWNER/*</url>
+			<url>https://maven.pkg.github.com/electronics-and-drives/*</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
