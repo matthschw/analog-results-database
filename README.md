@@ -40,7 +40,7 @@ import edlab.eda.ardb.*;
 
 ### Java
 
-The [JavaDoc](https://matthschw.github.io/analog-results-database/)
+The [JavaDoc](https://electronics-and-drives.github.io/analog-results-database/edlab/eda/ardb/package-summary.html)
 is stored on the Github-Pages (branch *gh-pages*).
 
 ## License
