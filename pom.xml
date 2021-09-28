@@ -12,19 +12,25 @@
 		<maven.compiler.target>8</maven.compiler.target>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>central</id>
-			<url>https://repo1.maven.org/maven2</url>
-		</repository>
-		<repository>
-			<id>nutmeg-reader</id>
-			<url>https://maven.pkg.github.com/electronics-and-drives/nutmeg-reader</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+  <activeProfiles>
+    <activeProfile>github</activeProfile>
+  </activeProfiles>
+
+  <profiles>
+    <profile>
+      <id>github</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>https://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+          <id>github</id>
+          <url>https://maven.pkg.github.com/electronics-and-drives/nutmeg-reader</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
 
 	<build>
 		<plugins>
@@ -111,11 +117,11 @@
 			<artifactId>commons-math3</artifactId>
 			<version>3.2</version>
 		</dependency>
-		<dependency>
-			<groupId>edlab.eda</groupId>
-			<artifactId>reader.nutmeg</artifactId>
-			<version>1.0.3</version>
-		</dependency>
+<dependency>
+  <groupId>edlab.eda</groupId>
+  <artifactId>reader.nutmeg</artifactId>
+  <version>1.0.3</version>
+</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
