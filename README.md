@@ -1,5 +1,5 @@
 # analog-results-database
-
+[![Java CI with Maven](https://github.com/electronics-and-drives/analog-results-database/actions/workflows/maven.yml/badge.svg)](https://github.com/electronics-and-drives/analog-results-database/actions/workflows/maven.yml)
 Analog Result Database
 
 ## Dependencies
