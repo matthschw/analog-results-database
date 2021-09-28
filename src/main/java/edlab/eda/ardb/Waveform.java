@@ -126,7 +126,7 @@ public abstract class Waveform {
   /**
    * Evaluate a waveform at a value
    * 
-   * @param val x-value where the waveform is evaluated
+   * @param pos x-value where the waveform is evaluated
    * @return value
    */
   public abstract Value getValue(double pos);
