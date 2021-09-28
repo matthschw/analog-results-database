@@ -3,6 +3,9 @@
 
 Analog Result Database
 
+This toolbox provides function for extracting simulation results
+from Cadence Spectre and/or Ngspice and process the results.
+
 ## Dependencies
 
 When the [GitHub Packages ](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry) 
