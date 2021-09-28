@@ -137,7 +137,7 @@ public class RealResultsDatabase extends ResultsDatabse {
 
     boolean firstIteration = true;
 
-    if (this.values.keySet() != null && !this.values.isEmpty()) {
+    if (this.values != null && !this.values.isEmpty()) {
 
       retval += "Values:";
 
@@ -150,7 +150,7 @@ public class RealResultsDatabase extends ResultsDatabse {
       }
     }
 
-    if (this.waves.keySet() != null && !this.waves.isEmpty()) {
+    if (this.waves != null && !this.waves.isEmpty()) {
 
       if (!firstIteration) {
         retval += "\n";
@@ -162,8 +162,7 @@ public class RealResultsDatabase extends ResultsDatabse {
 
       for (String name : this.waves.keySet()) {
 
-        retval += "\n- " + name + " X=" + this.waves.get(name).getUnitX() + "/"
-            + " X=" + this.waves.get(name).getUnitY();
+        retval += "\n- " + name + " " + this.waves.get(name).getUnitY();
       }
     }
 

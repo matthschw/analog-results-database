@@ -4,7 +4,11 @@ Analog Result Database
 
 ## Dependencies
 
-The following dependencies must be installed manually:
+When the [GitHub Packages ](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry) 
+are utilized, no manual actions must be performed.
+
+When this functionality is not available, please
+install the following dependencies manually:
 
 - [nutmeg-reader](https://github.com/electronics-and-drives/nutmeg-reader) 
 
@@ -37,11 +41,6 @@ import edlab.eda.ardb.*;
 
 The [JavaDoc](https://matthschw.github.io/analog-results-database/)
 is stored on the Github-Pages (branch *gh-pages*).
-
-## TODO
-
-- Finish [JavaDoc](https://matthschw.github.io/analog-results-database/)
-- Add more waveform processing functions
 
 ## License
 
