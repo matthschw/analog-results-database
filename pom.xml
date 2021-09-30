@@ -20,18 +20,21 @@
 		</repository>
 	</distributionManagement>
 
-
-	<repositories>
-		<repository>
-			<id>central</id>
-			<url>https://repo1.maven.org/maven2</url>
-		</repository>
-		<repository>
+	<profiles>
+		<profile>
 			<id>github</id>
-			<url>https://maven.pkg.github.com/electronics-and-drives/nutmeg-reader</url>
-		</repository>
-	</repositories>
-
+			<repositories>
+				<repository>
+					<id>central</id>
+					<url>https://repo1.maven.org/maven2</url>
+				</repository>
+				<repository>
+					<id>github</id>
+					<url>https://maven.pkg.github.com/electronics-and-drives/nutmeg-reader</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -116,6 +119,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>
 			<version>3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.9</version>
 		</dependency>
 		<dependency>
 			<groupId>edlab.eda</groupId>

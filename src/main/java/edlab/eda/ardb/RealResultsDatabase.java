@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.text.translate.CharSequenceTranslator;
+
+import edlab.eda.reader.nutmeg.DefaultTranslator;
 import edlab.eda.reader.nutmeg.NutmegRealPlot;
 
 /**
@@ -95,6 +98,18 @@ public class RealResultsDatabase extends ResultsDatabse {
    * @return ComplexResultsDatabase
    */
   public static RealResultsDatabase buildResultDatabase(NutmegRealPlot plot) {
+    return buildResultDatabase(plot, new DefaultTranslator());
+  }
+
+  /**
+   * Builds a {@link RealResultsDatabase} from a {@link NutmegRealPlot}
+   * 
+   * @param plot       {@link NutmegRealPlot}
+   * @param translator Translator for wave names
+   * @return ComplexResultsDatabase
+   */
+  public static RealResultsDatabase buildResultDatabase(NutmegRealPlot plot,
+      CharSequenceTranslator translator) {
 
     RealResultsDatabase retval = new RealResultsDatabase();
 
@@ -104,7 +119,7 @@ public class RealResultsDatabase extends ResultsDatabse {
 
       for (String wave : plot.getWaves()) {
 
-        retval.values.put(wave,
+        retval.values.put(translator.translate(wave),
             new RealValue(plot.getWave(wave)[0], plot.getUnit(wave)));
       }
     } else {
@@ -118,12 +133,15 @@ public class RealResultsDatabase extends ResultsDatabse {
 
       for (String wave : plot.getWaves()) {
 
-        RealWaveform.buildRealWaveform(x, plot.getWave(wave), refWaveUnit,
-            plot.getUnit(wave));
+        RealWaveform.buildRealWaveform(x, plot.getWave(wave),
+            translator.translate(refWaveUnit),
+            translator.translate(plot.getUnit(wave)));
 
         if (!wave.equals(refWave)) {
-          retval.waves.put(wave, RealWaveform.buildRealWaveform(x,
-              plot.getWave(wave), refWaveUnit, plot.getUnit(wave)));
+          retval.waves.put(translator.translate(wave),
+              RealWaveform.buildRealWaveform(x, plot.getWave(wave),
+                  translator.translate(refWaveUnit),
+                  translator.translate(plot.getUnit(wave))));
         }
       }
     }

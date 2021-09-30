@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
+import org.apache.commons.text.translate.CharSequenceTranslator;
 import org.apache.commons.math3.complex.Complex;
 
+import edlab.eda.reader.nutmeg.DefaultTranslator;
 import edlab.eda.reader.nutmeg.NutmegComplexPlot;
 
 /**
@@ -101,6 +102,19 @@ public class ComplexResultsDatabase extends ResultsDatabse {
   public static ComplexResultsDatabase buildResultDatabase(
       NutmegComplexPlot plot) {
 
+    return buildResultDatabase(plot, new DefaultTranslator());
+  }
+
+  /**
+   * Builds a {@link ComplexResultsDatabase} from a {@link NutmegComplexPlot}
+   * 
+   * @param plot       {@link NutmegComplexPlot}
+   * @param translator Translator for wave names
+   * @return ComplexResultsDatabase
+   */
+  public static ComplexResultsDatabase buildResultDatabase(
+      NutmegComplexPlot plot, CharSequenceTranslator translator) {
+
     ComplexResultsDatabase retval = new ComplexResultsDatabase();
 
     if (plot.getNoOfPoints() == 1) {
@@ -108,8 +122,9 @@ public class ComplexResultsDatabase extends ResultsDatabse {
       retval.values = new HashMap<String, ComplexValue>();
 
       for (String wave : plot.getWaves()) {
-        retval.values.put(wave,
-            new ComplexValue(plot.getWave(wave)[0], plot.getUnit(wave)));
+
+        retval.values.put(translator.translate(wave), new ComplexValue(
+            plot.getWave(wave)[0], translator.translate(plot.getUnit(wave))));
       }
     } else {
 
@@ -127,10 +142,13 @@ public class ComplexResultsDatabase extends ResultsDatabse {
       }
 
       for (String wave : plot.getWaves()) {
+        
         if (!wave.equals(refWave)) {
 
-          retval.waves.put(wave, ComplexWaveform.buildRealWaveform(x,
-              plot.getWave(wave), refWaveUnit, plot.getUnit(wave)));
+          retval.waves.put(translator.translate(wave),
+              ComplexWaveform.buildRealWaveform(x, plot.getWave(wave),
+                  translator.translate(refWaveUnit),
+                  translator.translate(plot.getUnit(wave))));
         }
       }
     }
