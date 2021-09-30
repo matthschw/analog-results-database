@@ -1,7 +1,7 @@
 # analog-results-database
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Java CI with Maven](https://github.com/electronics-and-drives/analog-results-database/actions/workflows/maven.yml/badge.svg)](https://github.com/electronics-and-drives/analog-results-database/actions/workflows/maven.yml)
 
-Analog Result Database
+Analog Results Database
 
 This toolbox provides function for extracting simulation results
 from Cadence Spectre and/or Ngspice and process the results.
