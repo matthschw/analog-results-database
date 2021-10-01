@@ -227,4 +227,15 @@ public class ComplexWaveform extends Waveform {
       }
     }
   }
+
+  /**
+   * Check if an object is an instance of this class
+   * 
+   * @param o Object
+   * @return <code>true</code> if the object is an instance of this class,
+   *         <code>false</code> otherwise
+   */
+  public static boolean isInstanceOf(Object o) {
+    return o instanceof ComplexWaveform;
+  }
 }

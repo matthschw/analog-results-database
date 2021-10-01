@@ -50,16 +50,14 @@ public class ComplexValue extends Value {
 
   /**
    * Returns the conjugate of a ComplexValue
-   *  @return Complex
+   * 
+   * @return Complex
    */
   public Complex conjugate() {
     return value.conjugate();
   }
 
-  
-  /**
-   * Provides a String-Representation if the ComplexValue
-   */
+  @Override
   public String toString() {
     if (getUnit() == null) {
       return "" + getValue().getReal() + " + j*" + getValue().getImaginary();
@@ -67,5 +65,16 @@ public class ComplexValue extends Value {
       return "" + getValue().getReal() + " + j*" + getValue().getImaginary()
           + " " + getUnit();
     }
+  }
+
+  /**
+   * Check if an object is an instance of this class
+   * 
+   * @param o Object
+   * @return <code>true</code> if the object is an instance of this class,
+   *         <code>false</code> otherwise
+   */
+  public static boolean isInstanceOf(Object o) {
+    return o instanceof RealValue;
   }
 }
