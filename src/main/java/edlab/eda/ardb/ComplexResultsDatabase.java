@@ -142,7 +142,7 @@ public class ComplexResultsDatabase extends ResultsDatabse {
       }
 
       for (String wave : plot.getWaves()) {
-        
+
         if (!wave.equals(refWave)) {
 
           retval.waves.put(translator.translate(wave),
@@ -193,5 +193,25 @@ public class ComplexResultsDatabase extends ResultsDatabse {
     }
 
     return retval;
+  }
+
+  @Override
+  public boolean isValueName(String name) {
+    return this.values.containsKey(name);
+  }
+
+  @Override
+  public boolean isWaveformName(String name) {
+    return this.waves.containsKey(name);
+  }
+
+  @Override
+  public boolean isValue(ReferenceableElectrical electrical) {
+    return this.isValueName(electrical.getIdentifier());
+  }
+
+  @Override
+  public boolean isWaveform(ReferenceableElectrical electrical) {
+    return this.isWaveformName(electrical.getIdentifier());
   }
 }

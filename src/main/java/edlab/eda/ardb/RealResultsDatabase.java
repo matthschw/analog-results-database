@@ -186,4 +186,24 @@ public class RealResultsDatabase extends ResultsDatabse {
 
     return retval;
   }
+
+  @Override
+  public boolean isValueName(String name) {
+    return this.values.containsKey(name);
+  }
+
+  @Override
+  public boolean isWaveformName(String name) {
+    return this.waves.containsKey(name);
+  }
+
+  @Override
+  public boolean isValue(ReferenceableElectrical electrical) {
+    return this.isValueName(electrical.getIdentifier());
+  }
+
+  @Override
+  public boolean isWaveform(ReferenceableElectrical electrical) {
+    return this.isWaveformName(electrical.getIdentifier());
+  }
 }

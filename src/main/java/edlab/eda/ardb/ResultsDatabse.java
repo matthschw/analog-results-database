@@ -41,4 +41,45 @@ public abstract class ResultsDatabse {
    * @return set of names
    */
   public abstract Set<String> getWaveNames();
+
+  /**
+   * Check if a the database contains a value with a given name
+   * 
+   * @param name Name of the value
+   * 
+   * @return <code>true</code> when the database contains a value with the given
+   *         name, <code>false</code> otherwise.
+   */
+  public abstract boolean isValueName(String name);
+
+  /**
+   * Check if a the database contains a wave with a given name
+   * 
+   * @param name Name of the waveform
+   * 
+   * @return <code>true</code> when the database contains a waveform with the
+   *         given name, <code>false</code> otherwise.
+   */
+  public abstract boolean isWaveformName(String name);
+
+  /**
+   * Check if a the database contains a value with a given electrical identifier
+   * 
+   * @param electrical Reference to the electrical
+   * 
+   * @return <code>true</code> when the database contains a value with the given
+   *         name, <code>false</code> otherwise.
+   */
+  public abstract boolean isValue(ReferenceableElectrical electrical);
+
+  /**
+   * Check if a the database contains a wave with a given electrical identifier
+   * 
+   * @param electrical Reference to the electrical
+   * 
+   * @return <code>true</code> when the database contains a waveform with the
+   *         given name, <code>false</code> otherwise.
+   */
+  public abstract boolean isWaveform(ReferenceableElectrical electrical);
+
 }
