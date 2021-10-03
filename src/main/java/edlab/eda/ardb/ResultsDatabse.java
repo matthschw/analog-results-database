@@ -81,5 +81,4 @@ public abstract class ResultsDatabse {
    *         given name, <code>false</code> otherwise.
    */
   public abstract boolean isWaveform(ReferenceableElectrical electrical);
-
 }

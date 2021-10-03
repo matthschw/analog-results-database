@@ -75,6 +75,6 @@ public class ComplexValue extends Value {
    *         <code>false</code> otherwise
    */
   public static boolean isInstanceOf(Object o) {
-    return o instanceof RealValue;
+    return o instanceof ComplexValue;
   }
 }
