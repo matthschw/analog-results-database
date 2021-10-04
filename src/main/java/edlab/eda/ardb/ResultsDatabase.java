@@ -9,15 +9,15 @@ import edlab.eda.reader.nutmeg.NutmegRealPlot;
 /**
  * Container consisting of waves and values
  */
-public abstract class ResultsDatabse {
+public abstract class ResultsDatabase {
 
   /**
-   * Builds a {@link ResultsDatabse} from a {@link NutmegPlot}
+   * Builds a {@link ResultsDatabase} from a {@link NutmegPlot}
    * 
    * @param plot {@link NutmegPlot}
    * @return ResultsDatabse
    */
-  public static ResultsDatabse buildResultDatabase(NutmegPlot plot) {
+  public static ResultsDatabase buildResultDatabase(NutmegPlot plot) {
 
     if (plot instanceof NutmegRealPlot) {
       return RealResultsDatabase.buildResultDatabase((NutmegRealPlot) plot);
@@ -159,6 +159,6 @@ public abstract class ResultsDatabse {
    *         <code>false</code> otherwise
    */
   public static boolean isInstanceOf(Object o) {
-    return o instanceof ResultsDatabse;
+    return o instanceof ResultsDatabase;
   }
 }

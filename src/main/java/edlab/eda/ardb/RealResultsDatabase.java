@@ -13,7 +13,7 @@ import edlab.eda.reader.nutmeg.NutmegRealPlot;
 /**
  * Container consisting of real waves and values
  */
-public class RealResultsDatabase extends ResultsDatabse {
+public class RealResultsDatabase extends ResultsDatabase {
 
   private Map<String, RealValue> values = new HashMap<String, RealValue>();
   private Map<String, RealWaveform> waves = new HashMap<String, RealWaveform>();
