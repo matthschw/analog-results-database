@@ -27,7 +27,7 @@ public class ComplexValue extends Value {
    * @return Complex
    */
   public Complex getValue() {
-    return value;
+    return this.value;
   }
 
   /**
@@ -36,7 +36,7 @@ public class ComplexValue extends Value {
    * @return Real part (double)
    */
   public double real() {
-    return value.getReal();
+    return this.value.getReal();
   }
 
   /**
@@ -45,7 +45,7 @@ public class ComplexValue extends Value {
    * @return Imaginary part (double)
    */
   public double imag() {
-    return value.getImaginary();
+    return this.value.getImaginary();
   }
 
   /**
@@ -54,7 +54,7 @@ public class ComplexValue extends Value {
    * @return Complex
    */
   public Complex conjugate() {
-    return value.conjugate();
+    return this.value.conjugate();
   }
 
   @Override

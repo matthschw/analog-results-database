@@ -28,18 +28,22 @@ public class ComplexWaveform extends Waveform {
    * @return y-values
    */
   public Complex[] getY() {
-    return y;
+    return this.y;
   }
 
   @Override
   public String toString() {
+
     String res = "";
-    for (int i = 0; i < x.length; i++) {
+
+    for (int i = 0; i < this.x.length; i++) {
+
       if (i > 0) {
         res += "\n";
       }
-      res += "(" + x[i] + " " + getUnitX() + " , " + y[i] + " " + getUnitY()
-          + ")";
+
+      res += "(" + this.x[i] + " " + this.getUnitX() + " , " + this.y[i] + " "
+          + this.getUnitY() + ")";
     }
     return res;
   }
@@ -50,26 +54,30 @@ public class ComplexWaveform extends Waveform {
     if (pos <= x[0]) {
 
       return new ComplexValue(
-          y[0].add(y[1].subtract(y[0])
-              .multiply(new Complex((pos - x[0]) / (x[1] - x[0])))),
+          this.y[0].add(this.y[1].subtract(this.y[0]).multiply(
+              new Complex((pos - this.x[0]) / (this.x[1] - this.x[0])))),
           getUnitY());
 
     } else if (pos >= x[x.length - 1]) {
 
       return new ComplexValue(
-          y[y.length - 1].add(y[y.length - 1].subtract(y[y.length - 2])
-              .multiply(new Complex((pos - x[0]) / (x[1] - x[0])))),
-          getUnitY());
+          this.y[this.y.length - 1]
+              .add(this.y[this.y.length - 1].subtract(this.y[this.y.length - 2])
+                  .multiply(new Complex(
+                      (pos - this.x[0]) / (this.x[1] - this.x[0])))),
+          this.getUnitY());
 
     } else {
 
       for (int i = 0; i < x.length - 1; i++) {
-        if ((x[i] - pos) * (x[i + 1] - pos) <= 0) {
+
+        if ((this.x[i] - pos) * (this.x[i + 1] - pos) <= 0) {
 
           return new ComplexValue(
-              y[i].add(y[i + 1].subtract(y[i])
-                  .multiply(new Complex((pos - x[i]) / (x[i + 1] - x[i])))),
-              getUnitY());
+              this.y[i].add(this.y[i + 1].subtract(this.y[i])
+                  .multiply(new Complex(
+                      (pos - this.x[i]) / (this.x[i + 1] - this.x[i])))),
+              this.getUnitY());
 
         }
       }
@@ -88,7 +96,7 @@ public class ComplexWaveform extends Waveform {
     Complex[] yVec = new Complex[this.y.length];
 
     for (int i = 0; i < yVec.length; i++) {
-      yVec[i] = y[i].conjugate();
+      yVec[i] = this.y[i].conjugate();
     }
 
     return ComplexWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
@@ -100,7 +108,7 @@ public class ComplexWaveform extends Waveform {
     double[] yVec = new double[this.x.length];
 
     for (int i = 0; i < yVec.length; i++) {
-      yVec[i] = y[i].abs();
+      yVec[i] = this.y[i].abs();
     }
 
     return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
@@ -116,10 +124,11 @@ public class ComplexWaveform extends Waveform {
     double[] yVec = new double[this.x.length];
 
     for (int i = 0; i < yVec.length; i++) {
-      yVec[i] = y[i].getReal();
+      yVec[i] = this.y[i].getReal();
     }
 
-    return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
+    return RealWaveform.buildRealWaveform(this.x, yVec, this.getUnitX(),
+        this.getUnitY());
   }
 
   /**
@@ -132,10 +141,11 @@ public class ComplexWaveform extends Waveform {
     double[] yVec = new double[this.x.length];
 
     for (int i = 0; i < yVec.length; i++) {
-      yVec[i] = y[i].getImaginary();
+      yVec[i] = this.y[i].getImaginary();
     }
 
-    return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
+    return RealWaveform.buildRealWaveform(this.x, yVec, this.getUnitX(),
+        this.getUnitY());
   }
 
   /**
