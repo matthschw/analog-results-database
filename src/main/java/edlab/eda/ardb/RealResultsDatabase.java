@@ -163,8 +163,7 @@ public class RealResultsDatabase extends ResultsDatabase {
 
       for (String name : this.values.keySet()) {
 
-        retval += "\n- " + name + " = " + this.values.get(name) + " "
-            + this.values.get(name).getUnit();
+        retval += "\n- " + name + " = " + this.values.get(name);
       }
     }
 
