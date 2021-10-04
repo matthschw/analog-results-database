@@ -81,4 +81,57 @@ public abstract class ResultsDatabse {
    *         given name, <code>false</code> otherwise.
    */
   public abstract boolean isWaveform(ReferenceableElectrical electrical);
+
+  /**
+   * Check if a the database contains a value or waveform with a given name
+   * 
+   * @param electrical Reference to the electrical
+   * 
+   * @return <code>true</code> when the database contains a value or waveform
+   *         with the given name, <code>false</code> otherwise.
+   */
+  public abstract boolean isMember(String name);
+
+  /**
+   * Check if a the database contains a value or waveform with a given
+   * electrical identifier
+   * 
+   * @param electrical Reference to the electrical
+   * 
+   * @return <code>true</code> when the database contains a value or waveform
+   *         with the given name, <code>false</code> otherwise.
+   */
+  public abstract boolean isMember(ReferenceableElectrical electrical);
+
+  /**
+   * Get a value of the database
+   * 
+   * @param name Name of the value
+   * @return value when available, <code>null</code> otherwise
+   */
+  public abstract Value getValue(String name);
+
+  /**
+   * Get a value of the database
+   * 
+   * @param electrical Reference to the electrical
+   * @return value when available, <code>null</code> otherwise
+   */
+  public abstract Value getValue(ReferenceableElectrical electrical);
+
+  /**
+   * Get a waveform from the database
+   * 
+   * @param name Name of the waveform
+   * @return waveform when available, <code>null</code> otherwise
+   */
+  public abstract Waveform getWaveform(String name);
+
+  /**
+   * Get a waveform from the database
+   * 
+   * @param electrical Reference to the electrical
+   * @return waveform when available, <code>null</code> otherwise
+   */
+  public abstract Waveform getWaveform(ReferenceableElectrical electrical);
 }

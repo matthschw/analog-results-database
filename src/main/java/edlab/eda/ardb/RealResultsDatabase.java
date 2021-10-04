@@ -15,8 +15,8 @@ import edlab.eda.reader.nutmeg.NutmegRealPlot;
  */
 public class RealResultsDatabase extends ResultsDatabse {
 
-  private Map<String, RealValue> values = null;
-  private Map<String, RealWaveform> waves = null;
+  private Map<String, RealValue> values = new HashMap<String, RealValue>();
+  private Map<String, RealWaveform> waves = new HashMap<String, RealWaveform>();
 
   private RealResultsDatabase() {
   }
@@ -206,7 +206,41 @@ public class RealResultsDatabase extends ResultsDatabse {
   public boolean isWaveform(ReferenceableElectrical electrical) {
     return this.isWaveformName(electrical.getIdentifier());
   }
-  
+
+  @Override
+  public boolean isMember(String name) {
+    return (this.values != null && this.values.containsKey(name))
+        || (this.waves != null && this.waves.containsKey(name));
+  }
+
+  @Override
+  public boolean isMember(ReferenceableElectrical electrical) {
+    return (this.values != null
+        && this.values.containsKey(electrical.getIdentifier()))
+        || (this.waves != null
+            && this.waves.containsKey(electrical.getIdentifier()));
+  }
+
+  @Override
+  public Value getValue(String name) {
+    return this.values.get(name);
+  }
+
+  @Override
+  public Value getValue(ReferenceableElectrical electrical) {
+    return this.values.get(electrical.getIdentifier());
+  }
+
+  @Override
+  public Waveform getWaveform(String name) {
+    return this.waves.get(name);
+  }
+
+  @Override
+  public Waveform getWaveform(ReferenceableElectrical electrical) {
+    return this.waves.get(electrical.getIdentifier());
+  }
+
   /**
    * Identify whether an object is an instance of this class
    * 
