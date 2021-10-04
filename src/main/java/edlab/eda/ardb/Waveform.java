@@ -31,7 +31,7 @@ public abstract class Waveform {
    * @return unit of x-axis
    */
   public String getUnitX() {
-    return unitX;
+    return this.unitX;
   }
 
   /**
@@ -40,7 +40,7 @@ public abstract class Waveform {
    * @return unit of y-axis
    */
   public String getUnitY() {
-    return unitY;
+    return this.unitY;
   }
 
   /**
@@ -49,7 +49,7 @@ public abstract class Waveform {
    * @return name
    */
   public String getName() {
-    return name;
+    return this.name;
   }
 
   /**
@@ -58,7 +58,7 @@ public abstract class Waveform {
    * @return x-values
    */
   public double[] getX() {
-    return x;
+    return this.x;
   }
 
   /**
@@ -67,7 +67,7 @@ public abstract class Waveform {
    * @return validity of the waveform
    */
   public boolean isInvalid() {
-    return invalid;
+    return this.invalid;
   }
 
   /**
@@ -77,7 +77,7 @@ public abstract class Waveform {
    */
   public RealValue xmin() {
 
-    return new RealValue(x[0], getUnitX());
+    return new RealValue(this.x[0], this.getUnitX());
   }
 
   /**
@@ -86,7 +86,7 @@ public abstract class Waveform {
    * @return maximal x-value
    */
   public RealValue xmax() {
-    return new RealValue(x[x.length - 1], getUnitX());
+    return new RealValue(this.x[this.x.length - 1], this.getUnitX());
   }
 
   /**
