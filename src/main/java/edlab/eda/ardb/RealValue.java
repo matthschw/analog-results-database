@@ -31,7 +31,7 @@ public class RealValue extends Value {
     if (isInvalid()) {
       return Double.NaN;
     } else {
-      return value;
+      return this.value;
     }
   }
 

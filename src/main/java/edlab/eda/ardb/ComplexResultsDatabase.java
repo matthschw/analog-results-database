@@ -259,4 +259,40 @@ public class ComplexResultsDatabase extends ResultsDatabse {
   public static boolean isInstanceOf(Object o) {
     return o instanceof ComplexResultsDatabase;
   }
+
+  @Override
+  public Object get(String name) {
+
+    if (name == null) {
+      return null;
+    }
+
+    if (this.values.containsKey(name)) {
+      return this.values.get(name);
+    }
+
+    if (this.waves.containsKey(name)) {
+      return this.waves.get(name);
+    }
+
+    return null;
+  }
+
+  @Override
+  public Object get(ReferenceableElectrical electrical) {
+
+    if (electrical == null) {
+      return null;
+    }
+
+    if (this.values.containsKey(electrical.getIdentifier())) {
+      return this.values.get(electrical.getIdentifier());
+    }
+
+    if (this.waves.containsKey(electrical.getIdentifier())) {
+      return this.waves.get(electrical.getIdentifier());
+    }
+
+    return null;
+  }
 }

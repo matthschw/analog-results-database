@@ -134,4 +134,20 @@ public abstract class ResultsDatabse {
    * @return waveform when available, <code>null</code> otherwise
    */
   public abstract Waveform getWaveform(ReferenceableElectrical electrical);
+
+  /**
+   * Get a waveform or value from the database
+   * 
+   * @param name Name of the waveform
+   * @return waveform or value when available, <code>null</code> otherwise
+   */
+  public abstract Object get(String name);
+
+  /**
+   * Get a waveform or value from the database
+   * 
+   * @param electrical Reference to the electrical
+   * @return waveform or value when available, <code>null</code> otherwise
+   */
+  public abstract Object get(ReferenceableElectrical electrical);
 }
