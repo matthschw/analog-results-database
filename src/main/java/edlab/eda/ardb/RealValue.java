@@ -1,5 +1,8 @@
 package edlab.eda.ardb;
 
+/**
+ * Representation of a real value
+ */
 public class RealValue extends Value {
 
   private double value;
@@ -16,10 +19,185 @@ public class RealValue extends Value {
   }
 
   /**
-   * Create a real value with Nan
+   * Create a real value with NaN
    */
   public RealValue() {
     super();
+  }
+
+  /**
+   * Check if this value is lower or equal than another value
+   * 
+   * @param value Value that is used as reference
+   * @return <code>true</code> when this value is smaller or equal than the
+   *         parameter, <code>false</code> otherwise
+   */
+  public boolean leq(RealValue value) {
+
+    if (this.isValid()) {
+      return this.value <= value.value;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Check if this value is lower or equal than another value
+   * 
+   * @param value Value that is used as reference
+   * @return <code>true</code> when this value is smaller or equals than the
+   *         parameter, <code>false</code> otherwise
+   */
+  public boolean leq(double value) {
+    if (this.isValid()) {
+      return this.value <= value;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Check if this value is greater or equal than another value
+   * 
+   * @param value Value that is used as reference
+   * @return <code>true</code> when this value is greater or equal than the
+   *         parameter, <code>false</code> otherwise
+   */
+  public boolean geq(RealValue value) {
+
+    if (this.isValid()) {
+      return this.value >= value.value;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Check if this value is greater or equal than another value
+   * 
+   * @param value Value that is used as reference
+   * @return <code>true</code> when this value is greater or equal than the
+   *         parameter, <code>false</code> otherwise
+   */
+  public boolean geq(double value) {
+
+    if (this.isValid()) {
+      return this.value >= value;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Add a real value
+   * 
+   * @param value summand
+   * @return sum
+   */
+  public RealValue add(RealValue value) {
+    if (this.isValid() && value.isValid()) {
+      return new RealValue(this.getValue() + value.getValue(), this.getUnit());
+    } else {
+      return new RealValue();
+    }
+  }
+
+  /**
+   * Add a double
+   * 
+   * @param value summand
+   * @return sum
+   */
+  public RealValue add(double value) {
+    if (this.isValid() && value != Double.NaN) {
+      return new RealValue(this.getValue() + value, this.getUnit());
+    } else {
+      return new RealValue();
+    }
+  }
+
+  /**
+   * Subtract a real value
+   * 
+   * @param value subtrahend
+   * @return difference
+   */
+  public RealValue subtract(RealValue value) {
+    if (this.isValid() && value.isValid()) {
+      return new RealValue(this.getValue() - value.getValue(), this.getUnit());
+    } else {
+      return new RealValue();
+    }
+  }
+
+  /**
+   * Subtract a double
+   * 
+   * @param value subtrahend
+   * @return difference
+   */
+  public RealValue subtract(double value) {
+    if (this.isValid() && value != Double.NaN) {
+      return new RealValue(this.getValue() - value, this.getUnit());
+    } else {
+      return new RealValue();
+    }
+  }
+
+  /**
+   * Multiply with a real value
+   * 
+   * @param value multiplier
+   * @return product
+   */
+  public RealValue multiply(RealValue value) {
+    if (this.isValid() && value.isValid()) {
+      return new RealValue(this.getValue() * value.getValue(), this.getUnit());
+    } else {
+      return new RealValue();
+    }
+  }
+
+  /**
+   * Multiply with a double
+   * 
+   * @param value multiplier
+   * @return product
+   */
+  public RealValue multiply(double value) {
+    if (this.isValid() && value != Double.NaN) {
+      return new RealValue(this.getValue() * value, this.getUnit());
+    } else {
+      return new RealValue();
+    }
+  }
+
+  /**
+   * Divide through a real value
+   * 
+   * @param value divisor
+   * @return quotient
+   */
+  public RealValue divide(RealValue value) {
+    if (this.isValid() && value.isValid() && value.getValue() != 0.0) {
+      return new RealValue(this.getValue() / value.getValue(), this.getUnit());
+    } else {
+      return new RealValue();
+    }
+  }
+
+  /**
+   * Divide through a double
+   * 
+   * @param value divisor
+   * @return quotient
+   */
+  public RealValue divide(double value) {
+    if (this.isValid() && value != Double.NaN && value != 0.0) {
+      return new RealValue(this.getValue() / value, this.getUnit());
+    } else {
+      return new RealValue();
+    }
   }
 
   /**
@@ -28,7 +206,7 @@ public class RealValue extends Value {
    * @return value
    */
   public double getValue() {
-    if (isInvalid()) {
+    if (this.isInvalid()) {
       return Double.NaN;
     } else {
       return this.value;
@@ -42,7 +220,7 @@ public class RealValue extends Value {
    *         <code>false</code> otherwise
    */
   public boolean flipSign() {
-    if (!isInvalid()) {
+    if (this.isValid()) {
       this.value = -value;
     }
     return true;
@@ -50,7 +228,7 @@ public class RealValue extends Value {
 
   @Override
   public String toString() {
-    if (getUnit() == null) {
+    if (this.getUnit() == null) {
       return "" + getValue();
     } else {
       return getValue() + " " + getUnit();

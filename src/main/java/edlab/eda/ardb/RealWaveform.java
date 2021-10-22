@@ -666,6 +666,29 @@ public class RealWaveform extends Waveform {
     }
   }
 
+  public RealValue getSettlingTime(double percentage) {
+
+    RealValue stopValue = this.getValue(this.xmax());
+
+    RealWaveform crossLower = this
+        .cross(stopValue.getValue() * (1 - percentage / 2));
+    RealWaveform crossUpper = this
+        .cross(stopValue.getValue() * (1 + percentage / 2));
+
+    double retval = Double.NaN;
+
+    for (int i = 0; i < crossLower.getX().length; i++) {
+      retval = Math.max(retval, i);
+    }
+    
+    for (int i = 0; i < crossUpper.getX().length; i++) {
+      retval = Math.max(retval, i);
+    }
+    
+    return new RealValue(retval - this.xmin().getValue(), "s");
+
+  }
+
   /**
    * Combine two waveforms by taking the y-values of both waveforms
    * 

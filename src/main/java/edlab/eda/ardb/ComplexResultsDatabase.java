@@ -144,7 +144,7 @@ public class ComplexResultsDatabase extends ResultsDatabase {
       for (String wave : plot.getWaves()) {
 
         if (!wave.equals(refWave)) {
-
+          
           retval.waves.put(translator.translate(wave),
               ComplexWaveform.buildRealWaveform(x, plot.getWave(wave),
                   translator.translate(refWaveUnit),

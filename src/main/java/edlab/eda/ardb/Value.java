@@ -1,5 +1,8 @@
 package edlab.eda.ardb;
 
+/**
+ * Representation of a value
+ */
 public abstract class Value {
 
   private String unit;
@@ -9,16 +12,35 @@ public abstract class Value {
     this.unit = unit;
   }
 
+  /**
+   * Get an invalid value
+   */
   public Value() {
     this.invalid = true;
+    this.unit = "";
   }
 
+  /**
+   * Get the unit of the value
+   * 
+   * @return unit
+   */
   public String getUnit() {
-    return unit;
+    return this.unit;
+  }
+
+  /**
+   * Check if the value is valid
+   * 
+   * @return <code>true</code> when the value is valid, <code>false</code>
+   *         otherwise
+   */
+  public boolean isValid() {
+    return !this.invalid;
   }
 
   public boolean isInvalid() {
-    return invalid;
+    return this.invalid;
   }
 
   /**
