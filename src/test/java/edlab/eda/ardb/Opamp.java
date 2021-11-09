@@ -12,6 +12,7 @@ import edlab.eda.reader.nutmeg.NutmegComplexPlot;
 import edlab.eda.reader.nutmeg.NutmegPlot;
 import edlab.eda.reader.nutmeg.NutmegRealPlot;
 
+@SuppressWarnings("unused")
 class Opamp {
 
   private static final double vs = 0.5;
