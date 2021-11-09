@@ -458,7 +458,7 @@ public class RealWaveform extends Waveform {
   }
 
   /**
-   * Derive a waveform a waveform
+   * Derive a waveform
    * 
    * @return waveform
    */
@@ -468,29 +468,48 @@ public class RealWaveform extends Waveform {
 
     y[0] = (this.y[1] - this.y[0]) / (this.x[1] - this.x[0]);
 
-    y[this.y.length
-        - 1] = (this.y[this.y.length - 1] - this.y[this.y.length - 2])
-            / (this.x[this.y.length - 1] - this.x[this.y.length - 2]);
+    if (this.x.length > 2) {
 
-    double a, b;
+      y[this.y.length
+          - 1] = (this.y[this.y.length - 1] - this.y[this.y.length - 2])
+              / (this.x[this.y.length - 1] - this.x[this.y.length - 2]);
 
-    for (int i = 1; i < y.length - 1; i++) {
+      double a, b;
 
-      a = ((this.y[i - 1] - this.y[i]) * (this.x[i - 1] - this.x[i + 1])
-          - (this.y[i - 1] - this.y[i + 1]) * (this.x[i - 1] - this.x[i]))
-          / ((Math.pow(this.x[i - 1], 2.0) - Math.pow(this.x[i], 2.0))
-              * (this.x[i - 1] - this.x[i + 1])
-              - (Math.pow(this.x[i - 1], 2.0) - Math.pow(this.x[i + 1], 2.0))
-                  * (this.x[i - 1] - this.x[i]));
+      for (int i = 1; i < y.length - 1; i++) {
 
-      b = (this.y[i - 1] - this.y[i]) / (this.x[i - 1] - this.x[i])
-          - a * (Math.pow(this.x[i - 1], 2.0) - Math.pow(this.x[i], 2.0))
-              / (this.x[i - 1] - this.x[i]);
+        a = ((this.y[i - 1] - this.y[i]) * (this.x[i - 1] - this.x[i + 1])
+            - (this.y[i - 1] - this.y[i + 1]) * (this.x[i - 1] - this.x[i]))
+            / ((Math.pow(this.x[i - 1], 2.0) - Math.pow(this.x[i], 2.0))
+                * (this.x[i - 1] - this.x[i + 1])
+                - (Math.pow(this.x[i - 1], 2.0) - Math.pow(this.x[i + 1], 2.0))
+                    * (this.x[i - 1] - this.x[i]));
 
-      y[i] = 2 * a * x[i] + b;
+        b = (this.y[i - 1] - this.y[i]) / (this.x[i - 1] - this.x[i])
+            - a * (Math.pow(this.x[i - 1], 2.0) - Math.pow(this.x[i], 2.0))
+                / (this.x[i - 1] - this.x[i]);
+
+        y[i] = 2 * a * x[i] + b;
+      }
     }
 
     return new RealWaveform(this.x, y, this.getUnitX(), "");
+  }
+
+  /**
+   * Integrate a waveform
+   * 
+   * @return area under the waveform
+   */
+  public RealValue integrate() {
+
+    double retval = 0;
+
+    for (int i = 1; i < this.x.length; i++) {
+      retval += (this.x[i] - this.x[i - 1]) * (this.y[i] + this.y[i - 1]) / 2.0;
+    }
+
+    return new RealValue(retval, "");
   }
 
   @Override
