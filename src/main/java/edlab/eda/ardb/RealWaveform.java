@@ -392,9 +392,9 @@ public class RealWaveform extends Waveform {
    */
   public RealWaveform resample(double[] newX) {
 
-    double[] yNew = new double[this.x.length];
+    double[] yNew = new double[newX.length];
 
-    for (int i = 0; i < newX.length; i++) {
+    for (int i = 0; i < newX.length - 1; i++) {
       yNew[i] = this.getValue(newX[i]).getValue();
     }
 
@@ -455,6 +455,42 @@ public class RealWaveform extends Waveform {
     }
 
     return new RealWaveform(this.getX(), ln, this.getUnitX(), "");
+  }
+
+  /**
+   * Derive a waveform a waveform
+   * 
+   * @return waveform
+   */
+  public RealWaveform derive() {
+
+    double y[] = new double[this.x.length];
+
+    y[0] = (this.y[1] - this.y[0]) / (this.x[1] - this.x[0]);
+
+    y[this.y.length
+        - 1] = (this.y[this.y.length - 1] - this.y[this.y.length - 2])
+            / (this.x[this.y.length - 1] - this.x[this.y.length - 2]);
+
+    double a, b;
+
+    for (int i = 1; i < y.length - 1; i++) {
+
+      a = ((this.y[i - 1] - this.y[i]) * (this.x[i - 1] - this.x[i + 1])
+          - (this.y[i - 1] - this.y[i + 1]) * (this.x[i - 1] - this.x[i]))
+          / ((Math.pow(this.x[i - 1], 2.0) - Math.pow(this.x[i], 2.0))
+              * (this.x[i - 1] - this.x[i + 1])
+              - (Math.pow(this.x[i - 1], 2.0) - Math.pow(this.x[i + 1], 2.0))
+                  * (this.x[i - 1] - this.x[i]));
+
+      b = (this.y[i - 1] - this.y[i]) / (this.x[i - 1] - this.x[i])
+          - a * (Math.pow(this.x[i - 1], 2.0) - Math.pow(this.x[i], 2.0))
+              / (this.x[i - 1] - this.x[i]);
+
+      y[i] = 2 * a * x[i] + b;
+    }
+
+    return new RealWaveform(this.x, y, this.getUnitX(), "");
   }
 
   @Override
@@ -680,11 +716,11 @@ public class RealWaveform extends Waveform {
     for (int i = 0; i < crossLower.getX().length; i++) {
       retval = Math.max(retval, i);
     }
-    
+
     for (int i = 0; i < crossUpper.getX().length; i++) {
       retval = Math.max(retval, i);
     }
-    
+
     return new RealValue(retval - this.xmin().getValue(), "s");
 
   }
@@ -761,7 +797,18 @@ public class RealWaveform extends Waveform {
     sortWaveElements(newX, newY);
 
     return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
 
+  public boolean leq(RealWaveform wave) {
+    wave = wave.resample(this.x);
+
+    for (int i = 0; i < x.length; i++) {
+      if (this.y[i] > wave.y[i]) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /**
