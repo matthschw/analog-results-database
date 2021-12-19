@@ -39,13 +39,6 @@ Import the corresponding package to your code
 import edlab.eda.ardb.*;
 ```
 
-## API
-
-### Java
-
-The [JavaDoc](https://electronics-and-drives.github.io/analog-results-database/edlab/eda/ardb/package-summary.html)
-is stored on the Github-Pages (branch *gh-pages*).
-
 ## License
 
 Copyright (C) 2021, [Electronics & Drives](https://www.electronics-and-drives.de/)
