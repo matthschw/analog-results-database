@@ -21,6 +21,45 @@ public class ComplexResultsDatabase extends ResultsDatabase {
 
   private ComplexResultsDatabase() {
   }
+  
+  /**
+   * Create a {@link ComplexResultsDatabase}
+   * 
+   * @param value map of values
+   * @param waves map of waves
+   * @return database
+   */
+  public static ComplexResultsDatabase create(Map<String, ComplexValue> value,
+      Map<String, ComplexWaveform> waves) {
+
+    ComplexResultsDatabase retval = new ComplexResultsDatabase();
+
+    retval.values = value;
+    retval.waves = waves;
+
+    return retval;
+  }
+
+  /**
+   * Create a {@link ComplexResultsDatabase}
+   * 
+   * @param valueNames array of value names
+   * @param valuesKeys array of value keys
+   * @param waveNames  array of wave names
+   * @param waveKeys   array of wave keys
+   * @return
+   */
+  public static ComplexResultsDatabase create(String[] valueNames,
+      ComplexValue[] valuesKeys, String[] waveNames, RealWaveform[] waveKeys) {
+
+    ComplexResultsDatabase retval = new ComplexResultsDatabase();
+
+    for (int i = 0; i < Math.min(valueNames.length, valuesKeys.length); i++) {
+      retval.values.put(valueNames[i], valuesKeys[i]);
+    }
+
+    return retval;
+  }
 
   /**
    * Returns a complex value with a given name

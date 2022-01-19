@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edlab.eda</groupId>
 	<artifactId>analog-results-database</artifactId>
-	<version>${git.commit.id}</version>
+	<version>draft</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,25 +63,6 @@
 						<phase>site</phase>
 					</execution>
 				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
-				<version>2.2.4</version>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>revision</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<dateFormat>yyyyMMdd-HHmmss</dateFormat>
-					<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-					<generateGitPropertiesFile>false</generateGitPropertiesFile>
-				</configuration>
 			</plugin>
 
 			<plugin>

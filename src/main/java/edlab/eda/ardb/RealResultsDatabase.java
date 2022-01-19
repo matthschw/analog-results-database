@@ -22,6 +22,45 @@ public class RealResultsDatabase extends ResultsDatabase {
   }
 
   /**
+   * Create a {@link RealResultsDatabase}
+   * 
+   * @param value map of values
+   * @param waves map of waves
+   * @return database
+   */
+  public static RealResultsDatabase create(Map<String, RealValue> value,
+      Map<String, RealWaveform> waves) {
+
+    RealResultsDatabase retval = new RealResultsDatabase();
+
+    retval.values = value;
+    retval.waves = waves;
+
+    return retval;
+  }
+
+  /**
+   * Create a {@link RealResultsDatabase}
+   * 
+   * @param valueNames array of value names
+   * @param valuesKeys array of value keys
+   * @param waveNames  array of wave names
+   * @param waveKeys   array of wave keys
+   * @return
+   */
+  public static RealResultsDatabase create(String[] valueNames,
+      RealValue[] valuesKeys, String[] waveNames, RealWaveform[] waveKeys) {
+
+    RealResultsDatabase retval = new RealResultsDatabase();
+
+    for (int i = 0; i < Math.min(valueNames.length, valuesKeys.length); i++) {
+      retval.values.put(valueNames[i], valuesKeys[i]);
+    }
+
+    return retval;
+  }
+
+  /**
    * Returns a real value for a given electrical reference
    * 
    * @param name of value

@@ -25,6 +25,7 @@ public abstract class ResultsDatabase {
       return ComplexResultsDatabase
           .buildResultDatabase((NutmegComplexPlot) plot);
     }
+    
     return null;
   }
 
