@@ -46,7 +46,7 @@ public class RealResultsDatabase extends ResultsDatabase {
    * @param valuesKeys array of value keys
    * @param waveNames  array of wave names
    * @param waveKeys   array of wave keys
-   * @return
+   * @return database
    */
   public static RealResultsDatabase create(String[] valueNames,
       RealValue[] valuesKeys, String[] waveNames, RealWaveform[] waveKeys) {
@@ -56,6 +56,21 @@ public class RealResultsDatabase extends ResultsDatabase {
     for (int i = 0; i < Math.min(valueNames.length, valuesKeys.length); i++) {
       retval.values.put(valueNames[i], valuesKeys[i]);
     }
+
+    return retval;
+  }
+
+  /**
+   * Create an empty {@link RealResultsDatabase}
+   * 
+   * @return database
+   */
+  public static RealResultsDatabase create() {
+
+    RealResultsDatabase retval = new RealResultsDatabase();
+
+    retval.values = new HashMap<String, RealValue>();
+    retval.waves = new HashMap<String, RealWaveform>();
 
     return retval;
   }

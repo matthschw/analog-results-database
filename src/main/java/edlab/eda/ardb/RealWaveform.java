@@ -849,7 +849,7 @@ public class RealWaveform extends Waveform {
       return new RealWaveform(x, y, unitX, unitY);
 
     } else {
-      System.out.println("Length of arrays do not match");
+      System.err.println("Length of arrays do not match");
       return new RealWaveform();
     }
   }

@@ -21,7 +21,7 @@ public class ComplexResultsDatabase extends ResultsDatabase {
 
   private ComplexResultsDatabase() {
   }
-  
+
   /**
    * Create a {@link ComplexResultsDatabase}
    * 
@@ -57,6 +57,21 @@ public class ComplexResultsDatabase extends ResultsDatabase {
     for (int i = 0; i < Math.min(valueNames.length, valuesKeys.length); i++) {
       retval.values.put(valueNames[i], valuesKeys[i]);
     }
+
+    return retval;
+  }
+
+  /**
+   * Create an empty {@link ComplexResultsDatabase}
+   * 
+   * @return database
+   */
+  public static ComplexResultsDatabase create() {
+
+    ComplexResultsDatabase retval = new ComplexResultsDatabase();
+
+    retval.values = new HashMap<String, ComplexValue>();
+    retval.waves = new HashMap<String, ComplexWaveform>();
 
     return retval;
   }
@@ -183,7 +198,7 @@ public class ComplexResultsDatabase extends ResultsDatabase {
       for (String wave : plot.getWaves()) {
 
         if (!wave.equals(refWave)) {
-          
+
           retval.waves.put(translator.translate(wave),
               ComplexWaveform.buildRealWaveform(x, plot.getWave(wave),
                   translator.translate(refWaveUnit),

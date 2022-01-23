@@ -86,6 +86,16 @@ public class CombinedResultsDatabase extends ResultsDatabase {
     return retval;
   }
 
+  /**
+   * Create an empty {@link CombinedResultsDatabase}
+   * 
+   * @return database
+   */
+  public static CombinedResultsDatabase create() {
+    return CombinedResultsDatabase.create(RealResultsDatabase.create(),
+        ComplexResultsDatabase.create());
+  }
+
   @Override
   public Set<String> getValueNames() {
 
