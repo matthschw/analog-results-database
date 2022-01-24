@@ -25,7 +25,7 @@ public abstract class ResultsDatabase {
       return ComplexResultsDatabase
           .buildResultDatabase((NutmegComplexPlot) plot);
     }
-    
+
     return null;
   }
 
@@ -151,7 +151,15 @@ public abstract class ResultsDatabase {
    * @return waveform or value when available, <code>null</code> otherwise
    */
   public abstract Object get(ReferenceableElectrical electrical);
-  
+
+  /**
+   * Returns if the {@link RealResultsDatabase} is empty
+   * 
+   * @return <code>true</code> when the database is empty, <code>false</code>
+   *         otherwise
+   */
+  public abstract boolean isEmpty();
+
   /**
    * Identify whether an object is an instance of this class
    * 

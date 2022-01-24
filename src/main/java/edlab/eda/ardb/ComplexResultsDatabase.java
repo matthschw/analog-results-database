@@ -302,17 +302,6 @@ public class ComplexResultsDatabase extends ResultsDatabase {
     return this.waves.get(electrical.getIdentifier());
   }
 
-  /**
-   * Identify whether an object is an instance of this class
-   * 
-   * @param o Object to be checked
-   * @return <code>true</code> when the object is an instance of this class,
-   *         <code>false</code> otherwise
-   */
-  public static boolean isInstanceOf(Object o) {
-    return o instanceof ComplexResultsDatabase;
-  }
-
   @Override
   public Object get(String name) {
 
@@ -347,5 +336,21 @@ public class ComplexResultsDatabase extends ResultsDatabase {
     }
 
     return null;
+  }
+  
+  @Override
+  public boolean isEmpty() {
+    return this.values.isEmpty() && this.waves.isEmpty();
+  }
+  
+  /**
+   * Identify whether an object is an instance of this class
+   * 
+   * @param o Object to be checked
+   * @return <code>true</code> when the object is an instance of this class,
+   *         <code>false</code> otherwise
+   */
+  public static boolean isInstanceOf(Object o) {
+    return o instanceof ComplexResultsDatabase;
   }
 }

@@ -330,6 +330,11 @@ public class RealResultsDatabase extends ResultsDatabase {
     return null;
   }
 
+  @Override
+  public boolean isEmpty() {
+    return this.values.isEmpty() && this.waves.isEmpty();
+  }
+  
   /**
    * Identify whether an object is an instance of this class
    * 

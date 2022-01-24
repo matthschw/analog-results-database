@@ -295,4 +295,21 @@ public class CombinedResultsDatabase extends ResultsDatabase {
 
     return null;
   }
+
+  @Override
+  public boolean isEmpty() {
+    return this.realResultsDatabase.isEmpty()
+        && this.complexResultsDatabase.isEmpty();
+  }
+  
+  /**
+   * Identify whether an object is an instance of this class
+   * 
+   * @param o Object to be checked
+   * @return <code>true</code> when the object is an instance of this class,
+   *         <code>false</code> otherwise
+   */
+  public static boolean isInstanceOf(Object o) {
+    return o instanceof CombinedResultsDatabase;
+  }
 }
