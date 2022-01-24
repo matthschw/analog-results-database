@@ -1,5 +1,6 @@
 package edlab.eda.ardb;
 
+import java.util.List;
 import java.util.Set;
 
 import edlab.eda.reader.nutmeg.NutmegComplexPlot;
@@ -37,11 +38,25 @@ public abstract class ResultsDatabase {
   public abstract Set<String> getValueNames();
 
   /**
+   * Returns an array of all value names in the container
+   * 
+   * @return array of names
+   */
+  public abstract String[] getValueNamesAsArray();
+
+  /**
    * Returns a set of all wave names in the container
    * 
    * @return set of names
    */
   public abstract Set<String> getWaveNames();
+
+  /**
+   * Returns an array of all wave names in the container
+   * 
+   * @return array of names
+   */
+  public abstract String[] getWaveNamesAsArray();
 
   /**
    * Check if a the database contains a value with a given name
@@ -169,5 +184,43 @@ public abstract class ResultsDatabase {
    */
   public static boolean isInstanceOf(Object o) {
     return o instanceof ResultsDatabase;
+  }
+
+  /**
+   * Convert a set of strings to an array
+   *
+   * @param set Set of strings
+   * @return array of strings
+   */
+  static String[] convert(final Set<String> set) {
+
+    final String[] array = new String[set.size()];
+
+    int i = 0;
+
+    for (final String val : set) {
+      array[i++] = val;
+    }
+
+    return array;
+  }
+
+  /**
+   * Convert a list of strings to an array
+   *
+   * @param list List of strings
+   * @return array of strings
+   */
+  static String[] convert(final List<String> list) {
+
+    final String[] array = new String[list.size()];
+
+    int i = 0;
+
+    for (final String val : list) {
+      array[i++] = val;
+    }
+
+    return array;
   }
 }

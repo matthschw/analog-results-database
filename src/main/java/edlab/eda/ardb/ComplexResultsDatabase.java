@@ -136,6 +136,11 @@ public class ComplexResultsDatabase extends ResultsDatabase {
       return new HashSet<String>();
     }
   }
+  
+  @Override
+  public String[] getValueNamesAsArray() {
+    return ResultsDatabase.convert(this.getValueNames());
+  }
 
   @Override
   public Set<String> getWaveNames() {
@@ -145,6 +150,11 @@ public class ComplexResultsDatabase extends ResultsDatabase {
       System.err.println("Database does not contain waveforms, only values");
       return new HashSet<String>();
     }
+  }
+  
+  @Override
+  public String[] getWaveNamesAsArray() {
+    return ResultsDatabase.convert(this.getWaveNames());
   }
 
   /**

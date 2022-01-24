@@ -136,6 +136,11 @@ public class RealResultsDatabase extends ResultsDatabase {
   }
 
   @Override
+  public String[] getValueNamesAsArray() {
+    return ResultsDatabase.convert(this.getValueNames());
+  }
+
+  @Override
   public Set<String> getWaveNames() {
     if (waves != null) {
       return waves.keySet();
@@ -143,6 +148,11 @@ public class RealResultsDatabase extends ResultsDatabase {
       System.err.println("Database does not contain waveforms, only values");
       return new HashSet<String>();
     }
+  }
+  
+  @Override
+  public String[] getWaveNamesAsArray() {
+    return ResultsDatabase.convert(this.getWaveNames());
   }
 
   /**
@@ -334,7 +344,7 @@ public class RealResultsDatabase extends ResultsDatabase {
   public boolean isEmpty() {
     return this.values.isEmpty() && this.waves.isEmpty();
   }
-  
+
   /**
    * Identify whether an object is an instance of this class
    * 

@@ -111,6 +111,11 @@ public class CombinedResultsDatabase extends ResultsDatabase {
 
     return retval;
   }
+  
+  @Override
+  public String[] getValueNamesAsArray() {
+    return ResultsDatabase.convert(this.getValueNames());
+  }
 
   @Override
   public Set<String> getWaveNames() {
@@ -126,6 +131,11 @@ public class CombinedResultsDatabase extends ResultsDatabase {
     }
 
     return retval;
+  }
+  
+  @Override
+  public String[] getWaveNamesAsArray() {
+    return ResultsDatabase.convert(this.getWaveNames());
   }
 
   @Override
