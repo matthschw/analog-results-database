@@ -50,13 +50,7 @@ public class RealWaveform extends Waveform {
     return res;
   }
 
-  /**
-   * Clip a waveform to a range
-   *
-   * @param left  Left boundary of range
-   * @param right Right boundary of range
-   * @return CLipped waveform
-   */
+  @Override
   public RealWaveform clip(final double left, final double right) {
 
     final LinkedList<Double> newXVals = new LinkedList<>();
@@ -64,7 +58,6 @@ public class RealWaveform extends Waveform {
 
     for (int i = 0; i < this.x.length; i++) {
       if ((left <= this.x[i]) && (this.x[i] <= right)) {
-
         newXVals.addLast(this.x[i]);
         newYVals.addLast(this.y[i]);
       }
@@ -102,7 +95,6 @@ public class RealWaveform extends Waveform {
 
       return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
     } else {
-
       return new RealWaveform();
     }
   }
@@ -925,19 +917,31 @@ public class RealWaveform extends Waveform {
   @Override
   public RealWaveform phaseDeg() {
 
-    final RealWaveform retval = new RealWaveform();
+    double[] x = new double[this.x.length];
+    double[] y = new double[this.y.length];
+
+    for (int i = 0; i < this.x.length; i++) {
+      x[i] = this.x[i];
+
+      if (y[i] >= 0) {
+        y[i] = 0.0;
+      } else {
+        y[i] = 180.0;
+      }
+    }
+
+    return buildRealWaveform(x, y, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public RealWaveform conjugate() {
 
     double[] x = new double[this.x.length];
     double[] y = new double[this.y.length];
 
     for (int i = 0; i < this.x.length; i++) {
-      retval.x[i] = this.x[i];
-
-      if (y[i] >= 0) {
-        retval.y[i] = 0.0;
-      } else {
-        retval.y[i] = 180.0;
-      }
+      x[i] = this.x[i];
+      y[i] = this.y[i];
     }
 
     return buildRealWaveform(x, y, this.getUnitX(), this.getUnitY());

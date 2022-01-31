@@ -1,5 +1,7 @@
 package edlab.eda.ardb;
 
+import java.util.LinkedList;
+
 import org.apache.commons.math3.complex.Complex;
 
 /**
@@ -87,11 +89,7 @@ public class ComplexWaveform extends Waveform {
     return null;
   }
 
-  /**
-   * Calculate the complex conjugate of a waveform
-   *
-   * @return Waveform
-   */
+  @Override
   public ComplexWaveform conjugate() {
 
     final Complex[] yVec = new Complex[this.y.length];
@@ -235,5 +233,53 @@ public class ComplexWaveform extends Waveform {
    */
   public static boolean isInstanceOf(final Object o) {
     return o instanceof ComplexWaveform;
+  }
+
+  @Override
+  public Waveform clip(double left, double right) {
+    final LinkedList<Double> newXVals = new LinkedList<>();
+    final LinkedList<Complex> newYVals = new LinkedList<>();
+
+    for (int i = 0; i < this.x.length; i++) {
+      if ((left <= this.x[i]) && (this.x[i] <= right)) {
+        newXVals.addLast(this.x[i]);
+        newYVals.addLast(this.y[i]);
+      }
+    }
+
+    final ComplexValue leftValue = this.getValue(left);
+
+    if (!leftValue.isInvalid()) {
+
+      if (!newXVals.get(0).equals(leftValue.getValue())) {
+        newYVals.addFirst(leftValue.getValue());
+        newXVals.addFirst(left);
+      }
+    }
+
+    final ComplexValue rightValue = this.getValue(right);
+
+    if (!rightValue.isInvalid()) {
+
+      if (!newXVals.get(newXVals.size() - 1).equals(rightValue.getValue())) {
+        newYVals.addLast(rightValue.getValue());
+        newXVals.addLast(right);
+      }
+    }
+
+    if (newXVals.size() > 0) {
+
+      final double[] newX = new double[newXVals.size()];
+      final Complex[] newY = new Complex[newYVals.size()];
+
+      for (int i = 0; i < newY.length; i++) {
+        newX[i] = newXVals.get(i);
+        newY[i] = newYVals.get(i);
+      }
+
+      return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+    } else {
+      return new ComplexWaveform();
+    }
   }
 }

@@ -99,6 +99,15 @@ public abstract class Waveform {
   }
 
   /**
+   * Clip a waveform to a range
+   *
+   * @param left  Left boundary of range
+   * @param right Right boundary of range
+   * @return Clipped waveform
+   */
+  public abstract Waveform clip(final double left, final double right);
+
+  /**
    * Check if the x-values of two waveforms are equal
    *
    * @param wave Waveform to be compared
@@ -122,6 +131,13 @@ public abstract class Waveform {
       return false;
     }
   }
+
+  /**
+   * Calculate the complex conjugate of a waveform
+   *
+   * @return Waveform
+   */
+  public abstract Waveform conjugate();
 
   /**
    * Evaluate a waveform at a value
