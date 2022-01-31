@@ -14,7 +14,7 @@ public class CombinedResultsDatabase extends ResultsDatabase {
 
   /**
    * Create a {@link CombinedResultsDatabase}
-   * 
+   *
    * @param realValues    map of real values
    * @param realWaves     map of real waves
    * @param complexValues map of complex values
@@ -22,11 +22,11 @@ public class CombinedResultsDatabase extends ResultsDatabase {
    * @return
    */
   public static CombinedResultsDatabase create(
-      Map<String, RealValue> realValues, Map<String, RealWaveform> realWaves,
-      Map<String, ComplexValue> complexValues,
-      Map<String, ComplexWaveform> complexWaves) {
+      final Map<String, RealValue> realValues, final Map<String, RealWaveform> realWaves,
+      final Map<String, ComplexValue> complexValues,
+      final Map<String, ComplexWaveform> complexWaves) {
 
-    CombinedResultsDatabase retval = new CombinedResultsDatabase();
+    final CombinedResultsDatabase retval = new CombinedResultsDatabase();
 
     retval.realResultsDatabase = RealResultsDatabase.create(realValues,
         realWaves);
@@ -38,16 +38,16 @@ public class CombinedResultsDatabase extends ResultsDatabase {
 
   /**
    * Create a {@link CombinedResultsDatabase}
-   * 
+   *
    * @param realResultsDatabase    real database
    * @param complexResultsDatabase complex database
    * @return database
    */
   public static CombinedResultsDatabase create(
-      RealResultsDatabase realResultsDatabase,
-      ComplexResultsDatabase complexResultsDatabase) {
+      final RealResultsDatabase realResultsDatabase,
+      final ComplexResultsDatabase complexResultsDatabase) {
 
-    CombinedResultsDatabase retval = new CombinedResultsDatabase();
+    final CombinedResultsDatabase retval = new CombinedResultsDatabase();
 
     retval.realResultsDatabase = realResultsDatabase;
     retval.complexResultsDatabase = complexResultsDatabase;
@@ -57,7 +57,7 @@ public class CombinedResultsDatabase extends ResultsDatabase {
 
   /**
    * Create a {@link CombinedResultsDatabase}
-   * 
+   *
    * @param realValueNames    array of real value names
    * @param realValuesKeys    array of real value keys
    * @param realWaveNames     array of real wave names
@@ -68,13 +68,13 @@ public class CombinedResultsDatabase extends ResultsDatabase {
    * @param complexWaveKeys   array of complex wave keys
    * @return database
    */
-  public static CombinedResultsDatabase create(String[] realValueNames,
-      RealValue[] realValuesKeys, String[] realWaveNames,
-      RealWaveform[] realWaveKey, String[] complexValueNames,
-      ComplexValue[] complexValuesKeys, String[] complexWaveNames,
-      RealWaveform[] complexWaveKeys) {
+  public static CombinedResultsDatabase create(final String[] realValueNames,
+      final RealValue[] realValuesKeys, final String[] realWaveNames,
+      final RealWaveform[] realWaveKey, final String[] complexValueNames,
+      final ComplexValue[] complexValuesKeys, final String[] complexWaveNames,
+      final RealWaveform[] complexWaveKeys) {
 
-    CombinedResultsDatabase retval = new CombinedResultsDatabase();
+    final CombinedResultsDatabase retval = new CombinedResultsDatabase();
 
     retval.realResultsDatabase = RealResultsDatabase.create(realValueNames,
         realValuesKeys, realWaveNames, realWaveKey);
@@ -88,7 +88,7 @@ public class CombinedResultsDatabase extends ResultsDatabase {
 
   /**
    * Create an empty {@link CombinedResultsDatabase}
-   * 
+   *
    * @return database
    */
   public static CombinedResultsDatabase create() {
@@ -99,19 +99,15 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   @Override
   public Set<String> getValueNames() {
 
-    Set<String> retval = new HashSet<String>();
+    final Set<String> retval = new HashSet<>();
 
-    for (String name : this.realResultsDatabase.getValueNames()) {
-      retval.add(name);
-    }
+    retval.addAll(this.realResultsDatabase.getValueNames());
 
-    for (String name : this.complexResultsDatabase.getValueNames()) {
-      retval.add(name);
-    }
+    retval.addAll(this.complexResultsDatabase.getValueNames());
 
     return retval;
   }
-  
+
   @Override
   public String[] getValueNamesAsArray() {
     return ResultsDatabase.convert(this.getValueNames());
@@ -120,32 +116,24 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   @Override
   public Set<String> getWaveNames() {
 
-    Set<String> retval = new HashSet<String>();
+    final Set<String> retval = new HashSet<>();
 
-    for (String name : this.realResultsDatabase.getWaveNames()) {
-      retval.add(name);
-    }
+    retval.addAll(this.realResultsDatabase.getWaveNames());
 
-    for (String name : this.complexResultsDatabase.getWaveNames()) {
-      retval.add(name);
-    }
+    retval.addAll(this.complexResultsDatabase.getWaveNames());
 
     return retval;
   }
-  
+
   @Override
   public String[] getWaveNamesAsArray() {
     return ResultsDatabase.convert(this.getWaveNames());
   }
 
   @Override
-  public boolean isValueName(String name) {
+  public boolean isValueName(final String name) {
 
-    if (this.realResultsDatabase.isValueName(name)) {
-      return true;
-    }
-
-    if (this.complexResultsDatabase.isValueName(name)) {
+    if (this.realResultsDatabase.isValueName(name) || this.complexResultsDatabase.isValueName(name)) {
       return true;
     }
 
@@ -153,13 +141,9 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public boolean isWaveformName(String name) {
+  public boolean isWaveformName(final String name) {
 
-    if (this.realResultsDatabase.isWaveformName(name)) {
-      return true;
-    }
-
-    if (this.complexResultsDatabase.isWaveformName(name)) {
+    if (this.realResultsDatabase.isWaveformName(name) || this.complexResultsDatabase.isWaveformName(name)) {
       return true;
     }
 
@@ -167,13 +151,9 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public boolean isValue(ReferenceableElectrical electrical) {
+  public boolean isValue(final ReferenceableElectrical electrical) {
 
-    if (this.realResultsDatabase.isValue(electrical)) {
-      return true;
-    }
-
-    if (this.complexResultsDatabase.isValue(electrical)) {
+    if (this.realResultsDatabase.isValue(electrical) || this.complexResultsDatabase.isValue(electrical)) {
       return true;
     }
 
@@ -181,13 +161,9 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public boolean isWaveform(ReferenceableElectrical electrical) {
+  public boolean isWaveform(final ReferenceableElectrical electrical) {
 
-    if (this.realResultsDatabase.isWaveform(electrical)) {
-      return true;
-    }
-
-    if (this.complexResultsDatabase.isWaveform(electrical)) {
+    if (this.realResultsDatabase.isWaveform(electrical) || this.complexResultsDatabase.isWaveform(electrical)) {
       return true;
     }
 
@@ -195,13 +171,9 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public boolean isMember(String name) {
+  public boolean isMember(final String name) {
 
-    if (this.realResultsDatabase.isMember(name)) {
-      return true;
-    }
-
-    if (this.complexResultsDatabase.isMember(name)) {
+    if (this.realResultsDatabase.isMember(name) || this.complexResultsDatabase.isMember(name)) {
       return true;
     }
 
@@ -209,13 +181,9 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public boolean isMember(ReferenceableElectrical electrical) {
+  public boolean isMember(final ReferenceableElectrical electrical) {
 
-    if (this.realResultsDatabase.isMember(electrical)) {
-      return true;
-    }
-
-    if (this.complexResultsDatabase.isMember(electrical)) {
+    if (this.realResultsDatabase.isMember(electrical) || this.complexResultsDatabase.isMember(electrical)) {
       return true;
     }
 
@@ -223,7 +191,7 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public Value getValue(String name) {
+  public Value getValue(final String name) {
 
     if (this.realResultsDatabase.isValueName(name)) {
       return this.realResultsDatabase.getValue(name);
@@ -237,7 +205,7 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public Value getValue(ReferenceableElectrical electrical) {
+  public Value getValue(final ReferenceableElectrical electrical) {
 
     if (this.realResultsDatabase.isValue(electrical)) {
       return this.realResultsDatabase.getValue(electrical);
@@ -251,7 +219,7 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public Waveform getWaveform(String name) {
+  public Waveform getWaveform(final String name) {
 
     if (this.realResultsDatabase.isWaveformName(name)) {
       return this.realResultsDatabase.getWaveform(name);
@@ -265,7 +233,7 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public Waveform getWaveform(ReferenceableElectrical electrical) {
+  public Waveform getWaveform(final ReferenceableElectrical electrical) {
 
     if (this.realResultsDatabase.isWaveform(electrical)) {
       return this.realResultsDatabase.getWaveform(electrical);
@@ -279,7 +247,7 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public Object get(String name) {
+  public Object get(final String name) {
 
     if (this.realResultsDatabase.isMember(name)) {
       return this.realResultsDatabase.get(name);
@@ -293,7 +261,7 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public Object get(ReferenceableElectrical electrical) {
+  public Object get(final ReferenceableElectrical electrical) {
 
     if (this.realResultsDatabase.isMember(electrical)) {
       return this.realResultsDatabase.get(electrical);
@@ -311,15 +279,15 @@ public class CombinedResultsDatabase extends ResultsDatabase {
     return this.realResultsDatabase.isEmpty()
         && this.complexResultsDatabase.isEmpty();
   }
-  
+
   /**
    * Identify whether an object is an instance of this class
-   * 
+   *
    * @param o Object to be checked
    * @return <code>true</code> when the object is an instance of this class,
    *         <code>false</code> otherwise
    */
-  public static boolean isInstanceOf(Object o) {
+  public static boolean isInstanceOf(final Object o) {
     return o instanceof CombinedResultsDatabase;
   }
 }

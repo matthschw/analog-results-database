@@ -5,10 +5,10 @@ package edlab.eda.ardb;
  */
 public abstract class Value {
 
-  private String unit;
+  private final String unit;
   private boolean invalid = false;
 
-  public Value(String unit) {
+  public Value(final String unit) {
     this.unit = unit;
   }
 
@@ -22,7 +22,7 @@ public abstract class Value {
 
   /**
    * Get the unit of the value
-   * 
+   *
    * @return unit
    */
   public String getUnit() {
@@ -31,7 +31,7 @@ public abstract class Value {
 
   /**
    * Check if the value is valid
-   * 
+   *
    * @return <code>true</code> when the value is valid, <code>false</code>
    *         otherwise
    */
@@ -45,12 +45,12 @@ public abstract class Value {
 
   /**
    * Identify whether an object is an instance of this class
-   * 
+   *
    * @param o Object to be checked
    * @return <code>true</code> when the object is an instance of this class,
    *         <code>false</code> otherwise
    */
-  public static boolean isInstanceOf(Object o) {
+  public static boolean isInstanceOf(final Object o) {
     return o instanceof Value;
   }
 }

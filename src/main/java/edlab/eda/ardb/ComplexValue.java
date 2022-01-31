@@ -8,22 +8,22 @@ import org.apache.commons.math3.complex.Complex;
  */
 public class ComplexValue extends Value {
 
-  private Complex value;
+  private final Complex value;
 
   /**
    * Constructor
-   * 
+   *
    * @param value of the ComplexValue
    * @param unit  of the ComplexValue
    */
-  public ComplexValue(Complex value, String unit) {
+  public ComplexValue(final Complex value, final String unit) {
     super(unit);
     this.value = value;
   }
 
   /**
    * Returns the value of a ComplexValue
-   * 
+   *
    * @return Complex
    */
   public Complex getValue() {
@@ -32,7 +32,7 @@ public class ComplexValue extends Value {
 
   /**
    * Returns the real part of a ComplexValue
-   * 
+   *
    * @return Real part (double)
    */
   public double real() {
@@ -41,7 +41,7 @@ public class ComplexValue extends Value {
 
   /**
    * Returns the imaginary part of a ComplexValue
-   * 
+   *
    * @return Imaginary part (double)
    */
   public double imag() {
@@ -50,7 +50,7 @@ public class ComplexValue extends Value {
 
   /**
    * Returns the conjugate of a ComplexValue
-   * 
+   *
    * @return Complex
    */
   public Complex conjugate() {
@@ -59,22 +59,22 @@ public class ComplexValue extends Value {
 
   @Override
   public String toString() {
-    if (getUnit() == null) {
-      return "" + getValue().getReal() + " + j*" + getValue().getImaginary();
+    if (this.getUnit() == null) {
+      return "" + this.getValue().getReal() + " + j*" + this.getValue().getImaginary();
     } else {
-      return "" + getValue().getReal() + " + j*" + getValue().getImaginary()
-          + " " + getUnit();
+      return "" + this.getValue().getReal() + " + j*" + this.getValue().getImaginary()
+          + " " + this.getUnit();
     }
   }
 
   /**
    * Check if an object is an instance of this class
-   * 
+   *
    * @param o Object
    * @return <code>true</code> if the object is an instance of this class,
    *         <code>false</code> otherwise
    */
-  public static boolean isInstanceOf(Object o) {
+  public static boolean isInstanceOf(final Object o) {
     return o instanceof ComplexValue;
   }
 }

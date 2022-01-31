@@ -15,23 +15,23 @@ import edlab.eda.reader.nutmeg.NutmegRealPlot;
  */
 public class RealResultsDatabase extends ResultsDatabase {
 
-  private Map<String, RealValue> values = new HashMap<String, RealValue>();
-  private Map<String, RealWaveform> waves = new HashMap<String, RealWaveform>();
+  private Map<String, RealValue> values = new HashMap<>();
+  private Map<String, RealWaveform> waves = new HashMap<>();
 
   private RealResultsDatabase() {
   }
 
   /**
    * Create a {@link RealResultsDatabase}
-   * 
+   *
    * @param value map of values
    * @param waves map of waves
    * @return database
    */
-  public static RealResultsDatabase create(Map<String, RealValue> value,
-      Map<String, RealWaveform> waves) {
+  public static RealResultsDatabase create(final Map<String, RealValue> value,
+      final Map<String, RealWaveform> waves) {
 
-    RealResultsDatabase retval = new RealResultsDatabase();
+    final RealResultsDatabase retval = new RealResultsDatabase();
 
     retval.values = value;
     retval.waves = waves;
@@ -41,17 +41,17 @@ public class RealResultsDatabase extends ResultsDatabase {
 
   /**
    * Create a {@link RealResultsDatabase}
-   * 
+   *
    * @param valueNames array of value names
    * @param valuesKeys array of value keys
    * @param waveNames  array of wave names
    * @param waveKeys   array of wave keys
    * @return database
    */
-  public static RealResultsDatabase create(String[] valueNames,
-      RealValue[] valuesKeys, String[] waveNames, RealWaveform[] waveKeys) {
+  public static RealResultsDatabase create(final String[] valueNames,
+      final RealValue[] valuesKeys, final String[] waveNames, final RealWaveform[] waveKeys) {
 
-    RealResultsDatabase retval = new RealResultsDatabase();
+    final RealResultsDatabase retval = new RealResultsDatabase();
 
     for (int i = 0; i < Math.min(valueNames.length, valuesKeys.length); i++) {
       retval.values.put(valueNames[i], valuesKeys[i]);
@@ -62,28 +62,28 @@ public class RealResultsDatabase extends ResultsDatabase {
 
   /**
    * Create an empty {@link RealResultsDatabase}
-   * 
+   *
    * @return database
    */
   public static RealResultsDatabase create() {
 
-    RealResultsDatabase retval = new RealResultsDatabase();
+    final RealResultsDatabase retval = new RealResultsDatabase();
 
-    retval.values = new HashMap<String, RealValue>();
-    retval.waves = new HashMap<String, RealWaveform>();
+    retval.values = new HashMap<>();
+    retval.waves = new HashMap<>();
 
     return retval;
   }
 
   /**
    * Returns a real value for a given electrical reference
-   * 
+   *
    * @param name of value
    * @return Real Value
    */
-  public RealValue getRealValue(String name) {
-    if (values != null) {
-      return values.get(name);
+  public RealValue getRealValue(final String name) {
+    if (this.values != null) {
+      return this.values.get(name);
     } else {
       System.err.println("Database does not contain values, only waveforms");
       return null;
@@ -92,23 +92,23 @@ public class RealResultsDatabase extends ResultsDatabase {
 
   /**
    * Returns a real value with a given name
-   * 
+   *
    * @param electrical Reference
    * @return Reference
    */
-  public RealValue getRealValue(ReferenceableElectrical electrical) {
+  public RealValue getRealValue(final ReferenceableElectrical electrical) {
     return this.getRealValue(electrical.getIdentifier());
   }
 
   /**
    * Returns a real wave with a given name
-   * 
+   *
    * @param name of wave
    * @return Real Wave
    */
-  public RealWaveform getRealWaveform(String name) {
-    if (waves != null) {
-      return waves.get(name);
+  public RealWaveform getRealWaveform(final String name) {
+    if (this.waves != null) {
+      return this.waves.get(name);
     } else {
       System.err.println("Database does not contain waveforms, only values");
       return null;
@@ -117,21 +117,21 @@ public class RealResultsDatabase extends ResultsDatabase {
 
   /**
    * Returns a real wave for a given electrical reference
-   * 
+   *
    * @param electrical Reference
    * @return Real Wave
    */
-  public RealWaveform getRealWaveform(ReferenceableElectrical electrical) {
+  public RealWaveform getRealWaveform(final ReferenceableElectrical electrical) {
     return this.getRealWaveform(electrical.getIdentifier());
   }
 
   @Override
   public Set<String> getValueNames() {
-    if (values != null) {
-      return values.keySet();
+    if (this.values != null) {
+      return this.values.keySet();
     } else {
       System.err.println("Database does not contain waveforms, only values");
-      return new HashSet<String>();
+      return new HashSet<>();
     }
   }
 
@@ -142,14 +142,14 @@ public class RealResultsDatabase extends ResultsDatabase {
 
   @Override
   public Set<String> getWaveNames() {
-    if (waves != null) {
-      return waves.keySet();
+    if (this.waves != null) {
+      return this.waves.keySet();
     } else {
       System.err.println("Database does not contain waveforms, only values");
-      return new HashSet<String>();
+      return new HashSet<>();
     }
   }
-  
+
   @Override
   public String[] getWaveNamesAsArray() {
     return ResultsDatabase.convert(this.getWaveNames());
@@ -157,45 +157,45 @@ public class RealResultsDatabase extends ResultsDatabase {
 
   /**
    * Builds a {@link RealResultsDatabase} from a {@link NutmegRealPlot}
-   * 
+   *
    * @param plot {@link NutmegRealPlot}
    * @return ComplexResultsDatabase
    */
-  public static RealResultsDatabase buildResultDatabase(NutmegRealPlot plot) {
+  public static RealResultsDatabase buildResultDatabase(final NutmegRealPlot plot) {
     return buildResultDatabase(plot, new DefaultTranslator());
   }
 
   /**
    * Builds a {@link RealResultsDatabase} from a {@link NutmegRealPlot}
-   * 
+   *
    * @param plot       {@link NutmegRealPlot}
    * @param translator Translator for wave names
    * @return ComplexResultsDatabase
    */
-  public static RealResultsDatabase buildResultDatabase(NutmegRealPlot plot,
-      CharSequenceTranslator translator) {
+  public static RealResultsDatabase buildResultDatabase(final NutmegRealPlot plot,
+      final CharSequenceTranslator translator) {
 
-    RealResultsDatabase retval = new RealResultsDatabase();
+    final RealResultsDatabase retval = new RealResultsDatabase();
 
     if (plot.getNoOfPoints() == 1) {
 
-      retval.values = new HashMap<String, RealValue>();
+      retval.values = new HashMap<>();
 
-      for (String wave : plot.getWaves()) {
+      for (final String wave : plot.getWaves()) {
 
         retval.values.put(translator.translate(wave),
             new RealValue(plot.getWave(wave)[0], plot.getUnit(wave)));
       }
     } else {
 
-      String refWave = plot.getRefWave();
-      String refWaveUnit = plot.getUnit(refWave);
+      final String refWave = plot.getRefWave();
+      final String refWaveUnit = plot.getUnit(refWave);
 
-      retval.waves = new HashMap<String, RealWaveform>();
+      retval.waves = new HashMap<>();
 
-      double x[] = plot.getWave(refWave);
+      final double x[] = plot.getWave(refWave);
 
-      for (String wave : plot.getWaves()) {
+      for (final String wave : plot.getWaves()) {
 
         RealWaveform.buildRealWaveform(x, plot.getWave(wave),
             translator.translate(refWaveUnit),
@@ -219,19 +219,19 @@ public class RealResultsDatabase extends ResultsDatabase {
 
     boolean firstIteration = true;
 
-    if (this.values != null && !this.values.isEmpty()) {
+    if ((this.values != null) && !this.values.isEmpty()) {
 
       retval += "Values:";
 
       firstIteration = false;
 
-      for (String name : this.values.keySet()) {
+      for (final String name : this.values.keySet()) {
 
         retval += "\n- " + name + " = " + this.values.get(name);
       }
     }
 
-    if (this.waves != null && !this.waves.isEmpty()) {
+    if ((this.waves != null) && !this.waves.isEmpty()) {
 
       if (!firstIteration) {
         retval += "\n";
@@ -241,7 +241,7 @@ public class RealResultsDatabase extends ResultsDatabase {
 
       firstIteration = false;
 
-      for (String name : this.waves.keySet()) {
+      for (final String name : this.waves.keySet()) {
 
         retval += "\n- " + name + " " + this.waves.get(name).getUnitY();
       }
@@ -251,61 +251,61 @@ public class RealResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public boolean isValueName(String name) {
+  public boolean isValueName(final String name) {
     return this.values.containsKey(name);
   }
 
   @Override
-  public boolean isWaveformName(String name) {
+  public boolean isWaveformName(final String name) {
     return this.waves.containsKey(name);
   }
 
   @Override
-  public boolean isValue(ReferenceableElectrical electrical) {
+  public boolean isValue(final ReferenceableElectrical electrical) {
     return this.isValueName(electrical.getIdentifier());
   }
 
   @Override
-  public boolean isWaveform(ReferenceableElectrical electrical) {
+  public boolean isWaveform(final ReferenceableElectrical electrical) {
     return this.isWaveformName(electrical.getIdentifier());
   }
 
   @Override
-  public boolean isMember(String name) {
-    return (this.values != null && this.values.containsKey(name))
-        || (this.waves != null && this.waves.containsKey(name));
+  public boolean isMember(final String name) {
+    return ((this.values != null) && this.values.containsKey(name))
+        || ((this.waves != null) && this.waves.containsKey(name));
   }
 
   @Override
-  public boolean isMember(ReferenceableElectrical electrical) {
-    return (this.values != null
+  public boolean isMember(final ReferenceableElectrical electrical) {
+    return ((this.values != null)
         && this.values.containsKey(electrical.getIdentifier()))
-        || (this.waves != null
+        || ((this.waves != null)
             && this.waves.containsKey(electrical.getIdentifier()));
   }
 
   @Override
-  public Value getValue(String name) {
+  public Value getValue(final String name) {
     return this.values.get(name);
   }
 
   @Override
-  public Value getValue(ReferenceableElectrical electrical) {
+  public Value getValue(final ReferenceableElectrical electrical) {
     return this.values.get(electrical.getIdentifier());
   }
 
   @Override
-  public Waveform getWaveform(String name) {
+  public Waveform getWaveform(final String name) {
     return this.waves.get(name);
   }
 
   @Override
-  public Waveform getWaveform(ReferenceableElectrical electrical) {
+  public Waveform getWaveform(final ReferenceableElectrical electrical) {
     return this.waves.get(electrical.getIdentifier());
   }
 
   @Override
-  public Object get(String name) {
+  public Object get(final String name) {
 
     if (name == null) {
       return null;
@@ -323,7 +323,7 @@ public class RealResultsDatabase extends ResultsDatabase {
   }
 
   @Override
-  public Object get(ReferenceableElectrical electrical) {
+  public Object get(final ReferenceableElectrical electrical) {
 
     if (electrical == null) {
       return null;
@@ -347,12 +347,12 @@ public class RealResultsDatabase extends ResultsDatabase {
 
   /**
    * Identify whether an object is an instance of this class
-   * 
+   *
    * @param o Object to be checked
    * @return <code>true</code> when the object is an instance of this class,
    *         <code>false</code> otherwise
    */
-  public static boolean isInstanceOf(Object o) {
+  public static boolean isInstanceOf(final Object o) {
     return o instanceof RealResultsDatabase;
   }
 }

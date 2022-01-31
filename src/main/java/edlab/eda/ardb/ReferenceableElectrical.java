@@ -9,7 +9,7 @@ public interface ReferenceableElectrical {
 
   /**
    * Get an identifier as string
-   * 
+   *
    * @return identifier
    */
   public String getIdentifier();

@@ -11,7 +11,7 @@ public abstract class Waveform {
   protected double[] x;
   protected boolean invalid = false;
 
-  protected Waveform(double[] x, String unitX, String unitY) {
+  protected Waveform(final double[] x, final String unitX, final String unitY) {
     this.name = "";
     this.x = x;
     this.unitX = unitX;
@@ -27,7 +27,7 @@ public abstract class Waveform {
 
   /**
    * Get unit of x-axis
-   * 
+   *
    * @return unit of x-axis
    */
   public String getUnitX() {
@@ -36,7 +36,7 @@ public abstract class Waveform {
 
   /**
    * Get unit of y-axis
-   * 
+   *
    * @return unit of y-axis
    */
   public String getUnitY() {
@@ -45,7 +45,7 @@ public abstract class Waveform {
 
   /**
    * Get name of waveform
-   * 
+   *
    * @return name
    */
   public String getName() {
@@ -54,7 +54,7 @@ public abstract class Waveform {
 
   /**
    * Get the x-values of the waveform
-   * 
+   *
    * @return x-values
    */
   public double[] getX() {
@@ -63,7 +63,7 @@ public abstract class Waveform {
 
   /**
    * Check if a waveform is valid (=non-empty)
-   * 
+   *
    * @return validity of the waveform
    */
   public boolean isInvalid() {
@@ -72,7 +72,7 @@ public abstract class Waveform {
 
   /**
    * Get the minimal x-value
-   * 
+   *
    * @return minimal x-value
    */
   public RealValue xmin() {
@@ -82,7 +82,7 @@ public abstract class Waveform {
 
   /**
    * Get the maximal x-value
-   * 
+   *
    * @return maximal x-value
    */
   public RealValue xmax() {
@@ -91,7 +91,7 @@ public abstract class Waveform {
 
   /**
    * Get the number of points in the waveform
-   * 
+   *
    * @return number of points
    */
   public int noOfVals() {
@@ -100,17 +100,17 @@ public abstract class Waveform {
 
   /**
    * Check if the x-values of two waveforms are equal
-   * 
+   *
    * @param wave Waveform to be compared
    * @return <code>true</code> if the x-values are equal <code>false</code>
    *         otherwise
    */
-  public boolean sameAxis(RealWaveform wave) {
+  public boolean sameAxis(final Waveform wave) {
 
     if (this.x.length == wave.x.length) {
 
-      for (int i = 0; i < x.length; i++) {
-        if (x[i] != wave.x[i]) {
+      for (int i = 0; i < this.x.length; i++) {
+        if (this.x[i] != wave.x[i]) {
           return false;
         }
       }
@@ -125,41 +125,62 @@ public abstract class Waveform {
 
   /**
    * Evaluate a waveform at a value
-   * 
+   *
    * @param pos x-value where the waveform is evaluated
    * @return value
    */
   public abstract Value getValue(double pos);
 
   /**
+   * Extract the real-part of a waveform
+   *
+   * @return Waveform
+   */
+  public abstract RealWaveform real();
+
+  /**
+   * Extract the imag-part of a waveform
+   *
+   * @return Waveform
+   */
+  public abstract RealWaveform imag();
+
+  /**
+   * Extract the phase of a {@link ComplexWaveform}
+   *
+   * @return Waveform
+   */
+  public abstract RealWaveform phaseDeg();
+
+  /**
    * Calculate the absolute value of a waveform
-   * 
+   *
    * @return Waveform
    */
   public abstract RealWaveform abs();
 
   /**
    * Calculate db10 of a waveform
-   * 
+   *
    * @return Waveform
    */
   public abstract RealWaveform db10();
 
   /**
    * Calculate db10 of a waveform
-   * 
+   *
    * @return Waveform
    */
   public abstract RealWaveform db20();
 
   /**
    * Identify whether an object is an instance of this class
-   * 
+   *
    * @param o Object to be checked
    * @return <code>true</code> when the object is an instance of this class,
    *         <code>false</code> otherwise
    */
-  public static boolean isInstanceOf(Object o) {
+  public static boolean isInstanceOf(final Object o) {
     return o instanceof Value;
   }
 }

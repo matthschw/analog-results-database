@@ -10,7 +10,8 @@ public class ComplexWaveform extends Waveform {
 
   private Complex[] y;
 
-  private ComplexWaveform(double[] x, Complex[] y, String unitX, String unitY) {
+  private ComplexWaveform(final double[] x, final Complex[] y,
+      final String unitX, final String unitY) {
     super(x, unitX, unitY);
     this.y = y;
   }
@@ -24,7 +25,7 @@ public class ComplexWaveform extends Waveform {
 
   /**
    * Get the y-values of a complex waveform
-   * 
+   *
    * @return y-values
    */
   public Complex[] getY() {
@@ -49,16 +50,16 @@ public class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public ComplexValue getValue(double pos) {
+  public ComplexValue getValue(final double pos) {
 
-    if (pos <= x[0]) {
+    if (pos <= this.x[0]) {
 
       return new ComplexValue(
           this.y[0].add(this.y[1].subtract(this.y[0]).multiply(
               new Complex((pos - this.x[0]) / (this.x[1] - this.x[0])))),
-          getUnitY());
+          this.getUnitY());
 
-    } else if (pos >= x[x.length - 1]) {
+    } else if (pos >= this.x[this.x.length - 1]) {
 
       return new ComplexValue(
           this.y[this.y.length - 1]
@@ -69,9 +70,9 @@ public class ComplexWaveform extends Waveform {
 
     } else {
 
-      for (int i = 0; i < x.length - 1; i++) {
+      for (int i = 0; i < (this.x.length - 1); i++) {
 
-        if ((this.x[i] - pos) * (this.x[i + 1] - pos) <= 0) {
+        if (((this.x[i] - pos) * (this.x[i + 1] - pos)) <= 0) {
 
           return new ComplexValue(
               this.y[i].add(this.y[i + 1].subtract(this.y[i])
@@ -88,40 +89,38 @@ public class ComplexWaveform extends Waveform {
 
   /**
    * Calculate the complex conjugate of a waveform
-   * 
+   *
    * @return Waveform
    */
   public ComplexWaveform conjugate() {
 
-    Complex[] yVec = new Complex[this.y.length];
+    final Complex[] yVec = new Complex[this.y.length];
 
     for (int i = 0; i < yVec.length; i++) {
       yVec[i] = this.y[i].conjugate();
     }
 
-    return ComplexWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
+    return ComplexWaveform.buildComplexWaveform(this.x, yVec, this.getUnitX(),
+        this.getUnitY());
   }
 
   @Override
   public RealWaveform abs() {
 
-    double[] yVec = new double[this.x.length];
+    final double[] yVec = new double[this.x.length];
 
     for (int i = 0; i < yVec.length; i++) {
       yVec[i] = this.y[i].abs();
     }
 
-    return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), getUnitY());
+    return RealWaveform.buildRealWaveform(this.x, yVec, this.getUnitX(),
+        this.getUnitY());
   }
 
-  /**
-   * Extract the real-part of a waveform
-   * 
-   * @return Waveform
-   */
+  @Override
   public RealWaveform real() {
 
-    double[] yVec = new double[this.x.length];
+    final double[] yVec = new double[this.x.length];
 
     for (int i = 0; i < yVec.length; i++) {
       yVec[i] = this.y[i].getReal();
@@ -131,14 +130,10 @@ public class ComplexWaveform extends Waveform {
         this.getUnitY());
   }
 
-  /**
-   * Extract the imaginary-part of a waveform
-   * 
-   * @return Waveform
-   */
+  @Override
   public RealWaveform imag() {
 
-    double[] yVec = new double[this.x.length];
+    final double[] yVec = new double[this.x.length];
 
     for (int i = 0; i < yVec.length; i++) {
       yVec[i] = this.y[i].getImaginary();
@@ -148,49 +143,42 @@ public class ComplexWaveform extends Waveform {
         this.getUnitY());
   }
 
-  /**
-   * Extract the phase of a {@link ComplexWaveform}
-   * 
-   * @return Waveform
-   */
+  @Override
   public RealWaveform phaseDeg() {
 
-    double[] yVec = new double[this.x.length];
+    final double[] yVec = new double[this.x.length];
 
     for (int i = 0; i < yVec.length; i++) {
-      yVec[i] = y[i].getArgument() / Math.PI * 180;
+      yVec[i] = (this.y[i].getArgument() / Math.PI) * 180;
     }
 
-    return RealWaveform.buildRealWaveform(x, yVec, getUnitX(), "deg");
+    return RealWaveform.buildRealWaveform(this.x, yVec, this.getUnitX(), "deg");
   }
 
   @Override
   public RealWaveform db10() {
 
-    RealWaveform realWave = this.abs();
+    final RealWaveform realWave = this.abs();
 
     return realWave.db10();
   }
 
   @Override
   public RealWaveform db20() {
-
-    RealWaveform realWave = this.abs();
-
-    return realWave.db20();
+    return this.abs().db20();
   }
 
   /**
-   * Create a new {@link RealWaveform}
-   * 
+   * Create a new {@link ComplexWaveform}
+   *
    * @param x     x-values
    * @param y     y-values
    * @param unitX unit of x-values
    * @param unitY unit of y-values
    * @return {@link ComplexWaveform}
    */
-  public static ComplexWaveform buildRealWaveform(double[] x, Complex[] y,
-      String unitX, String unitY) {
+  public static ComplexWaveform buildComplexWaveform(final double[] x,
+      final Complex[] y, final String unitX, final String unitY) {
 
     if (x.length == y.length) {
 
@@ -207,11 +195,11 @@ public class ComplexWaveform extends Waveform {
   /**
    * Sort both <code>x</code> and <code>y</code> that <code>x</code> is sorted
    * in ascending order
-   * 
+   *
    * @param x x-values
    * @param y y-values
    */
-  private static void sortWaveElements(double[] x, Complex[] y) {
+  private static void sortWaveElements(final double[] x, final Complex[] y) {
 
     double swapReal;
     Complex swapComplex;
@@ -221,7 +209,7 @@ public class ComplexWaveform extends Waveform {
 
       swapPerformed = false;
 
-      for (int i = 0; i < x.length - 1; i++) {
+      for (int i = 0; i < (x.length - 1); i++) {
 
         if (x[i] > x[i + 1]) {
 
@@ -240,12 +228,12 @@ public class ComplexWaveform extends Waveform {
 
   /**
    * Check if an object is an instance of this class
-   * 
+   *
    * @param o Object
    * @return <code>true</code> if the object is an instance of this class,
    *         <code>false</code> otherwise
    */
-  public static boolean isInstanceOf(Object o) {
+  public static boolean isInstanceOf(final Object o) {
     return o instanceof ComplexWaveform;
   }
 }
