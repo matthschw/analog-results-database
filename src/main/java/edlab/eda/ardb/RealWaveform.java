@@ -1,5 +1,7 @@
 package edlab.eda.ardb;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -124,6 +126,16 @@ public class RealWaveform extends Waveform {
    * @param value Value to be added
    * @return Waveform
    */
+  public RealWaveform add(final BigDecimal value) {
+    return this.add(value.round(MathContext.DECIMAL64).doubleValue());
+  }
+
+  /**
+   * Add a value to the waveform
+   *
+   * @param value Value to be added
+   * @return Waveform
+   */
   public RealWaveform add(final RealValue value) {
 
     if (value.isInvalid()) {
@@ -173,6 +185,16 @@ public class RealWaveform extends Waveform {
     }
 
     return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  /**
+   * Subtract a value from a waveform
+   *
+   * @param value Value to be subtracted
+   * @return Waveform
+   */
+  public RealWaveform subtract(final BigDecimal value) {
+    return this.subtract(value.round(MathContext.DECIMAL64).doubleValue());
   }
 
   /**
@@ -238,6 +260,16 @@ public class RealWaveform extends Waveform {
    * @param value Multiplier
    * @return Waveform
    */
+  public RealWaveform multiply(final BigDecimal value) {
+    return this.multiply(value.round(MathContext.DECIMAL64).doubleValue());
+  }
+
+  /**
+   * Multiply a value with a waveform
+   *
+   * @param value Multiplier
+   * @return Waveform
+   */
   public RealWaveform multiply(final RealValue value) {
 
     if (value.isInvalid()) {
@@ -287,6 +319,16 @@ public class RealWaveform extends Waveform {
     }
 
     return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  /**
+   * Divide a waveform by a value
+   *
+   * @param value Divisor
+   * @return Waveform
+   */
+  public RealWaveform divide(final BigDecimal value) {
+    return this.divide(value.round(MathContext.DECIMAL64).doubleValue());
   }
 
   /**
