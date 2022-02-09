@@ -387,4 +387,22 @@ public class ComplexWaveform extends Waveform {
 
     return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
+
+  @Override
+  public Waveform uminus() {
+    final double[] newX = new double[this.x.length];
+    final Complex[] newY = new Complex[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = new Complex(-this.y[i].getReal(),-this.y[i].getImaginary());
+    }
+
+    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public Waveform uplus() {
+    return this;
+  }
 }

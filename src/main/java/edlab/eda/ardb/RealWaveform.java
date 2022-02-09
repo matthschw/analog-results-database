@@ -136,7 +136,7 @@ public class RealWaveform extends Waveform {
       return this.add(value.getValue());
     }
   }
-  
+
   @Override
   public Waveform add(Complex value) {
     return new ComplexWaveform(this).add(value);
@@ -1002,5 +1002,24 @@ public class RealWaveform extends Waveform {
     }
 
     return buildRealWaveform(x, y, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public Waveform uminus() {
+
+    double[] x = new double[this.x.length];
+    double[] y = new double[this.y.length];
+
+    for (int i = 0; i < this.x.length; i++) {
+      x[i] = this.x[i];
+      y[i] = -this.y[i];
+    }
+
+    return buildRealWaveform(x, y, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public Waveform uplus() {
+    return this;
   }
 }

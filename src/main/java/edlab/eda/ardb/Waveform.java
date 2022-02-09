@@ -194,6 +194,20 @@ public abstract class Waveform {
   public abstract RealWaveform db20();
 
   /**
+   * Unary minus of the waveform
+   *
+   * @return wave
+   */
+  public abstract Waveform uminus();
+  
+  /**
+   * Unary plus of the waveform
+   *
+   * @return wave
+   */
+  public abstract Waveform uplus();
+
+  /**
    * Add two waveforms together
    *
    * @param wave waveform to be added
@@ -216,7 +230,7 @@ public abstract class Waveform {
    * @return wave
    */
   public abstract Waveform add(final BigDecimal value);
-  
+
   /**
    * Add a constant to a waveform
    *
