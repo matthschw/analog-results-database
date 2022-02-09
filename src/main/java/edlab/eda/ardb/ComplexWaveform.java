@@ -10,7 +10,7 @@ import org.apache.commons.math3.complex.Complex;
  * Class for representing a complex waveform. Both axes and the units are
  * covered by the object.
  */
-public class ComplexWaveform extends Waveform {
+public final class ComplexWaveform extends Waveform {
 
   private Complex[] y;
 
@@ -51,18 +51,22 @@ public class ComplexWaveform extends Waveform {
   @Override
   public String toString() {
 
-    String res = "";
+    StringBuilder builder = new StringBuilder();
 
     for (int i = 0; i < this.x.length; i++) {
 
       if (i > 0) {
-        res += "\n";
+        builder.append("\n");
       }
 
-      res += "(" + this.x[i] + " " + this.getUnitX() + " , " + this.y[i] + " "
-          + this.getUnitY() + ")";
+      builder.append("(").append(Formatter.format(this.x[i])).append(" ")
+          .append(this.getUnitX()).append(" , ")
+          .append(Formatter.format(this.y[i].getReal())).append("+i*")
+          .append(Formatter.format(this.y[i].getImaginary())).append(" ")
+          .append(this.getUnitY()).append(")");
     }
-    return res;
+
+    return builder.toString();
   }
 
   @Override
@@ -395,7 +399,7 @@ public class ComplexWaveform extends Waveform {
 
     for (int i = 0; i < newY.length; i++) {
       newX[i] = this.x[i];
-      newY[i] = new Complex(-this.y[i].getReal(),-this.y[i].getImaginary());
+      newY[i] = new Complex(-this.y[i].getReal(), -this.y[i].getImaginary());
     }
 
     return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());

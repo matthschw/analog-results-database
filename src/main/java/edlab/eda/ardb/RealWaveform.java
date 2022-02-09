@@ -11,7 +11,7 @@ import org.apache.commons.math3.complex.Complex;
  * Class for representing a complex waveform. Both axes and the units are
  * covered by the object.
  */
-public class RealWaveform extends Waveform {
+public final class RealWaveform extends Waveform {
 
   private double[] y;
 
@@ -40,18 +40,21 @@ public class RealWaveform extends Waveform {
   @Override
   public String toString() {
 
-    String res = "";
+    StringBuilder builder = new StringBuilder();
 
     for (int i = 0; i < this.x.length; i++) {
 
       if (i > 0) {
-        res += "\n";
+        builder.append("\n");
       }
 
-      res += "(" + this.x[i] + " " + this.getUnitX() + " , " + this.y[i] + " "
-          + this.getUnitY() + ")";
+      builder.append("(").append(Formatter.format(this.x[i])).append(" ")
+          .append(this.getUnitX()).append(" , ")
+          .append(Formatter.format(this.y[i])).append(" ")
+          .append(this.getUnitY()).append(")");
     }
-    return res;
+
+    return builder.toString();
   }
 
   @Override

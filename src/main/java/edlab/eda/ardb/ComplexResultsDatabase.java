@@ -15,7 +15,7 @@ import edlab.eda.reader.nutmeg.NutmegComplexPlot;
  * Container consisting of complex waves and values
  *
  */
-public class ComplexResultsDatabase extends ResultsDatabase {
+public final class ComplexResultsDatabase extends ResultsDatabase {
 
   private Map<String, ComplexValue> values = new HashMap<>();
   private Map<String, ComplexWaveform> waves = new HashMap<>();

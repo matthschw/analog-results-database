@@ -3,7 +3,7 @@ package edlab.eda.ardb;
 /**
  * Representation of a real value
  */
-public class RealValue extends Value {
+public final class RealValue extends Value {
 
   private double value;
 
@@ -229,9 +229,9 @@ public class RealValue extends Value {
   @Override
   public String toString() {
     if (this.getUnit() == null) {
-      return "" + this.getValue();
+      return Formatter.format(this.getValue());
     } else {
-      return this.getValue() + " " + this.getUnit();
+      return Formatter.format(this.getValue()) + " " + this.getUnit();
     }
   }
 

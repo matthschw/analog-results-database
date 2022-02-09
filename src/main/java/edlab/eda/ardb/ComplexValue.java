@@ -6,7 +6,7 @@ import org.apache.commons.math3.complex.Complex;
  * Class for representing a complex values Both value and unit are covered by
  * the object.
  */
-public class ComplexValue extends Value {
+public final class ComplexValue extends Value {
 
   private final Complex value;
 
