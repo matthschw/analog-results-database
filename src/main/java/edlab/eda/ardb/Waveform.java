@@ -1,5 +1,9 @@
 package edlab.eda.ardb;
 
+import java.math.BigDecimal;
+
+import org.apache.commons.math3.complex.Complex;
+
 /**
  * Class for representing a waveform
  */
@@ -188,6 +192,46 @@ public abstract class Waveform {
    * @return Waveform
    */
   public abstract RealWaveform db20();
+
+  /**
+   * Add two waveforms together
+   *
+   * @param wave waveform to be added
+   * @return sum
+   */
+  public abstract Waveform add(final Waveform wave);
+
+  /**
+   * Add a constant to a waveform
+   *
+   * @param value value to be added
+   * @return wave
+   */
+  public abstract Waveform add(final double value);
+
+  /**
+   * Add a constant to a waveform
+   *
+   * @param value value to be added
+   * @return wave
+   */
+  public abstract Waveform add(final BigDecimal value);
+  
+  /**
+   * Add a constant to a waveform
+   *
+   * @param value value to be added
+   * @return wave
+   */
+  public abstract Waveform add(final Complex value);
+
+  /**
+   * Add a {@link RealValue} to a waveform
+   *
+   * @param value value to be added
+   * @return wave
+   */
+  public abstract Waveform add(final Value value);
 
   /**
    * Identify whether an object is an instance of this class

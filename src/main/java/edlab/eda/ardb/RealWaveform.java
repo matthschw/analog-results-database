@@ -5,6 +5,8 @@ import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import org.apache.commons.math3.complex.Complex;
+
 /**
  * Class for representing a complex waveform. Both axes and the units are
  * covered by the object.
@@ -101,31 +103,21 @@ public class RealWaveform extends Waveform {
     }
   }
 
-  /**
-   * Add a value to the waveform
-   *
-   * @param value Value to be added
-   * @return Waveform
-   */
+  @Override
   public RealWaveform add(final double value) {
 
     final double[] newX = new double[this.x.length];
     final double[] newY = new double[this.y.length];
 
     for (int i = 0; i < newY.length; i++) {
-      newX[i] = this.x[i] + value;
-      newY[i] = this.y[i];
+      newX[i] = this.x[i];
+      newY[i] = this.y[i] + value;
     }
 
     return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
-  /**
-   * Add a value to the waveform
-   *
-   * @param value Value to be added
-   * @return Waveform
-   */
+  @Override
   public RealWaveform add(final BigDecimal value) {
     return this.add(value.round(MathContext.DECIMAL64).doubleValue());
   }
@@ -142,6 +134,20 @@ public class RealWaveform extends Waveform {
       return null;
     } else {
       return this.add(value.getValue());
+    }
+  }
+  
+  @Override
+  public Waveform add(Complex value) {
+    return new ComplexWaveform(this).add(value);
+  }
+
+  @Override
+  public Waveform add(Value value) {
+    if (value instanceof RealValue) {
+      return this.add((RealValue) value);
+    } else {
+      return this.add((ComplexValue) value);
     }
   }
 
@@ -166,6 +172,15 @@ public class RealWaveform extends Waveform {
     }
 
     return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public Waveform add(Waveform wave) {
+    if (wave instanceof RealWaveform) {
+      return this.add((RealWaveform) wave);
+    } else {
+      return ((ComplexWaveform) wave).add(this);
+    }
   }
 
   /**

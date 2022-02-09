@@ -1,5 +1,7 @@
 package edlab.eda.ardb;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.LinkedList;
 
 import org.apache.commons.math3.complex.Complex;
@@ -23,6 +25,18 @@ public class ComplexWaveform extends Waveform {
    */
   public ComplexWaveform() {
     super();
+  }
+
+  /**
+   * Create an complex waveform from a real waveform
+   */
+  public ComplexWaveform(RealWaveform realWave) {
+    super(realWave.getX(), realWave.getUnitX(), realWave.getUnitY());
+    this.y = new Complex[realWave.getY().length];
+
+    for (int i = 0; i < this.y.length; i++) {
+      this.y[i] = new Complex(realWave.getY()[i]);
+    }
   }
 
   /**
@@ -281,5 +295,96 @@ public class ComplexWaveform extends Waveform {
     } else {
       return new ComplexWaveform();
     }
+  }
+
+  @Override
+  public Waveform add(Waveform wave) {
+    if (wave instanceof RealWaveform) {
+      return this.add((RealWaveform) wave);
+    } else {
+      return this.add((ComplexWaveform) wave);
+    }
+  }
+
+  public Waveform add(RealWaveform wave) {
+    return this.add(new ComplexWaveform(wave));
+  }
+
+  public Waveform add(ComplexWaveform wave) {
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this.getX());
+    }
+
+    final double[] newX = new double[this.x.length];
+    final Complex[] newY = new Complex[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i].add(wave.y[i]);
+    }
+    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  private ComplexWaveform resample(final double[] newX) {
+
+    // TODO Auto-generated method stub
+    final Complex[] yNew = new Complex[newX.length];
+
+    for (int i = 0; i < (newX.length - 1); i++) {
+      yNew[i] = this.getValue(newX[i]).getValue();
+    }
+
+    return new ComplexWaveform(this.x, yNew, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public ComplexWaveform add(double value) {
+
+    final double[] newX = new double[this.x.length];
+    final Complex[] newY = new Complex[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i].add(value);
+    }
+    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public Waveform add(BigDecimal value) {
+    return this.add(value.round(MathContext.DECIMAL64).doubleValue());
+  }
+
+  public Waveform add(RealValue value) {
+    return this.add(value.getValue());
+  }
+
+  public Waveform add(ComplexValue value) {
+    return this.add(value.getValue());
+  }
+
+  @Override
+  public Waveform add(Value value) {
+
+    if (value instanceof RealValue) {
+      return this.add((RealValue) value);
+    } else {
+      return this.add((ComplexValue) value);
+    }
+  }
+
+  @Override
+  public Waveform add(Complex value) {
+
+    final double[] newX = new double[this.x.length];
+    final Complex[] newY = new Complex[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i].add(value);
+    }
+
+    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 }
