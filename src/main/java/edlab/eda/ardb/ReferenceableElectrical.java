@@ -20,14 +20,14 @@ public interface ReferenceableElectrical {
   /**
    * Get hierarchical address to the corresponding net, terminal or operating
    * point
-   * 
+   *
    * @return address
    */
   public String[] getAddress();
 
   /**
    * Get the type of the {@link ReferenceableElectrical} as enum {@link TYPE}
-   * 
+   *
    * @return type of the electrical property
    */
   public TYPE getType();

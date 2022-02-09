@@ -138,16 +138,16 @@ public class RealWaveform extends Waveform {
   }
 
   @Override
-  public Waveform add(Complex value) {
+  public Waveform add(final Complex value) {
     return new ComplexWaveform(this).add(value);
   }
 
   @Override
-  public Waveform add(Value value) {
+  public Waveform add(final Value value) {
     if (value instanceof RealValue) {
       return this.add((RealValue) value);
     } else {
-      return this.add((ComplexValue) value);
+      return this.add(value);
     }
   }
 
@@ -175,7 +175,7 @@ public class RealWaveform extends Waveform {
   }
 
   @Override
-  public Waveform add(Waveform wave) {
+  public Waveform add(final Waveform wave) {
     if (wave instanceof RealWaveform) {
       return this.add((RealWaveform) wave);
     } else {
@@ -960,8 +960,8 @@ public class RealWaveform extends Waveform {
   @Override
   public RealWaveform imag() {
 
-    double[] x = new double[this.x.length];
-    double[] y = new double[this.y.length];
+    final double[] x = new double[this.x.length];
+    final double[] y = new double[this.y.length];
 
     for (int i = 0; i < this.x.length; i++) {
       x[i] = this.x[i];
@@ -974,8 +974,8 @@ public class RealWaveform extends Waveform {
   @Override
   public RealWaveform phaseDeg() {
 
-    double[] x = new double[this.x.length];
-    double[] y = new double[this.y.length];
+    final double[] x = new double[this.x.length];
+    final double[] y = new double[this.y.length];
 
     for (int i = 0; i < this.x.length; i++) {
       x[i] = this.x[i];
@@ -993,8 +993,8 @@ public class RealWaveform extends Waveform {
   @Override
   public RealWaveform conjugate() {
 
-    double[] x = new double[this.x.length];
-    double[] y = new double[this.y.length];
+    final double[] x = new double[this.x.length];
+    final double[] y = new double[this.y.length];
 
     for (int i = 0; i < this.x.length; i++) {
       x[i] = this.x[i];
@@ -1007,8 +1007,8 @@ public class RealWaveform extends Waveform {
   @Override
   public Waveform uminus() {
 
-    double[] x = new double[this.x.length];
-    double[] y = new double[this.y.length];
+    final double[] x = new double[this.x.length];
+    final double[] y = new double[this.y.length];
 
     for (int i = 0; i < this.x.length; i++) {
       x[i] = this.x[i];

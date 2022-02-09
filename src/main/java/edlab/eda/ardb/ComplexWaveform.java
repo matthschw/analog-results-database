@@ -30,7 +30,7 @@ public class ComplexWaveform extends Waveform {
   /**
    * Create an complex waveform from a real waveform
    */
-  public ComplexWaveform(RealWaveform realWave) {
+  public ComplexWaveform(final RealWaveform realWave) {
     super(realWave.getX(), realWave.getUnitX(), realWave.getUnitY());
     this.y = new Complex[realWave.getY().length];
 
@@ -250,7 +250,7 @@ public class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public Waveform clip(double left, double right) {
+  public Waveform clip(final double left, final double right) {
     final LinkedList<Double> newXVals = new LinkedList<>();
     final LinkedList<Complex> newYVals = new LinkedList<>();
 
@@ -298,7 +298,7 @@ public class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public Waveform add(Waveform wave) {
+  public Waveform add(final Waveform wave) {
     if (wave instanceof RealWaveform) {
       return this.add((RealWaveform) wave);
     } else {
@@ -306,7 +306,7 @@ public class ComplexWaveform extends Waveform {
     }
   }
 
-  public Waveform add(RealWaveform wave) {
+  public Waveform add(final RealWaveform wave) {
     return this.add(new ComplexWaveform(wave));
   }
 
@@ -339,7 +339,7 @@ public class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public ComplexWaveform add(double value) {
+  public ComplexWaveform add(final double value) {
 
     final double[] newX = new double[this.x.length];
     final Complex[] newY = new Complex[this.y.length];
@@ -352,20 +352,20 @@ public class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public Waveform add(BigDecimal value) {
+  public Waveform add(final BigDecimal value) {
     return this.add(value.round(MathContext.DECIMAL64).doubleValue());
   }
 
-  public Waveform add(RealValue value) {
+  public Waveform add(final RealValue value) {
     return this.add(value.getValue());
   }
 
-  public Waveform add(ComplexValue value) {
+  public Waveform add(final ComplexValue value) {
     return this.add(value.getValue());
   }
 
   @Override
-  public Waveform add(Value value) {
+  public Waveform add(final Value value) {
 
     if (value instanceof RealValue) {
       return this.add((RealValue) value);
@@ -375,7 +375,7 @@ public class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public Waveform add(Complex value) {
+  public Waveform add(final Complex value) {
 
     final double[] newX = new double[this.x.length];
     final Complex[] newY = new Complex[this.y.length];

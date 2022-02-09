@@ -199,7 +199,7 @@ public abstract class Waveform {
    * @return wave
    */
   public abstract Waveform uminus();
-  
+
   /**
    * Unary plus of the waveform
    *
