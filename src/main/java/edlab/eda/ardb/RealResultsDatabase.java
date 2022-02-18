@@ -215,39 +215,39 @@ public final class RealResultsDatabase extends ResultsDatabase {
   @Override
   public String toString() {
 
-    String retval = "";
+    StringBuilder retval = new StringBuilder();
 
     boolean firstIteration = true;
 
     if ((this.values != null) && !this.values.isEmpty()) {
 
-      retval += "Values:";
+      retval.append("Values:");
 
       firstIteration = false;
 
       for (final String name : this.values.keySet()) {
 
-        retval += "\n- " + name + " = " + this.values.get(name);
+        retval.append("\n- ").append(name).append(" = ").append(this.values.get(name));
       }
     }
 
     if ((this.waves != null) && !this.waves.isEmpty()) {
 
       if (!firstIteration) {
-        retval += "\n";
+        retval.append("\n");
       }
 
-      retval += "Waves:";
+      retval.append("Waves:");
 
       firstIteration = false;
 
       for (final String name : this.waves.keySet()) {
 
-        retval += "\n- " + name + " " + this.waves.get(name).getUnitY();
+        retval.append("\n- ").append(name).append(" ").append(this.waves.get(name).getUnitY());
       }
     }
 
-    return retval;
+    return retval.toString();
   }
 
   @Override

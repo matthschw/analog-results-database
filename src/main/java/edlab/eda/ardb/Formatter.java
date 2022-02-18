@@ -26,7 +26,7 @@ public final class Formatter {
    */
   public static String format(final BigDecimal num) {
 
-    BigDecimal number = new BigDecimal(num.toString());
+    final BigDecimal number = new BigDecimal(num.toString());
 
     String retval = "";
 
@@ -34,7 +34,7 @@ public final class Formatter {
       return "0";
     }
 
-    int prefix = (int) (3
+    final int prefix = (int) (3
         * Math.round((Math.log10(number.abs().doubleValue()) / 3.0) - 0.39));
 
     if (prefix > 0) {

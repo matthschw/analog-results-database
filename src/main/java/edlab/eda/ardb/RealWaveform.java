@@ -40,7 +40,7 @@ public final class RealWaveform extends Waveform {
   @Override
   public String toString() {
 
-    StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder();
 
     for (int i = 0; i < this.x.length; i++) {
 
@@ -74,7 +74,7 @@ public final class RealWaveform extends Waveform {
 
     if (!leftValue.isInvalid()) {
 
-      if (newXVals.get(0) != leftValue.getValue()) {
+      if (newYVals.get(0) != leftValue.getValue()) {
         newYVals.addFirst(leftValue.getValue());
         newXVals.addFirst(left);
       }
@@ -84,7 +84,7 @@ public final class RealWaveform extends Waveform {
 
     if (!rightValue.isInvalid()) {
 
-      if (newXVals.get(newXVals.size() - 1) != rightValue.getValue()) {
+      if (newYVals.get(newXVals.size() - 1) != rightValue.getValue()) {
         newYVals.addLast(rightValue.getValue());
         newXVals.addLast(right);
       }
@@ -99,7 +99,6 @@ public final class RealWaveform extends Waveform {
         newX[i] = newXVals.get(i);
         newY[i] = newYVals.get(i);
       }
-
       return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
     } else {
       return new RealWaveform();

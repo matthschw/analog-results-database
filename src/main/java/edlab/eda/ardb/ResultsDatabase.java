@@ -176,17 +176,6 @@ public abstract class ResultsDatabase {
   public abstract boolean isEmpty();
 
   /**
-   * Identify whether an object is an instance of this class
-   *
-   * @param o Object to be checked
-   * @return <code>true</code> when the object is an instance of this class,
-   *         <code>false</code> otherwise
-   */
-  public static boolean isInstanceOf(final Object o) {
-    return o instanceof ResultsDatabase;
-  }
-
-  /**
    * Convert a set of strings to an array
    *
    * @param set Set of strings
@@ -222,5 +211,16 @@ public abstract class ResultsDatabase {
     }
 
     return array;
+  }
+
+  /**
+   * Identify whether an object is an instance of this class
+   *
+   * @param o Object to be checked
+   * @return <code>true</code> when the object is an instance of this class,
+   *         <code>false</code> otherwise
+   */
+  public static boolean isInstanceOf(final Object o) {
+    return o instanceof ResultsDatabase;
   }
 }

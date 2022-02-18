@@ -30,7 +30,8 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
    * @param waves map of waves
    * @return database
    */
-  public static ComplexResultsDatabase create(final Map<String, ComplexValue> value,
+  public static ComplexResultsDatabase create(
+      final Map<String, ComplexValue> value,
       final Map<String, ComplexWaveform> waves) {
 
     final ComplexResultsDatabase retval = new ComplexResultsDatabase();
@@ -51,7 +52,8 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
    * @return
    */
   public static ComplexResultsDatabase create(final String[] valueNames,
-      final ComplexValue[] valuesKeys, final String[] waveNames, final RealWaveform[] waveKeys) {
+      final ComplexValue[] valuesKeys, final String[] waveNames,
+      final RealWaveform[] waveKeys) {
 
     final ComplexResultsDatabase retval = new ComplexResultsDatabase();
 
@@ -98,7 +100,8 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
    * @param electrical Reference
    * @return Complex Value
    */
-  public ComplexValue getComplexValue(final ReferenceableElectrical electrical) {
+  public ComplexValue getComplexValue(
+      final ReferenceableElectrical electrical) {
     return this.getComplexValue(electrical.getIdentifier());
   }
 
@@ -223,40 +226,42 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
   @Override
   public String toString() {
 
-    String retval = "";
+    StringBuilder retval = new StringBuilder();
 
     boolean firstIteration = true;
 
     if ((this.values.keySet() != null) && !this.values.isEmpty()) {
 
-      retval += "Values:";
+      retval.append("Values:");
 
       firstIteration = false;
 
       for (final String name : this.values.keySet()) {
 
-        retval += "\n- " + name + " = " + this.values.get(name);
+        retval.append("\n- ").append(name).append(" = ")
+            .append(this.values.get(name));
       }
     }
 
     if ((this.waves.keySet() != null) && !this.waves.isEmpty()) {
 
       if (!firstIteration) {
-        retval += "\n";
+        retval.append("\n");
       }
 
-      retval += "Waves:";
+      retval.append("Waves:");
 
       firstIteration = false;
 
       for (final String name : this.waves.keySet()) {
 
-        retval += "\n- " + name + " X=" + this.waves.get(name).getUnitX() + "/"
-            + " X=" + this.waves.get(name).getUnitY();
+        retval.append("\n- ").append(name).append(" X=")
+            .append(this.waves.get(name).getUnitX()).append("/").append(" X=")
+            .append(this.waves.get(name).getUnitY());
       }
     }
 
-    return retval;
+    return retval.toString();
   }
 
   @Override

@@ -51,7 +51,7 @@ public final class ComplexWaveform extends Waveform {
   @Override
   public String toString() {
 
-    StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder();
 
     for (int i = 0; i < this.x.length; i++) {
 
@@ -198,12 +198,12 @@ public final class ComplexWaveform extends Waveform {
 
     if (x.length == y.length) {
 
-      sortWaveElements(x, y);
+      ComplexWaveform.sortWaveElements(x, y);
 
       return new ComplexWaveform(x, y, unitX, unitY);
 
     } else {
-      System.out.println("Length of arrays do not match");
+      System.err.println("Length of arrays do not match");
       return null;
     }
   }
@@ -242,17 +242,6 @@ public final class ComplexWaveform extends Waveform {
     }
   }
 
-  /**
-   * Check if an object is an instance of this class
-   *
-   * @param o Object
-   * @return <code>true</code> if the object is an instance of this class,
-   *         <code>false</code> otherwise
-   */
-  public static boolean isInstanceOf(final Object o) {
-    return o instanceof ComplexWaveform;
-  }
-
   @Override
   public Waveform clip(final double left, final double right) {
     final LinkedList<Double> newXVals = new LinkedList<>();
@@ -269,7 +258,7 @@ public final class ComplexWaveform extends Waveform {
 
     if (!leftValue.isInvalid()) {
 
-      if (!newXVals.get(0).equals(leftValue.getValue())) {
+      if (!newYVals.get(0).equals(leftValue.getValue())) {
         newYVals.addFirst(leftValue.getValue());
         newXVals.addFirst(left);
       }
@@ -279,7 +268,7 @@ public final class ComplexWaveform extends Waveform {
 
     if (!rightValue.isInvalid()) {
 
-      if (!newXVals.get(newXVals.size() - 1).equals(rightValue.getValue())) {
+      if (!newYVals.get(newXVals.size() - 1).equals(rightValue.getValue())) {
         newYVals.addLast(rightValue.getValue());
         newXVals.addLast(right);
       }
@@ -330,18 +319,6 @@ public final class ComplexWaveform extends Waveform {
     return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
-  private ComplexWaveform resample(final double[] newX) {
-
-    // TODO Auto-generated method stub
-    final Complex[] yNew = new Complex[newX.length];
-
-    for (int i = 0; i < (newX.length - 1); i++) {
-      yNew[i] = this.getValue(newX[i]).getValue();
-    }
-
-    return new ComplexWaveform(this.x, yNew, this.getUnitX(), this.getUnitY());
-  }
-
   @Override
   public ComplexWaveform add(final double value) {
 
@@ -356,8 +333,13 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public Waveform add(final BigDecimal value) {
-    return this.add(value.round(MathContext.DECIMAL64).doubleValue());
+  public Waveform add(final Value value) {
+
+    if (value instanceof RealValue) {
+      return this.add((RealValue) value);
+    } else {
+      return this.add((ComplexValue) value);
+    }
   }
 
   public Waveform add(final RealValue value) {
@@ -369,13 +351,8 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public Waveform add(final Value value) {
-
-    if (value instanceof RealValue) {
-      return this.add((RealValue) value);
-    } else {
-      return this.add((ComplexValue) value);
-    }
+  public Waveform add(final BigDecimal value) {
+    return this.add(value.round(MathContext.DECIMAL64).doubleValue());
   }
 
   @Override
@@ -390,6 +367,18 @@ public final class ComplexWaveform extends Waveform {
     }
 
     return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  private ComplexWaveform resample(final double[] newX) {
+
+    // TODO Auto-generated method stub
+    final Complex[] yNew = new Complex[newX.length];
+
+    for (int i = 0; i < (newX.length - 1); i++) {
+      yNew[i] = this.getValue(newX[i]).getValue();
+    }
+
+    return new ComplexWaveform(this.x, yNew, this.getUnitX(), this.getUnitY());
   }
 
   @Override
@@ -408,5 +397,16 @@ public final class ComplexWaveform extends Waveform {
   @Override
   public Waveform uplus() {
     return this;
+  }
+
+  /**
+   * Check if an object is an instance of this class
+   *
+   * @param o Object
+   * @return <code>true</code> if the object is an instance of this class,
+   *         <code>false</code> otherwise
+   */
+  public static boolean isInstanceOf(final Object o) {
+    return o instanceof ComplexWaveform;
   }
 }
