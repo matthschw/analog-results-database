@@ -248,6 +248,46 @@ public abstract class Waveform {
   public abstract Waveform add(final Value value);
 
   /**
+   * Subtract two waveforms
+   *
+   * @param subtrahed waveform to be subtracted
+   * @return difference
+   */
+  public abstract Waveform subtract(final Waveform subtrahed);
+
+  /**
+   * Subtract a constant from a waveform
+   *
+   * @param value value to be subtracted
+   * @return difference
+   */
+  public abstract Waveform subtract(final double subtrahed);
+
+  /**
+   * Subtract a constant from a waveform
+   *
+   * @param value value to be subtracted
+   * @return difference
+   */
+  public abstract Waveform subtract(final BigDecimal subtrahed);
+
+  /**
+   * Subtract a constant from a waveform
+   *
+   * @param subtrahed value to be subtracted
+   * @return difference
+   */
+  public abstract Waveform subtract(final Complex subtrahed);
+
+  /**
+   * Subtract a {@link RealValue} from a waveform
+   *
+   * @param subtrahed value to be subtracted
+   * @return difference
+   */
+  public abstract Waveform subtract(final Value subtrahed);
+
+  /**
    * Identify whether an object is an instance of this class
    *
    * @param o Object to be checked

@@ -303,7 +303,7 @@ public final class ComplexWaveform extends Waveform {
     return this.add(new ComplexWaveform(wave));
   }
 
-  public Waveform add(ComplexWaveform wave) {
+  public ComplexWaveform add(ComplexWaveform wave) {
 
     if (!this.sameAxis(wave)) {
       wave = wave.resample(this.getX());
@@ -397,6 +397,71 @@ public final class ComplexWaveform extends Waveform {
   @Override
   public Waveform uplus() {
     return this;
+  }
+
+  @Override
+  public ComplexWaveform subtract(Waveform subtrahed) {
+    if (subtrahed instanceof ComplexWaveform) {
+      return this.subtract((ComplexWaveform) subtrahed);
+    } else {
+      return this.subtract(new ComplexWaveform((RealWaveform) subtrahed));
+    }
+  }
+
+  public ComplexWaveform subtract(ComplexWaveform subtrahed) {
+
+    if (!this.sameAxis(subtrahed)) {
+      subtrahed = subtrahed.resample(this.getX());
+    }
+
+    final double[] newX = new double[this.x.length];
+    final Complex[] newY = new Complex[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i].subtract(subtrahed.y[i]);
+    }
+    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public ComplexWaveform subtract(double subtrahed) {
+    final double[] newX = new double[this.x.length];
+    final Complex[] newY = new Complex[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i].subtract(subtrahed);
+    }
+
+    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public ComplexWaveform subtract(BigDecimal subtrahed) {
+    return this.subtract(subtrahed.round(MathContext.DECIMAL64).doubleValue());
+  }
+
+  @Override
+  public ComplexWaveform subtract(Complex subtrahed) {
+    final double[] newX = new double[this.x.length];
+    final Complex[] newY = new Complex[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i].subtract(subtrahed);
+    }
+
+    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public Waveform subtract(Value subtrahed) {
+    if (subtrahed instanceof RealValue) {
+      return this.subtract(((RealValue) subtrahed).getValue());
+    } else {
+      return this.subtract(((ComplexValue) subtrahed).getValue());
+    }
   }
 
   /**

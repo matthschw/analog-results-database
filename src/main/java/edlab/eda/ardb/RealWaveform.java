@@ -185,72 +185,7 @@ public final class RealWaveform extends Waveform {
     }
   }
 
-  /**
-   * Subtract a value from a waveform
-   *
-   * @param value Value to be subtracted
-   * @return Waveform
-   */
-  public RealWaveform subtract(final double value) {
 
-    final double[] newX = new double[this.x.length];
-    final double[] newY = new double[this.y.length];
-
-    for (int i = 0; i < newY.length; i++) {
-      newX[i] = this.x[i];
-      newY[i] = this.y[i] - value;
-    }
-
-    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
-  }
-
-  /**
-   * Subtract a value from a waveform
-   *
-   * @param value Value to be subtracted
-   * @return Waveform
-   */
-  public RealWaveform subtract(final BigDecimal value) {
-    return this.subtract(value.round(MathContext.DECIMAL64).doubleValue());
-  }
-
-  /**
-   * Subtract a value from a waveform
-   *
-   * @param value Value to be subtracted
-   * @return Waveform
-   */
-  public RealWaveform subtract(final RealValue value) {
-
-    if (value.isInvalid()) {
-      return new RealWaveform();
-    } else {
-      return this.subtract(value.getValue());
-    }
-  }
-
-  /**
-   * Subtract a waveform from a waveform
-   *
-   * @param wave Waveform to be subtracted
-   * @return Waveform
-   */
-  public RealWaveform subtract(RealWaveform wave) {
-
-    if (!this.sameAxis(wave)) {
-      wave = wave.resample(this);
-    }
-
-    final double[] newX = new double[this.x.length];
-    final double[] newY = new double[this.y.length];
-
-    for (int i = 0; i < newY.length; i++) {
-      newX[i] = this.x[i];
-      newY[i] = this.y[i] - wave.y[i];
-    }
-
-    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
-  }
 
   /**
    * Multiply a value with a waveform
@@ -1023,5 +958,76 @@ public final class RealWaveform extends Waveform {
   @Override
   public Waveform uplus() {
     return this;
+  }
+
+  @Override
+  public Waveform subtract(Waveform subtrahed) {
+
+    if (subtrahed instanceof RealWaveform) {
+      return this.subtract(((RealWaveform) subtrahed));
+    } else {
+      return this.subtract(((ComplexWaveform) subtrahed));
+    }
+  }
+
+  public RealWaveform subtract(RealWaveform wave) {
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this);
+    }
+
+    final double[] newX = new double[this.x.length];
+    final double[] newY = new double[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i] - wave.y[i];
+    }
+
+    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+  
+  public ComplexWaveform subtract(ComplexWaveform wave) {
+    return new ComplexWaveform(this).subtract(wave);
+  }
+  
+  @Override
+  public RealWaveform subtract(final double value) {
+
+    final double[] newX = new double[this.x.length];
+    final double[] newY = new double[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i] - value;
+    }
+
+    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public RealWaveform subtract(final BigDecimal value) {
+    return this.subtract(value.round(MathContext.DECIMAL64).doubleValue());
+  }
+
+  @Override
+  public ComplexWaveform subtract(Complex subtrahed) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Waveform subtract(Value subtrahed) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  
+  public RealWaveform subtract(final RealValue value) {
+
+    if (value.isInvalid()) {
+      return new RealWaveform();
+    } else {
+      return this.subtract(value.getValue());
+    }
   }
 }
