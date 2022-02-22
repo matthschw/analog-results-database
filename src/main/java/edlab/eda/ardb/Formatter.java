@@ -53,13 +53,16 @@ public final class Formatter {
       break;
     case 21:
       retval += "Z";
+      break;
     case 18:
       retval += "E";
+      break;
     case 15:
       retval += "P";
       break;
     case 12:
       retval += "T";
+      break;
     case 9:
       retval += "G";
       break;
