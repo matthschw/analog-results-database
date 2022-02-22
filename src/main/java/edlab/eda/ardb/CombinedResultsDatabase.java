@@ -19,10 +19,11 @@ public class CombinedResultsDatabase extends ResultsDatabase {
    * @param realWaves     map of real waves
    * @param complexValues map of complex values
    * @param complexWaves  map of complex waves
-   * @return
+   * @return database
    */
   public static CombinedResultsDatabase create(
-      final Map<String, RealValue> realValues, final Map<String, RealWaveform> realWaves,
+      final Map<String, RealValue> realValues,
+      final Map<String, RealWaveform> realWaves,
       final Map<String, ComplexValue> complexValues,
       final Map<String, ComplexWaveform> complexWaves) {
 
@@ -133,7 +134,8 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   @Override
   public boolean isValueName(final String name) {
 
-    if (this.realResultsDatabase.isValueName(name) || this.complexResultsDatabase.isValueName(name)) {
+    if (this.realResultsDatabase.isValueName(name)
+        || this.complexResultsDatabase.isValueName(name)) {
       return true;
     }
 
@@ -143,7 +145,8 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   @Override
   public boolean isWaveformName(final String name) {
 
-    if (this.realResultsDatabase.isWaveformName(name) || this.complexResultsDatabase.isWaveformName(name)) {
+    if (this.realResultsDatabase.isWaveformName(name)
+        || this.complexResultsDatabase.isWaveformName(name)) {
       return true;
     }
 
@@ -153,7 +156,8 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   @Override
   public boolean isValue(final ReferenceableElectrical electrical) {
 
-    if (this.realResultsDatabase.isValue(electrical) || this.complexResultsDatabase.isValue(electrical)) {
+    if (this.realResultsDatabase.isValue(electrical)
+        || this.complexResultsDatabase.isValue(electrical)) {
       return true;
     }
 
@@ -163,7 +167,8 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   @Override
   public boolean isWaveform(final ReferenceableElectrical electrical) {
 
-    if (this.realResultsDatabase.isWaveform(electrical) || this.complexResultsDatabase.isWaveform(electrical)) {
+    if (this.realResultsDatabase.isWaveform(electrical)
+        || this.complexResultsDatabase.isWaveform(electrical)) {
       return true;
     }
 
@@ -173,7 +178,8 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   @Override
   public boolean isMember(final String name) {
 
-    if (this.realResultsDatabase.isMember(name) || this.complexResultsDatabase.isMember(name)) {
+    if (this.realResultsDatabase.isMember(name)
+        || this.complexResultsDatabase.isMember(name)) {
       return true;
     }
 
@@ -183,7 +189,8 @@ public class CombinedResultsDatabase extends ResultsDatabase {
   @Override
   public boolean isMember(final ReferenceableElectrical electrical) {
 
-    if (this.realResultsDatabase.isMember(electrical) || this.complexResultsDatabase.isMember(electrical)) {
+    if (this.realResultsDatabase.isMember(electrical)
+        || this.complexResultsDatabase.isMember(electrical)) {
       return true;
     }
 

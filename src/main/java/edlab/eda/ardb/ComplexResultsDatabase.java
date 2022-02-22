@@ -49,7 +49,7 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
    * @param valuesKeys array of value keys
    * @param waveNames  array of wave names
    * @param waveKeys   array of wave keys
-   * @return
+   * @return database
    */
   public static ComplexResultsDatabase create(final String[] valueNames,
       final ComplexValue[] valuesKeys, final String[] waveNames,

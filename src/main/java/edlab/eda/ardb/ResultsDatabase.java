@@ -101,7 +101,7 @@ public abstract class ResultsDatabase {
   /**
    * Check if a the database contains a value or waveform with a given name
    *
-   * @param electrical Reference to the electrical
+   * @param name Name of the waveform or value
    *
    * @return <code>true</code> when the database contains a value or waveform
    *         with the given name, <code>false</code> otherwise.

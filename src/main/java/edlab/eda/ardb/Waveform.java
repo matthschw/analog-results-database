@@ -258,7 +258,7 @@ public abstract class Waveform {
   /**
    * Subtract a constant from a waveform
    *
-   * @param value value to be subtracted
+   * @param subtrahed value to be subtracted
    * @return difference
    */
   public abstract Waveform subtract(final double subtrahed);
@@ -266,7 +266,7 @@ public abstract class Waveform {
   /**
    * Subtract a constant from a waveform
    *
-   * @param value value to be subtracted
+   * @param subtrahed value to be subtracted
    * @return difference
    */
   public abstract Waveform subtract(final BigDecimal subtrahed);

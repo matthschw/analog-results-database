@@ -185,8 +185,6 @@ public final class RealWaveform extends Waveform {
     }
   }
 
-
-
   /**
    * Multiply a value with a waveform
    *
@@ -240,7 +238,7 @@ public final class RealWaveform extends Waveform {
   public RealWaveform multiply(RealWaveform wave) {
 
     if (!this.sameAxis(wave)) {
-      wave = wave.resample(this);
+      wave = wave.resample(this.getX());
     }
 
     final double[] newX = new double[this.x.length];
@@ -307,7 +305,7 @@ public final class RealWaveform extends Waveform {
   public RealWaveform divide(RealWaveform wave) {
 
     if (!this.sameAxis(wave)) {
-      wave = wave.resample(this);
+      wave = wave.resample(this.getX());
     }
 
     final double[] newX = new double[this.x.length];
@@ -415,8 +413,8 @@ public final class RealWaveform extends Waveform {
   /**
    * Exponentiate a waveform
    *
-   * @param exponent
-   * @return Waveform
+   * @param exponent Exponents
+   * @return waveform
    */
   public RealWaveform pow(final double exponent) {
 
@@ -809,11 +807,87 @@ public final class RealWaveform extends Waveform {
     return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
+  /**
+   * Check if this waveform is lower or equal than this waveform
+   * 
+   * @param wave waveform
+   * @return <code>true</code> when this waveform is lower or equal than the
+   *         other waveform, <code>false</code> otherwise
+   */
   public boolean leq(RealWaveform wave) {
-    wave = wave.resample(this.x);
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this.x);
+    }
 
     for (int i = 0; i < this.x.length; i++) {
       if (this.y[i] > wave.y[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Check if this waveform is less than this waveform
+   * 
+   * @param wave waveform
+   * @return <code>true</code> when this waveform is less than the other,
+   *         <code>false</code> otherwise
+   */
+  public boolean less(RealWaveform wave) {
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this.x);
+    }
+
+    for (int i = 0; i < this.x.length; i++) {
+      if (this.y[i] >= wave.y[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Check if this waveform is greater or equal than the other waveform
+   * 
+   * @param wave waveform
+   * @return <code>true</code> when this waveform is greater or equal than the
+   *         other waveform, <code>false</code> otherwise
+   */
+  public boolean geq(RealWaveform wave) {
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this.x);
+    }
+
+    for (int i = 0; i < this.x.length; i++) {
+      if (this.y[i] < wave.y[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Check if this waveform is greater than the other waveform
+   * 
+   * @param wave waveform
+   * @return <code>true</code> when this waveform is less than the other,
+   *         <code>false</code> otherwise
+   */
+  public boolean greater(RealWaveform wave) {
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this.x);
+    }
+
+    for (int i = 0; i < this.x.length; i++) {
+      if (this.y[i] <= wave.y[i]) {
         return false;
       }
     }
@@ -876,17 +950,6 @@ public final class RealWaveform extends Waveform {
         }
       }
     }
-  }
-
-  /**
-   * Check if an object is an instance of this class
-   *
-   * @param o Object
-   * @return <code>true</code> if the object is an instance of this class,
-   *         <code>false</code> otherwise
-   */
-  public static boolean isInstanceOf(final Object o) {
-    return o instanceof RealWaveform;
   }
 
   @Override
@@ -970,10 +1033,16 @@ public final class RealWaveform extends Waveform {
     }
   }
 
-  public RealWaveform subtract(RealWaveform wave) {
+  /**
+   * Subtract a {@link RealWaveform} from the waveform
+   * 
+   * @param subtrahend wave to be subtracted
+   * @return wave
+   */
+  public RealWaveform subtract(RealWaveform subtrahend) {
 
-    if (!this.sameAxis(wave)) {
-      wave = wave.resample(this);
+    if (!this.sameAxis(subtrahend)) {
+      subtrahend = subtrahend.resample(this);
     }
 
     final double[] newX = new double[this.x.length];
@@ -981,16 +1050,22 @@ public final class RealWaveform extends Waveform {
 
     for (int i = 0; i < newY.length; i++) {
       newX[i] = this.x[i];
-      newY[i] = this.y[i] - wave.y[i];
+      newY[i] = this.y[i] - subtrahend.y[i];
     }
 
     return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
-  
-  public ComplexWaveform subtract(ComplexWaveform wave) {
-    return new ComplexWaveform(this).subtract(wave);
+
+  /**
+   * Subtract a {@link ComplexWaveform} from the waveform
+   * 
+   * @param subtrahend wave to be subtracted
+   * @return wave
+   */
+  public ComplexWaveform subtract(ComplexWaveform subtrahend) {
+    return new ComplexWaveform(this).subtract(subtrahend);
   }
-  
+
   @Override
   public RealWaveform subtract(final double value) {
 
@@ -1012,22 +1087,44 @@ public final class RealWaveform extends Waveform {
 
   @Override
   public ComplexWaveform subtract(Complex subtrahed) {
-    // TODO Auto-generated method stub
-    return null;
+    return new ComplexWaveform(this).subtract(subtrahed);
   }
 
   @Override
   public Waveform subtract(Value subtrahed) {
-    // TODO Auto-generated method stub
+
+    if (subtrahed instanceof RealValue) {
+      this.subtract((RealValue) subtrahed);
+    } else {
+      return new ComplexWaveform(this).subtract((ComplexValue) subtrahed);
+    }
+
     return null;
   }
-  
-  public RealWaveform subtract(final RealValue value) {
 
-    if (value.isInvalid()) {
+  /**
+   * Subtract a {@link RealValue} from the waveform
+   * 
+   * @param subtrahend value to be subtracted
+   * @return wave
+   */
+  public RealWaveform subtract(final RealValue subtrahen) {
+
+    if (subtrahen.isInvalid()) {
       return new RealWaveform();
     } else {
-      return this.subtract(value.getValue());
+      return this.subtract(subtrahen.getValue());
     }
+  }
+
+  /**
+   * Check if an object is an instance of this class
+   *
+   * @param o Object
+   * @return <code>true</code> if the object is an instance of this class,
+   *         <code>false</code> otherwise
+   */
+  public static boolean isInstanceOf(final Object o) {
+    return o instanceof RealWaveform;
   }
 }

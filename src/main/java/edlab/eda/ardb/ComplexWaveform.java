@@ -29,13 +29,15 @@ public final class ComplexWaveform extends Waveform {
 
   /**
    * Create an complex waveform from a real waveform
+   * 
+   * @param wave real waveform
    */
-  public ComplexWaveform(final RealWaveform realWave) {
-    super(realWave.getX(), realWave.getUnitX(), realWave.getUnitY());
-    this.y = new Complex[realWave.getY().length];
+  public ComplexWaveform(final RealWaveform wave) {
+    super(wave.getX(), wave.getUnitX(), wave.getUnitY());
+    this.y = new Complex[wave.getY().length];
 
     for (int i = 0; i < this.y.length; i++) {
-      this.y[i] = new Complex(realWave.getY()[i]);
+      this.y[i] = new Complex(wave.getY()[i]);
     }
   }
 
@@ -421,6 +423,7 @@ public final class ComplexWaveform extends Waveform {
       newX[i] = this.x[i];
       newY[i] = this.y[i].subtract(subtrahed.y[i]);
     }
+
     return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
