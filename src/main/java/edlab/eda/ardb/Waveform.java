@@ -288,6 +288,46 @@ public abstract class Waveform {
   public abstract Waveform subtract(final Value subtrahed);
 
   /**
+   * Multiply two waveforms
+   *
+   * @param factor waveform to be multiplied
+   * @return product
+   */
+  public abstract Waveform multiply(final Waveform factor);
+
+  /**
+   * Subtract a constant from a waveform
+   *
+   * @param factor waveform to be multiplied
+   * @return difference
+   */
+  public abstract Waveform multiply(final double factor);
+
+  /**
+   * Subtract a constant from a waveform
+   *
+   * @param factor value to be multiplied
+   * @return product
+   */
+  public abstract Waveform multiply(final BigDecimal factor);
+
+  /**
+   * Subtract a constant from a waveform
+   *
+   * @param factor value to be multiplied
+   * @return product
+   */
+  public abstract Waveform multiply(final Complex factor);
+
+  /**
+   * Subtract a {@link RealValue} from a waveform
+   *
+   * @param factor value to be multiplied
+   * @return product
+   */
+  public abstract Waveform multiply(final Value factor);
+
+  /**
    * Identify whether an object is an instance of this class
    *
    * @param o Object to be checked

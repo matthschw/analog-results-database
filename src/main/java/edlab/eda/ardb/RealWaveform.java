@@ -186,73 +186,6 @@ public final class RealWaveform extends Waveform {
   }
 
   /**
-   * Multiply a value with a waveform
-   *
-   * @param value Multiplier
-   * @return Waveform
-   */
-  public RealWaveform multiply(final double value) {
-
-    final double[] newX = new double[this.x.length];
-    final double[] newY = new double[this.y.length];
-
-    for (int i = 0; i < newY.length; i++) {
-      newX[i] = this.x[i];
-      newY[i] = this.y[i] * value;
-    }
-
-    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
-  }
-
-  /**
-   * Multiply a value with a waveform
-   *
-   * @param value Multiplier
-   * @return Waveform
-   */
-  public RealWaveform multiply(final BigDecimal value) {
-    return this.multiply(value.round(MathContext.DECIMAL64).doubleValue());
-  }
-
-  /**
-   * Multiply a value with a waveform
-   *
-   * @param value Multiplier
-   * @return Waveform
-   */
-  public RealWaveform multiply(final RealValue value) {
-
-    if (value.isInvalid()) {
-      return null;
-    } else {
-      return this.multiply(value.getValue());
-    }
-  }
-
-  /**
-   * Multiply two waveforms
-   *
-   * @param wave Waveform to be multiplied
-   * @return Waveform
-   */
-  public RealWaveform multiply(RealWaveform wave) {
-
-    if (!this.sameAxis(wave)) {
-      wave = wave.resample(this.getX());
-    }
-
-    final double[] newX = new double[this.x.length];
-    final double[] newY = new double[this.y.length];
-
-    for (int i = 0; i < newY.length; i++) {
-      newX[i] = this.x[i];
-      newY[i] = this.y[i] * wave.y[i];
-    }
-
-    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
-  }
-
-  /**
    * Divide a waveform by a value
    *
    * @param value Divisor
@@ -1108,12 +1041,93 @@ public final class RealWaveform extends Waveform {
    * @param subtrahend value to be subtracted
    * @return wave
    */
-  public RealWaveform subtract(final RealValue subtrahen) {
+  public RealWaveform subtract(final RealValue subtrahend) {
 
-    if (subtrahen.isInvalid()) {
+    if (subtrahend.isInvalid()) {
       return new RealWaveform();
     } else {
-      return this.subtract(subtrahen.getValue());
+      return this.subtract(subtrahend.getValue());
+    }
+  }
+
+  @Override
+  public RealWaveform multiply(final double factor) {
+
+    final double[] newX = new double[this.x.length];
+    final double[] newY = new double[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i] * factor;
+    }
+
+    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public RealWaveform multiply(final BigDecimal factor) {
+    return this.multiply(factor.round(MathContext.DECIMAL64).doubleValue());
+  }
+
+  /**
+   * Multiply a waveform with a {@link RealValue}
+   *
+   * @param factor value to be multiplied
+   * @return wave
+   */
+  public RealWaveform multiply(final RealValue factor) {
+
+    if (factor.isInvalid()) {
+      return null;
+    } else {
+      return this.multiply(factor.getValue());
+    }
+  }
+
+  @Override
+  public ComplexWaveform multiply(Complex factor) {
+    return new ComplexWaveform(this).multiply(factor);
+  }
+
+  @Override
+  public Waveform multiply(Value factor) {
+    if (factor instanceof RealValue) {
+      return this.multiply((RealValue) factor);
+    } else {
+      return this.multiply((ComplexValue) factor);
+    }
+  }
+
+  /**
+   * Multiply two waveforms
+   *
+   * @param wave Waveform to be multiplied
+   * @return Waveform
+   */
+  public RealWaveform multiply(RealWaveform wave) {
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this.getX());
+    }
+
+    final double[] newX = new double[this.x.length];
+    final double[] newY = new double[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i] * wave.y[i];
+    }
+
+    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public Waveform multiply(Waveform factor) {
+
+    if (factor instanceof RealWaveform) {
+      return this.multiply((RealWaveform) factor);
+    } else {
+      return new ComplexWaveform(this).multiply(factor);
     }
   }
 

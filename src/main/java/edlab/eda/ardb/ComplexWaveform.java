@@ -467,6 +467,79 @@ public final class ComplexWaveform extends Waveform {
     }
   }
 
+  @Override
+  public ComplexWaveform multiply(Waveform factor) {
+
+    if (factor instanceof ComplexWaveform) {
+      return this.multiply((ComplexWaveform) factor);
+    } else {
+      return this.multiply(new ComplexWaveform((RealWaveform) factor));
+    }
+  }
+
+  /**
+   * Multiply a waveform with another {@link ComplexWaveform}
+   * 
+   * @param factor waveform to be multiplied
+   * @return wave
+   */
+  public ComplexWaveform multiply(ComplexWaveform factor) {
+
+    if (!this.sameAxis(factor)) {
+      factor = factor.resample(this.getX());
+    }
+
+    final double[] newX = new double[this.x.length];
+    final Complex[] newY = new Complex[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i].multiply(factor.y[i]);
+    }
+
+    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public Waveform multiply(double factor) {
+    final double[] newX = new double[this.x.length];
+    final Complex[] newY = new Complex[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i].multiply(factor);
+    }
+
+    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public Waveform multiply(BigDecimal factor) {
+    return this.multiply(factor.round(MathContext.DECIMAL64));
+  }
+  
+  @Override
+  public Waveform multiply(Value factor) {
+    if (factor instanceof RealValue) {
+      return this.multiply(((RealValue)factor).getValue());
+    } else {
+      return this.multiply(((ComplexValue)factor).getValue());
+    }
+  }
+
+  @Override
+  public ComplexWaveform multiply(Complex factor) {
+    final double[] newX = new double[this.x.length];
+    final Complex[] newY = new Complex[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i].multiply(factor);
+    }
+
+    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
   /**
    * Check if an object is an instance of this class
    *
@@ -477,4 +550,6 @@ public final class ComplexWaveform extends Waveform {
   public static boolean isInstanceOf(final Object o) {
     return o instanceof ComplexWaveform;
   }
+
+
 }
