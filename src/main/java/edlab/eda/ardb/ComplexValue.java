@@ -21,6 +21,11 @@ public final class ComplexValue extends Value {
     this.value = value;
   }
 
+  public ComplexValue() {
+    super();
+    this.value = Complex.NaN;
+  }
+
   /**
    * Returns the value of a ComplexValue
    *
@@ -60,11 +65,17 @@ public final class ComplexValue extends Value {
   @Override
   public String toString() {
     if (this.getUnit() == null) {
-      return "" + this.getValue().getReal() + " + j*" + this.getValue().getImaginary();
+      return "" + this.getValue().getReal() + " + j*"
+          + this.getValue().getImaginary();
     } else {
-      return "" + this.getValue().getReal() + " + j*" + this.getValue().getImaginary()
-          + " " + this.getUnit();
+      return "" + this.getValue().getReal() + " + j*"
+          + this.getValue().getImaginary() + " " + this.getUnit();
     }
+  }
+
+  @Override
+  public boolean isNaN() {
+    return this.value.isNaN();
   }
 
   /**

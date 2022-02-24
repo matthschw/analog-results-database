@@ -23,8 +23,9 @@ public final class ComplexWaveform extends Waveform {
   /**
    * Create an empty complex waveform
    */
-  public ComplexWaveform() {
+  ComplexWaveform() {
     super();
+    this.y = new Complex[0];
   }
 
   /**
@@ -33,7 +34,8 @@ public final class ComplexWaveform extends Waveform {
    * @param wave real waveform
    */
   public ComplexWaveform(final RealWaveform wave) {
-    super(wave.getX(), wave.getUnitX(), wave.getUnitY());
+    super(wave.getX(), new String(wave.getUnitX()),
+        new String(wave.getUnitY()));
     this.y = new Complex[wave.getY().length];
 
     for (int i = 0; i < this.y.length; i++) {
@@ -69,6 +71,7 @@ public final class ComplexWaveform extends Waveform {
     }
 
     return builder.toString();
+
   }
 
   @Override
@@ -105,7 +108,6 @@ public final class ComplexWaveform extends Waveform {
         }
       }
     }
-
     return null;
   }
 
@@ -198,11 +200,11 @@ public final class ComplexWaveform extends Waveform {
   public static ComplexWaveform buildComplexWaveform(final double[] x,
       final Complex[] y, final String unitX, final String unitY) {
 
-    if (x.length == y.length) {
+    if (x != null && y != null && x.length == y.length) {
 
       ComplexWaveform.sortWaveElements(x, y);
 
-      return new ComplexWaveform(x, y, unitX, unitY);
+      return new ComplexWaveform(x, y, new String(unitX), new String(unitY));
 
     } else {
       System.err.println("Length of arrays do not match");
@@ -258,7 +260,7 @@ public final class ComplexWaveform extends Waveform {
 
     final ComplexValue leftValue = this.getValue(left);
 
-    if (!leftValue.isInvalid()) {
+    if (!leftValue.isNaN()) {
 
       if (!newYVals.get(0).equals(leftValue.getValue())) {
         newYVals.addFirst(leftValue.getValue());
@@ -268,7 +270,7 @@ public final class ComplexWaveform extends Waveform {
 
     final ComplexValue rightValue = this.getValue(right);
 
-    if (!rightValue.isInvalid()) {
+    if (!rightValue.isNaN()) {
 
       if (!newYVals.get(newXVals.size() - 1).equals(rightValue.getValue())) {
         newYVals.addLast(rightValue.getValue());
@@ -345,11 +347,20 @@ public final class ComplexWaveform extends Waveform {
   }
 
   public Waveform add(final RealValue value) {
-    return this.add(value.getValue());
+    if (value.isNaN()) {
+      return new ComplexWaveform();
+    } else {
+      return this.add(value.getValue());
+    }
   }
 
   public Waveform add(final ComplexValue value) {
-    return this.add(value.getValue());
+
+    if (value.isNaN()) {
+      return new ComplexWaveform();
+    } else {
+      return this.add(value.getValue());
+    }
   }
 
   @Override
@@ -412,19 +423,24 @@ public final class ComplexWaveform extends Waveform {
 
   public ComplexWaveform subtract(ComplexWaveform subtrahed) {
 
-    if (!this.sameAxis(subtrahed)) {
-      subtrahed = subtrahed.resample(this.getX());
+    if (this.isEmpty() || subtrahed.isEmpty()) {
+      if (!this.sameAxis(subtrahed)) {
+        subtrahed = subtrahed.resample(this.getX());
+      }
+
+      final double[] newX = new double[this.x.length];
+      final Complex[] newY = new Complex[this.y.length];
+
+      for (int i = 0; i < newY.length; i++) {
+        newX[i] = this.x[i];
+        newY[i] = this.y[i].subtract(subtrahed.y[i]);
+      }
+
+      return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+
+    } else {
+      return new ComplexWaveform();
     }
-
-    final double[] newX = new double[this.x.length];
-    final Complex[] newY = new Complex[this.y.length];
-
-    for (int i = 0; i < newY.length; i++) {
-      newX[i] = this.x[i];
-      newY[i] = this.y[i].subtract(subtrahed.y[i]);
-    }
-
-    return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
   @Override
@@ -517,13 +533,13 @@ public final class ComplexWaveform extends Waveform {
   public Waveform multiply(BigDecimal factor) {
     return this.multiply(factor.round(MathContext.DECIMAL64));
   }
-  
+
   @Override
   public Waveform multiply(Value factor) {
     if (factor instanceof RealValue) {
-      return this.multiply(((RealValue)factor).getValue());
+      return this.multiply(((RealValue) factor).getValue());
     } else {
-      return this.multiply(((ComplexValue)factor).getValue());
+      return this.multiply(((ComplexValue) factor).getValue());
     }
   }
 
@@ -540,6 +556,12 @@ public final class ComplexWaveform extends Waveform {
     return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
+  @Override
+  public boolean isEmpty() {
+    return this.x == null || this.y == null || this.x.length == 0
+        || this.y.length == 0;
+  }
+
   /**
    * Check if an object is an instance of this class
    *
@@ -550,6 +572,4 @@ public final class ComplexWaveform extends Waveform {
   public static boolean isInstanceOf(final Object o) {
     return o instanceof ComplexWaveform;
   }
-
-
 }

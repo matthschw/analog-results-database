@@ -23,6 +23,7 @@ public final class RealValue extends Value {
    */
   public RealValue() {
     super();
+    this.value = Double.NaN;
   }
 
   /**
@@ -34,7 +35,7 @@ public final class RealValue extends Value {
    */
   public boolean leq(final RealValue value) {
 
-    if (this.isValid()) {
+    if (!this.isNaN()) {
       return this.value <= value.value;
     } else {
       return false;
@@ -49,7 +50,7 @@ public final class RealValue extends Value {
    *         parameter, <code>false</code> otherwise
    */
   public boolean leq(final double value) {
-    if (this.isValid()) {
+    if (!this.isNaN()) {
       return this.value <= value;
     } else {
       return false;
@@ -65,7 +66,7 @@ public final class RealValue extends Value {
    */
   public boolean geq(final RealValue value) {
 
-    if (this.isValid()) {
+    if (!this.isNaN()) {
       return this.value >= value.value;
     } else {
       return false;
@@ -81,7 +82,7 @@ public final class RealValue extends Value {
    */
   public boolean geq(final double value) {
 
-    if (this.isValid()) {
+    if (!this.isNaN()) {
       return this.value >= value;
     } else {
       return false;
@@ -95,7 +96,7 @@ public final class RealValue extends Value {
    * @return sum
    */
   public RealValue add(final RealValue value) {
-    if (this.isValid() && value.isValid()) {
+    if ((!this.isNaN()) && (!this.isNaN())) {
       return new RealValue(this.getValue() + value.getValue(), this.getUnit());
     } else {
       return new RealValue();
@@ -109,7 +110,7 @@ public final class RealValue extends Value {
    * @return sum
    */
   public RealValue add(final double value) {
-    if (this.isValid() && (value != Double.NaN)) {
+    if ((!this.isNaN()) && (value != Double.NaN)) {
       return new RealValue(this.getValue() + value, this.getUnit());
     } else {
       return new RealValue();
@@ -123,7 +124,7 @@ public final class RealValue extends Value {
    * @return difference
    */
   public RealValue subtract(final RealValue value) {
-    if (this.isValid() && value.isValid()) {
+    if ((!this.isNaN()) && (!this.isNaN())) {
       return new RealValue(this.getValue() - value.getValue(), this.getUnit());
     } else {
       return new RealValue();
@@ -137,7 +138,7 @@ public final class RealValue extends Value {
    * @return difference
    */
   public RealValue subtract(final double value) {
-    if (this.isValid() && (value != Double.NaN)) {
+    if ((!this.isNaN()) && (value != Double.NaN)) {
       return new RealValue(this.getValue() - value, this.getUnit());
     } else {
       return new RealValue();
@@ -151,7 +152,7 @@ public final class RealValue extends Value {
    * @return product
    */
   public RealValue multiply(final RealValue value) {
-    if (this.isValid() && value.isValid()) {
+    if ((!this.isNaN()) && (!this.isNaN())) {
       return new RealValue(this.getValue() * value.getValue(), this.getUnit());
     } else {
       return new RealValue();
@@ -165,7 +166,7 @@ public final class RealValue extends Value {
    * @return product
    */
   public RealValue multiply(final double value) {
-    if (this.isValid() && (value != Double.NaN)) {
+    if ((!this.isNaN()) && (value != Double.NaN)) {
       return new RealValue(this.getValue() * value, this.getUnit());
     } else {
       return new RealValue();
@@ -179,7 +180,7 @@ public final class RealValue extends Value {
    * @return quotient
    */
   public RealValue divide(final RealValue value) {
-    if (this.isValid() && value.isValid() && (value.getValue() != 0.0)) {
+    if (!this.isNaN() && !value.isNaN() && (value.getValue() != 0.0)) {
       return new RealValue(this.getValue() / value.getValue(), this.getUnit());
     } else {
       return new RealValue();
@@ -193,7 +194,7 @@ public final class RealValue extends Value {
    * @return quotient
    */
   public RealValue divide(final double value) {
-    if (this.isValid() && (value != Double.NaN) && (value != 0.0)) {
+    if (!this.isNaN() && (value != Double.NaN) && (value != 0.0)) {
       return new RealValue(this.getValue() / value, this.getUnit());
     } else {
       return new RealValue();
@@ -206,11 +207,7 @@ public final class RealValue extends Value {
    * @return value
    */
   public double getValue() {
-    if (this.isInvalid()) {
-      return Double.NaN;
-    } else {
-      return this.value;
-    }
+    return this.value;
   }
 
   /**
@@ -220,7 +217,7 @@ public final class RealValue extends Value {
    *         <code>false</code> otherwise
    */
   public boolean flipSign() {
-    if (this.isValid()) {
+    if (!this.isNaN()) {
       this.value = -this.value;
     }
     return true;
@@ -233,6 +230,11 @@ public final class RealValue extends Value {
     } else {
       return Formatter.format(this.getValue()) + " " + this.getUnit();
     }
+  }
+
+  @Override
+  public boolean isNaN() {
+    return Double.isNaN(this.value);
   }
 
   /**

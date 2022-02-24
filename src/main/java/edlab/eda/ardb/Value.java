@@ -6,7 +6,6 @@ package edlab.eda.ardb;
 public abstract class Value {
 
   private final String unit;
-  private boolean invalid = false;
 
   public Value(final String unit) {
     this.unit = unit;
@@ -16,7 +15,6 @@ public abstract class Value {
    * Get an invalid value
    */
   public Value() {
-    this.invalid = true;
     this.unit = "";
   }
 
@@ -30,18 +28,12 @@ public abstract class Value {
   }
 
   /**
-   * Check if the value is valid
-   *
-   * @return <code>true</code> when the value is valid, <code>false</code>
-   *         otherwise
+   * Is the value not a number
+   * 
+   * @return <code>true</code> when the value is not a number,
+   *         <code>false</code> otherwise
    */
-  public boolean isValid() {
-    return !this.invalid;
-  }
-
-  public boolean isInvalid() {
-    return this.invalid;
-  }
+  public abstract boolean isNaN();
 
   /**
    * Identify whether an object is an instance of this class

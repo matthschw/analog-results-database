@@ -24,8 +24,9 @@ public final class RealWaveform extends Waveform {
   /**
    * Creating an empty waveform
    */
-  public RealWaveform() {
+  RealWaveform() {
     super();
+    this.y = new double[0];
   }
 
   /**
@@ -40,68 +41,82 @@ public final class RealWaveform extends Waveform {
   @Override
   public String toString() {
 
-    final StringBuilder builder = new StringBuilder();
+    if (this.isEmpty()) {
 
-    for (int i = 0; i < this.x.length; i++) {
+      return "";
 
-      if (i > 0) {
-        builder.append("\n");
+    } else {
+
+      final StringBuilder builder = new StringBuilder();
+
+      for (int i = 0; i < this.x.length; i++) {
+
+        if (i > 0) {
+          builder.append("\n");
+        }
+
+        builder.append("(").append(Formatter.format(this.x[i])).append(" ")
+            .append(this.getUnitX()).append(" , ")
+            .append(Formatter.format(this.y[i])).append(" ")
+            .append(this.getUnitY()).append(")");
       }
 
-      builder.append("(").append(Formatter.format(this.x[i])).append(" ")
-          .append(this.getUnitX()).append(" , ")
-          .append(Formatter.format(this.y[i])).append(" ")
-          .append(this.getUnitY()).append(")");
+      return builder.toString();
     }
-
-    return builder.toString();
   }
 
   @Override
   public RealWaveform clip(final double left, final double right) {
 
-    final LinkedList<Double> newXVals = new LinkedList<>();
-    final LinkedList<Double> newYVals = new LinkedList<>();
-
-    for (int i = 0; i < this.x.length; i++) {
-      if ((left <= this.x[i]) && (this.x[i] <= right)) {
-        newXVals.addLast(this.x[i]);
-        newYVals.addLast(this.y[i]);
-      }
-    }
-
-    final RealValue leftValue = this.getValue(left);
-
-    if (!leftValue.isInvalid()) {
-
-      if (newYVals.get(0) != leftValue.getValue()) {
-        newYVals.addFirst(leftValue.getValue());
-        newXVals.addFirst(left);
-      }
-    }
-
-    final RealValue rightValue = this.getValue(right);
-
-    if (!rightValue.isInvalid()) {
-
-      if (newYVals.get(newXVals.size() - 1) != rightValue.getValue()) {
-        newYVals.addLast(rightValue.getValue());
-        newXVals.addLast(right);
-      }
-    }
-
-    if (newXVals.size() > 0) {
-
-      final double[] newX = new double[newXVals.size()];
-      final double[] newY = new double[newYVals.size()];
-
-      for (int i = 0; i < newY.length; i++) {
-        newX[i] = newXVals.get(i);
-        newY[i] = newYVals.get(i);
-      }
-      return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
-    } else {
+    if (this.isEmpty()) {
       return new RealWaveform();
+    } else {
+      final LinkedList<Double> newXVals = new LinkedList<>();
+      final LinkedList<Double> newYVals = new LinkedList<>();
+
+      for (int i = 0; i < this.x.length; i++) {
+        if ((left <= this.x[i]) && (this.x[i] <= right)) {
+          newXVals.addLast(this.x[i]);
+          newYVals.addLast(this.y[i]);
+        }
+      }
+
+      final RealValue leftValue = this.getValue(left);
+
+      if (!leftValue.isNaN()) {
+
+        if (newYVals.get(0) != leftValue.getValue()) {
+          newYVals.addFirst(leftValue.getValue());
+          newXVals.addFirst(left);
+        }
+      }
+
+      final RealValue rightValue = this.getValue(right);
+
+      if (!rightValue.isNaN()) {
+
+        if (newYVals.get(newXVals.size() - 1) != rightValue.getValue()) {
+          newYVals.addLast(rightValue.getValue());
+          newXVals.addLast(right);
+        }
+      }
+
+      if (newXVals.size() > 0) {
+
+        final double[] newX = new double[newXVals.size()];
+        final double[] newY = new double[newYVals.size()];
+
+        for (int i = 0; i < newY.length; i++) {
+          newX[i] = newXVals.get(i);
+          newY[i] = newYVals.get(i);
+
+        }
+
+        return buildRealWaveform(newX, newY, getUnitX(), getUnitY());
+
+      } else {
+        return new RealWaveform();
+      }
     }
   }
 
@@ -116,7 +131,7 @@ public final class RealWaveform extends Waveform {
       newY[i] = this.y[i] + value;
     }
 
-    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+    return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
   @Override
@@ -132,7 +147,7 @@ public final class RealWaveform extends Waveform {
    */
   public RealWaveform add(final RealValue value) {
 
-    if (value.isInvalid()) {
+    if (value.isNaN()) {
       return null;
     } else {
       return this.add(value.getValue());
@@ -173,7 +188,7 @@ public final class RealWaveform extends Waveform {
       newY[i] = this.y[i] + wave.y[i];
     }
 
-    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+    return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
   @Override
@@ -201,7 +216,7 @@ public final class RealWaveform extends Waveform {
       newY[i] = this.y[i] / value;
     }
 
-    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+    return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
   /**
@@ -222,7 +237,7 @@ public final class RealWaveform extends Waveform {
    */
   public RealWaveform divide(final RealValue value) {
 
-    if (value.isInvalid()) {
+    if (value.isNaN()) {
       return null;
     } else {
       return this.divide(value.getValue());
@@ -249,7 +264,7 @@ public final class RealWaveform extends Waveform {
       newY[i] = this.y[i] / wave.y[i];
     }
 
-    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+    return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
   @Override
@@ -296,7 +311,7 @@ public final class RealWaveform extends Waveform {
    */
   public RealValue getValue(final RealValue val) {
 
-    if (val.isInvalid()) {
+    if (val.isNaN()) {
       return new RealValue();
     } else {
       return this.getValue(val.getValue());
@@ -327,7 +342,6 @@ public final class RealWaveform extends Waveform {
    * @return resampled waveform
    */
   public RealWaveform resample(final RealWaveform wave) {
-
     return this.resample(wave.x);
   }
 
@@ -590,7 +604,7 @@ public final class RealWaveform extends Waveform {
    */
   public RealValue cross(final RealValue val, final int edge) {
 
-    if (val.isInvalid()) {
+    if (val.isNaN()) {
       return new RealValue();
     } else {
       return this.cross(val.getValue(), edge);
@@ -636,7 +650,7 @@ public final class RealWaveform extends Waveform {
    */
   public RealWaveform cross(final RealValue val) {
 
-    if (val.isInvalid()) {
+    if (val.isNaN()) {
       return new RealWaveform();
     } else {
       return this.cross(val.getValue());
@@ -986,7 +1000,7 @@ public final class RealWaveform extends Waveform {
       newY[i] = this.y[i] - subtrahend.y[i];
     }
 
-    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+    return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
   /**
@@ -1010,7 +1024,7 @@ public final class RealWaveform extends Waveform {
       newY[i] = this.y[i] - value;
     }
 
-    return new RealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+    return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
   @Override
@@ -1043,7 +1057,7 @@ public final class RealWaveform extends Waveform {
    */
   public RealWaveform subtract(final RealValue subtrahend) {
 
-    if (subtrahend.isInvalid()) {
+    if (subtrahend.isNaN()) {
       return new RealWaveform();
     } else {
       return this.subtract(subtrahend.getValue());
@@ -1077,7 +1091,7 @@ public final class RealWaveform extends Waveform {
    */
   public RealWaveform multiply(final RealValue factor) {
 
-    if (factor.isInvalid()) {
+    if (factor.isNaN()) {
       return null;
     } else {
       return this.multiply(factor.getValue());
@@ -1129,6 +1143,12 @@ public final class RealWaveform extends Waveform {
     } else {
       return new ComplexWaveform(this).multiply(factor);
     }
+  }
+
+  @Override
+  public boolean isEmpty() {
+    return this.x == null || this.y == null || this.x.length == 0
+        || this.y.length == 0;
   }
 
   /**

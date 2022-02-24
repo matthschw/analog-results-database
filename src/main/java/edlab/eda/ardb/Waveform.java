@@ -9,11 +9,10 @@ import org.apache.commons.math3.complex.Complex;
  */
 public abstract class Waveform {
 
-  private String name = null;
+  private String name = "";
   private String unitX;
   private String unitY;
   protected double[] x;
-  protected boolean invalid = false;
 
   protected Waveform(final double[] x, final String unitX, final String unitY) {
     this.name = "";
@@ -26,7 +25,9 @@ public abstract class Waveform {
    * Create an empty waveform
    */
   public Waveform() {
-    this.invalid = true;
+    this.x = new double[0];
+    this.unitX = "";
+    this.unitY = "";
   }
 
   /**
@@ -66,21 +67,11 @@ public abstract class Waveform {
   }
 
   /**
-   * Check if a waveform is valid (=non-empty)
-   *
-   * @return validity of the waveform
-   */
-  public boolean isInvalid() {
-    return this.invalid;
-  }
-
-  /**
    * Get the minimal x-value
    *
    * @return minimal x-value
    */
   public RealValue xmin() {
-
     return new RealValue(this.x[0], this.getUnitX());
   }
 
@@ -135,6 +126,14 @@ public abstract class Waveform {
       return false;
     }
   }
+
+  /**
+   * Check if the waveform in valid
+   * 
+   * @return <code>true</code> when the waveform in valid, <code>false</code>
+   *         otherwise
+   */
+  public abstract boolean isEmpty();
 
   /**
    * Calculate the complex conjugate of a waveform
@@ -296,7 +295,7 @@ public abstract class Waveform {
   public abstract Waveform multiply(final Waveform factor);
 
   /**
-   * Subtract a constant from a waveform
+   * Multiply a constant with a waveform
    *
    * @param factor waveform to be multiplied
    * @return difference
@@ -304,7 +303,7 @@ public abstract class Waveform {
   public abstract Waveform multiply(final double factor);
 
   /**
-   * Subtract a constant from a waveform
+   * Multiply a constant with a waveform
    *
    * @param factor value to be multiplied
    * @return product
@@ -312,7 +311,7 @@ public abstract class Waveform {
   public abstract Waveform multiply(final BigDecimal factor);
 
   /**
-   * Subtract a constant from a waveform
+   * Multiply a constant with a waveform
    *
    * @param factor value to be multiplied
    * @return product
