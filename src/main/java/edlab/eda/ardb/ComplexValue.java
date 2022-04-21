@@ -21,6 +21,9 @@ public final class ComplexValue extends Value {
     this.value = value;
   }
 
+  /**
+   * Constructor
+   */
   public ComplexValue() {
     super();
     this.value = Complex.NaN;

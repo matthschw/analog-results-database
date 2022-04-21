@@ -1,7 +1,6 @@
 # analog-results-database
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-
 Analog Results Database
 
 This toolbox provides function for extracting simulation results
@@ -9,7 +8,7 @@ from Cadence Spectre and/or Ngspice and process the results.
 
 ## License
 
-Copyright (C) 2021, [Electronics & Drives](https://www.electronics-and-drives.de/)
+Copyright (C) 2022, [Reutlingen University](https://www.reutlingen-university.de), [Electronics & Drives](https://www.electronics-and-drives.de/)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

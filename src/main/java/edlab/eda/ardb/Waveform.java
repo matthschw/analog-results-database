@@ -10,9 +10,10 @@ import org.apache.commons.math3.complex.Complex;
 public abstract class Waveform {
 
   private String name = "";
-  private String unitX;
-  private String unitY;
-  protected double[] x;
+  private final String unitX;
+  private final String unitY;
+  
+  protected final double[] x;
 
   protected Waveform(final double[] x, final String unitX, final String unitY) {
     this.name = "";

@@ -7,7 +7,12 @@ public abstract class Value {
 
   private final String unit;
 
-  public Value(final String unit) {
+  /**
+   * Create a new value
+   * 
+   * @param unit Unit
+   */
+  protected Value(final String unit) {
     this.unit = unit;
   }
 
