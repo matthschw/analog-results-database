@@ -15,7 +15,7 @@ public interface ReferenceableElectrical {
    *
    * @return identifier
    */
-  public String getIdentifier();
+  public String getNetlistIdentifier();
 
   /**
    * Get hierarchical address to the corresponding net, terminal or operating

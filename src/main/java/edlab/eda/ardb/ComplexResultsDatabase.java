@@ -102,7 +102,7 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
    */
   public ComplexValue getComplexValue(
       final ReferenceableElectrical electrical) {
-    return this.getComplexValue(electrical.getIdentifier());
+    return this.getComplexValue(electrical.getNetlistIdentifier());
   }
 
   /**
@@ -128,7 +128,7 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
    */
   public ComplexWaveform getComplexWaveform(
       final ReferenceableElectrical electrical) {
-    return this.getComplexWaveform(electrical.getIdentifier());
+    return this.getComplexWaveform(electrical.getNetlistIdentifier());
   }
 
   @Override
@@ -276,12 +276,12 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
 
   @Override
   public boolean isValue(final ReferenceableElectrical electrical) {
-    return this.isValueName(electrical.getIdentifier());
+    return this.isValueName(electrical.getNetlistIdentifier());
   }
 
   @Override
   public boolean isWaveform(final ReferenceableElectrical electrical) {
-    return this.isWaveformName(electrical.getIdentifier());
+    return this.isWaveformName(electrical.getNetlistIdentifier());
   }
 
   @Override
@@ -293,9 +293,9 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
   @Override
   public boolean isMember(final ReferenceableElectrical electrical) {
     return ((this.values != null)
-        && this.values.containsKey(electrical.getIdentifier()))
+        && this.values.containsKey(electrical.getNetlistIdentifier()))
         || ((this.waves != null)
-            && this.waves.containsKey(electrical.getIdentifier()));
+            && this.waves.containsKey(electrical.getNetlistIdentifier()));
   }
 
   @Override
@@ -305,7 +305,7 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
 
   @Override
   public Value getValue(final ReferenceableElectrical electrical) {
-    return this.values.get(electrical.getIdentifier());
+    return this.values.get(electrical.getNetlistIdentifier());
   }
 
   @Override
@@ -315,7 +315,7 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
 
   @Override
   public Waveform getWaveform(final ReferenceableElectrical electrical) {
-    return this.waves.get(electrical.getIdentifier());
+    return this.waves.get(electrical.getNetlistIdentifier());
   }
 
   @Override
@@ -343,12 +343,12 @@ public final class ComplexResultsDatabase extends ResultsDatabase {
       return null;
     }
 
-    if (this.values.containsKey(electrical.getIdentifier())) {
-      return this.values.get(electrical.getIdentifier());
+    if (this.values.containsKey(electrical.getNetlistIdentifier())) {
+      return this.values.get(electrical.getNetlistIdentifier());
     }
 
-    if (this.waves.containsKey(electrical.getIdentifier())) {
-      return this.waves.get(electrical.getIdentifier());
+    if (this.waves.containsKey(electrical.getNetlistIdentifier())) {
+      return this.waves.get(electrical.getNetlistIdentifier());
     }
 
     return null;

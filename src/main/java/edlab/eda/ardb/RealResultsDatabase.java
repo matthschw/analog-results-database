@@ -97,7 +97,7 @@ public final class RealResultsDatabase extends ResultsDatabase {
    * @return Reference
    */
   public RealValue getRealValue(final ReferenceableElectrical electrical) {
-    return this.getRealValue(electrical.getIdentifier());
+    return this.getRealValue(electrical.getNetlistIdentifier());
   }
 
   /**
@@ -122,7 +122,7 @@ public final class RealResultsDatabase extends ResultsDatabase {
    * @return Real Wave
    */
   public RealWaveform getRealWaveform(final ReferenceableElectrical electrical) {
-    return this.getRealWaveform(electrical.getIdentifier());
+    return this.getRealWaveform(electrical.getNetlistIdentifier());
   }
 
   @Override
@@ -262,12 +262,12 @@ public final class RealResultsDatabase extends ResultsDatabase {
 
   @Override
   public boolean isValue(final ReferenceableElectrical electrical) {
-    return this.isValueName(electrical.getIdentifier());
+    return this.isValueName(electrical.getNetlistIdentifier());
   }
 
   @Override
   public boolean isWaveform(final ReferenceableElectrical electrical) {
-    return this.isWaveformName(electrical.getIdentifier());
+    return this.isWaveformName(electrical.getNetlistIdentifier());
   }
 
   @Override
@@ -279,9 +279,9 @@ public final class RealResultsDatabase extends ResultsDatabase {
   @Override
   public boolean isMember(final ReferenceableElectrical electrical) {
     return ((this.values != null)
-        && this.values.containsKey(electrical.getIdentifier()))
+        && this.values.containsKey(electrical.getNetlistIdentifier()))
         || ((this.waves != null)
-            && this.waves.containsKey(electrical.getIdentifier()));
+            && this.waves.containsKey(electrical.getNetlistIdentifier()));
   }
 
   @Override
@@ -291,7 +291,7 @@ public final class RealResultsDatabase extends ResultsDatabase {
 
   @Override
   public Value getValue(final ReferenceableElectrical electrical) {
-    return this.values.get(electrical.getIdentifier());
+    return this.values.get(electrical.getNetlistIdentifier());
   }
 
   @Override
@@ -301,7 +301,7 @@ public final class RealResultsDatabase extends ResultsDatabase {
 
   @Override
   public Waveform getWaveform(final ReferenceableElectrical electrical) {
-    return this.waves.get(electrical.getIdentifier());
+    return this.waves.get(electrical.getNetlistIdentifier());
   }
 
   @Override
@@ -329,12 +329,12 @@ public final class RealResultsDatabase extends ResultsDatabase {
       return null;
     }
 
-    if (this.values.containsKey(electrical.getIdentifier())) {
-      return this.values.get(electrical.getIdentifier());
+    if (this.values.containsKey(electrical.getNetlistIdentifier())) {
+      return this.values.get(electrical.getNetlistIdentifier());
     }
 
-    if (this.waves.containsKey(electrical.getIdentifier())) {
-      return this.waves.get(electrical.getIdentifier());
+    if (this.waves.containsKey(electrical.getNetlistIdentifier())) {
+      return this.waves.get(electrical.getNetlistIdentifier());
     }
 
     return null;
