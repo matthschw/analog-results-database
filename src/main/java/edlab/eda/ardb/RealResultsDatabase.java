@@ -215,7 +215,7 @@ public final class RealResultsDatabase extends ResultsDatabase {
   @Override
   public String toString() {
 
-    StringBuilder retval = new StringBuilder();
+    final StringBuilder retval = new StringBuilder();
 
     boolean firstIteration = true;
 

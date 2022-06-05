@@ -13,7 +13,7 @@ import org.apache.commons.math3.complex.Complex;
  */
 public final class RealWaveform extends Waveform {
 
-  private double[] y;
+  private final double[] y;
 
   private RealWaveform(final double[] x, final double[] y, final String unitX,
       final String unitY) {
@@ -112,7 +112,7 @@ public final class RealWaveform extends Waveform {
 
         }
 
-        return buildRealWaveform(newX, newY, getUnitX(), getUnitY());
+        return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
 
       } else {
         return new RealWaveform();
@@ -971,7 +971,7 @@ public final class RealWaveform extends Waveform {
   }
 
   @Override
-  public Waveform subtract(Waveform subtrahed) {
+  public Waveform subtract(final Waveform subtrahed) {
 
     if (subtrahed instanceof RealWaveform) {
       return this.subtract(((RealWaveform) subtrahed));
@@ -1009,7 +1009,7 @@ public final class RealWaveform extends Waveform {
    * @param subtrahend wave to be subtracted
    * @return wave
    */
-  public ComplexWaveform subtract(ComplexWaveform subtrahend) {
+  public ComplexWaveform subtract(final ComplexWaveform subtrahend) {
     return new ComplexWaveform(this).subtract(subtrahend);
   }
 
@@ -1033,17 +1033,17 @@ public final class RealWaveform extends Waveform {
   }
 
   @Override
-  public ComplexWaveform subtract(Complex subtrahed) {
+  public ComplexWaveform subtract(final Complex subtrahed) {
     return new ComplexWaveform(this).subtract(subtrahed);
   }
 
   @Override
-  public Waveform subtract(Value subtrahed) {
+  public Waveform subtract(final Value subtrahed) {
 
     if (subtrahed instanceof RealValue) {
       this.subtract((RealValue) subtrahed);
     } else {
-      return new ComplexWaveform(this).subtract((ComplexValue) subtrahed);
+      return new ComplexWaveform(this).subtract(subtrahed);
     }
 
     return null;
@@ -1099,16 +1099,16 @@ public final class RealWaveform extends Waveform {
   }
 
   @Override
-  public ComplexWaveform multiply(Complex factor) {
+  public ComplexWaveform multiply(final Complex factor) {
     return new ComplexWaveform(this).multiply(factor);
   }
 
   @Override
-  public Waveform multiply(Value factor) {
+  public Waveform multiply(final Value factor) {
     if (factor instanceof RealValue) {
       return this.multiply((RealValue) factor);
     } else {
-      return this.multiply((ComplexValue) factor);
+      return this.multiply(factor);
     }
   }
 
@@ -1136,7 +1136,7 @@ public final class RealWaveform extends Waveform {
   }
 
   @Override
-  public Waveform multiply(Waveform factor) {
+  public Waveform multiply(final Waveform factor) {
 
     if (factor instanceof RealWaveform) {
       return this.multiply((RealWaveform) factor);
@@ -1147,8 +1147,8 @@ public final class RealWaveform extends Waveform {
 
   @Override
   public boolean isEmpty() {
-    return this.x == null || this.y == null || this.x.length == 0
-        || this.y.length == 0;
+    return (this.x == null) || (this.y == null) || (this.x.length == 0)
+        || (this.y.length == 0);
   }
 
   /**

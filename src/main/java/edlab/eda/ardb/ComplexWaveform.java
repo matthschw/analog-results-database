@@ -12,7 +12,7 @@ import org.apache.commons.math3.complex.Complex;
  */
 public final class ComplexWaveform extends Waveform {
 
-  private Complex[] y;
+  private final Complex[] y;
 
   private ComplexWaveform(final double[] x, final Complex[] y,
       final String unitX, final String unitY) {
@@ -200,7 +200,7 @@ public final class ComplexWaveform extends Waveform {
   public static ComplexWaveform buildComplexWaveform(final double[] x,
       final Complex[] y, final String unitX, final String unitY) {
 
-    if (x != null && y != null && x.length == y.length) {
+    if ((x != null) && (y != null) && (x.length == y.length)) {
 
       ComplexWaveform.sortWaveElements(x, y);
 
@@ -413,7 +413,7 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public ComplexWaveform subtract(Waveform subtrahed) {
+  public ComplexWaveform subtract(final Waveform subtrahed) {
     if (subtrahed instanceof ComplexWaveform) {
       return this.subtract((ComplexWaveform) subtrahed);
     } else {
@@ -444,7 +444,7 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public ComplexWaveform subtract(double subtrahed) {
+  public ComplexWaveform subtract(final double subtrahed) {
     final double[] newX = new double[this.x.length];
     final Complex[] newY = new Complex[this.y.length];
 
@@ -457,12 +457,12 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public ComplexWaveform subtract(BigDecimal subtrahed) {
+  public ComplexWaveform subtract(final BigDecimal subtrahed) {
     return this.subtract(subtrahed.round(MathContext.DECIMAL64).doubleValue());
   }
 
   @Override
-  public ComplexWaveform subtract(Complex subtrahed) {
+  public ComplexWaveform subtract(final Complex subtrahed) {
     final double[] newX = new double[this.x.length];
     final Complex[] newY = new Complex[this.y.length];
 
@@ -475,7 +475,7 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public Waveform subtract(Value subtrahed) {
+  public Waveform subtract(final Value subtrahed) {
     if (subtrahed instanceof RealValue) {
       return this.subtract(((RealValue) subtrahed).getValue());
     } else {
@@ -484,7 +484,7 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public ComplexWaveform multiply(Waveform factor) {
+  public ComplexWaveform multiply(final Waveform factor) {
 
     if (factor instanceof ComplexWaveform) {
       return this.multiply((ComplexWaveform) factor);
@@ -517,7 +517,7 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public Waveform multiply(double factor) {
+  public Waveform multiply(final double factor) {
     final double[] newX = new double[this.x.length];
     final Complex[] newY = new Complex[this.y.length];
 
@@ -530,12 +530,12 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public Waveform multiply(BigDecimal factor) {
+  public Waveform multiply(final BigDecimal factor) {
     return this.multiply(factor.round(MathContext.DECIMAL64));
   }
 
   @Override
-  public Waveform multiply(Value factor) {
+  public Waveform multiply(final Value factor) {
     if (factor instanceof RealValue) {
       return this.multiply(((RealValue) factor).getValue());
     } else {
@@ -544,7 +544,7 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public ComplexWaveform multiply(Complex factor) {
+  public ComplexWaveform multiply(final Complex factor) {
     final double[] newX = new double[this.x.length];
     final Complex[] newY = new Complex[this.y.length];
 
@@ -558,8 +558,8 @@ public final class ComplexWaveform extends Waveform {
 
   @Override
   public boolean isEmpty() {
-    return this.x == null || this.y == null || this.x.length == 0
-        || this.y.length == 0;
+    return (this.x == null) || (this.y == null) || (this.x.length == 0)
+        || (this.y.length == 0);
   }
 
   /**

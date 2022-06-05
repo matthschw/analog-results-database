@@ -6,8 +6,22 @@ package edlab.eda.ardb;
  */
 public interface ReferenceableElectrical {
 
-  public enum TYPE {
-    NET, TERMINAL, OPPOINT
+  /**
+   * Type of the electrical property in the database
+   */
+  public enum ELECTRICAL_TYPE {
+    /**
+     * Net, voltage in volt
+     */
+    NET,
+    /**
+     * Terminal, current in ampere
+     */
+    TERMINAL,
+    /**
+     * Operating point
+     */
+    OPPOINT
   }
 
   /**
@@ -26,9 +40,10 @@ public interface ReferenceableElectrical {
   public String[] getAddress();
 
   /**
-   * Get the type of the {@link ReferenceableElectrical} as enum {@link TYPE}
+   * Get the type of the {@link ReferenceableElectrical} as enum
+   * {@link ELECTRICAL_TYPE}
    *
    * @return type of the electrical property
    */
-  public TYPE getType();
+  public ELECTRICAL_TYPE getType();
 }
