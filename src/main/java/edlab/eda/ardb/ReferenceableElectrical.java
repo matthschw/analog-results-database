@@ -11,7 +11,7 @@ public interface ReferenceableElectrical {
    */
   public enum ELECTRICAL_TYPE {
     /**
-     * Net, voltage in volt
+     * Net, voltage in volts
      */
     NET,
     /**
@@ -19,7 +19,7 @@ public interface ReferenceableElectrical {
      */
     TERMINAL,
     /**
-     * Operating point
+     * Operating point, several possibilities
      */
     OPPOINT
   }

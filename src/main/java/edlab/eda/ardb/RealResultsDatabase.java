@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.apache.commons.text.translate.CharSequenceTranslator;
 
-import edlab.eda.reader.nutmeg.DefaultTranslator;
 import edlab.eda.reader.nutmeg.NutmegRealPlot;
 
 /**
