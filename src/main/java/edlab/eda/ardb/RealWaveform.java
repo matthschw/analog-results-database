@@ -66,6 +66,120 @@ public final class RealWaveform extends Waveform {
   }
 
   @Override
+  public boolean lessThan(Waveform wave) {
+
+    if (wave instanceof RealWaveform) {
+
+      RealWaveform second = (RealWaveform) wave;
+
+      if (!this.sameAxis(wave)) {
+        second = second.resample(this.getX());
+      }
+
+      for (int i = 0; i < this.x.length; i++) {
+
+        if (this.y[i] >= second.getY()[i]) {
+          return false;
+        }
+      }
+
+      return true;
+
+    } else if (wave instanceof ComplexWaveform) {
+      System.err
+          .println("Cannot compare a real waveform with a complex waveform");
+    }
+
+    return false;
+  }
+
+  @Override
+  public boolean greaterThan(Waveform wave) {
+
+    if (wave instanceof RealWaveform) {
+
+      RealWaveform second = (RealWaveform) wave;
+
+      if (!this.sameAxis(wave)) {
+        second = second.resample(this.getX());
+      }
+
+      for (int i = 0; i < this.x.length; i++) {
+
+        if (this.y[i] <= second.getY()[i]) {
+          return false;
+        }
+      }
+
+      return true;
+
+    } else if (wave instanceof ComplexWaveform) {
+      System.err
+          .println("Cannot compare a real waveform with a complex waveform");
+    }
+
+    return false;
+  }
+
+  @Override
+  public boolean lessThanOrEqualTo(Waveform wave) {
+
+    if (wave instanceof RealWaveform) {
+
+      RealWaveform second = (RealWaveform) wave;
+
+      if (!this.sameAxis(wave)) {
+        second = second.resample(this.getX());
+      }
+
+      for (int i = 0; i < this.x.length; i++) {
+
+        if (this.y[i] > second.getY()[i]) {
+          return false;
+        }
+      }
+
+      return true;
+
+    } else if (wave instanceof ComplexWaveform) {
+
+      System.err
+          .println("Cannot compare a real waveform with a complex waveform");
+    }
+
+    return false;
+  }
+
+  @Override
+  public boolean greaterThanOrEqualTo(Waveform wave) {
+
+    if (wave instanceof RealWaveform) {
+
+      RealWaveform second = (RealWaveform) wave;
+
+      if (!this.sameAxis(wave)) {
+        second = second.resample(this.getX());
+      }
+
+      for (int i = 0; i < this.x.length; i++) {
+
+        if (this.y[i] < second.getY()[i]) {
+          return false;
+        }
+      }
+
+      return true;
+
+    } else if (wave instanceof ComplexWaveform) {
+
+      System.err
+          .println("Cannot compare a real waveform with a complex waveform");
+    }
+
+    return false;
+  }
+
+  @Override
   public RealWaveform clip(final double left, final double right) {
 
     if (this.isEmpty()) {
@@ -112,7 +226,8 @@ public final class RealWaveform extends Waveform {
 
         }
 
-        return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+        return RealWaveform.buildRealWaveform(newX, newY, this.getUnitX(),
+            this.getUnitY());
 
       } else {
         return new RealWaveform();
@@ -384,7 +499,12 @@ public final class RealWaveform extends Waveform {
     final double[] ln = new double[this.y.length];
 
     for (int i = 0; i < ln.length; i++) {
-      ln[i] = 10 * Math.log(this.y[i]);
+
+      if (this.y[i] > 0) {
+        ln[i] = 10 * Math.log(this.y[i]);
+      } else {
+        ln[i] = Double.NaN;
+      }
     }
 
     return new RealWaveform(this.getX(), ln, this.getUnitX(), "");
@@ -582,6 +702,7 @@ public final class RealWaveform extends Waveform {
       if (((this.y[i] - val) * (this.y[i + 1] - val)) <= 0) {
 
         if (counter == edge) {
+
           return new RealValue(
               this.x[i] + (((val - this.y[i]) / (this.y[i + 1] - this.y[i]))
                   * (this.x[i + 1] - this.x[i])),
@@ -589,9 +710,9 @@ public final class RealWaveform extends Waveform {
         }
 
         counter++;
-
       }
     }
+
     return new RealValue();
   }
 

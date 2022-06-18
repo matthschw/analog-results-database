@@ -12,7 +12,7 @@ public abstract class Waveform {
   private String name = "";
   private final String unitX;
   private final String unitY;
-  
+
   protected final double[] x;
 
   protected Waveform(final double[] x, final String unitX, final String unitY) {
@@ -122,10 +122,9 @@ public abstract class Waveform {
 
       return true;
 
-    } else {
-
-      return false;
     }
+
+    return false;
   }
 
   /**
@@ -192,6 +191,41 @@ public abstract class Waveform {
    * @return Waveform
    */
   public abstract RealWaveform db20();
+
+  /**
+   * Identify if the y values of this waveform are less than of another waveform
+   * 
+   * @param wave Waveform reference
+   * @return <code>true</code> when valid, <code>false</code> otherwise
+   */
+  public abstract boolean lessThan(final Waveform wave);
+
+  /**
+   * Identify if the y values of this waveform are greater than of another
+   * waveform
+   * 
+   * @param wave Waveform reference
+   * @return <code>true</code> when valid, <code>false</code> otherwise
+   */
+  public abstract boolean greaterThan(final Waveform wave);
+
+  /**
+   * Identify if the y values of this waveform are less than or equals of
+   * another waveform
+   * 
+   * @param wave Waveform reference
+   * @return <code>true</code> when valid, <code>false</code> otherwise
+   */
+  public abstract boolean lessThanOrEqualTo(final Waveform wave);
+
+  /**
+   * Identify if the y values of this waveform are greater than or equal of
+   * another waveform
+   * 
+   * @param wave Waveform reference
+   * @return <code>true</code> when valid, <code>false</code> otherwise
+   */
+  public abstract boolean greaterThanOrEqualTo(final Waveform wave);
 
   /**
    * Unary minus of the waveform

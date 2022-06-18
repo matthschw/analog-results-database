@@ -247,6 +247,42 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
+  public boolean lessThan(Waveform wave) {
+
+    System.err
+        .println("Cannot compare a complex waveform with another waveform");
+
+    return false;
+  }
+
+  @Override
+  public boolean greaterThan(Waveform wave) {
+
+    System.err
+        .println("Cannot compare a complex waveform with another waveform");
+
+    return false;
+  }
+
+  @Override
+  public boolean lessThanOrEqualTo(Waveform wave) {
+
+    System.err
+        .println("Cannot compare a complex waveform with another waveform");
+
+    return false;
+  }
+
+  @Override
+  public boolean greaterThanOrEqualTo(Waveform wave) {
+
+    System.err
+        .println("Cannot compare a complex waveform with another waveform");
+
+    return false;
+  }
+
+  @Override
   public Waveform clip(final double left, final double right) {
     final LinkedList<Double> newXVals = new LinkedList<>();
     final LinkedList<Complex> newYVals = new LinkedList<>();
