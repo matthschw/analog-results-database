@@ -1,7 +1,9 @@
 package edlab.eda.ardb;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.commons.math3.complex.Complex;
 import org.junit.jupiter.api.Test;
 
 import edlab.eda.reader.nutmeg.NutReader;
@@ -34,7 +36,8 @@ class Opamp {
     final RealResultsDatabase dcmatchResults = RealResultsDatabase
         .buildResultDatabase((NutmegRealPlot) plots.get(resultIdentifier++));
 
-    final NutmegComplexPlot plot = (NutmegComplexPlot) plots.get(resultIdentifier++);
+    final NutmegComplexPlot plot = (NutmegComplexPlot) plots
+        .get(resultIdentifier++);
 
     final ComplexResultsDatabase stb = ComplexResultsDatabase
         .buildResultDatabase(plot);
@@ -55,7 +58,29 @@ class Opamp {
     final RealResultsDatabase tran = RealResultsDatabase
         .buildResultDatabase((NutmegRealPlot) plots.get(resultIdentifier++));
 
+    RealWaveform in = tran.getRealWaveform("INP");
     RealWaveform out = tran.getRealWaveform("OUT");
+
+    in.add(out);
+    in.add(1.0);
+    in.add(BigDecimal.ONE);
+    in.add(new Complex(1.0,1.0));
+    
+    in.subtract(out);
+    in.subtract(1.0);
+    in.subtract(BigDecimal.ONE);
+    in.subtract(new Complex(1.0,1.0));
+    
+    in.multiply(out);
+    in.multiply(1.0);
+    in.multiply(BigDecimal.ONE);
+    in.multiply(new Complex(1.0,1.0));
+    
+    
+    in.divide(out);
+    in.divide(1.0);
+    in.divide(BigDecimal.ONE);
+    in.divide(new Complex(1.0,1.0));
 
     final RealWaveform rising = out.clip(100e-9, 50e-6);
     final RealWaveform falling = out.clip(50.1e-6, 99.9e-6);
@@ -66,12 +91,14 @@ class Opamp {
     RealValue point1 = rising.cross(lower, 1);
     RealValue point2 = rising.cross(upper, 1);
 
-    final double sr_r = (upper - lower) / (point2.getValue() - point1.getValue());
+    final double sr_r = (upper - lower)
+        / (point2.getValue() - point1.getValue());
 
     point1 = falling.cross(upper, 1);
     point2 = falling.cross(lower, 1);
 
-    final double sr_f = (lower - upper) / (point2.getValue() - point1.getValue());
+    final double sr_f = (lower - upper)
+        / (point2.getValue() - point1.getValue());
 
     final RealResultsDatabase noise = RealResultsDatabase
         .buildResultDatabase((NutmegRealPlot) plots.get(resultIdentifier++));
