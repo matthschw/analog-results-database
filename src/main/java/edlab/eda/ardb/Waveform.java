@@ -151,6 +151,14 @@ public abstract class Waveform {
   public abstract Value getValue(double pos);
 
   /**
+   * Resample a waveform
+   *
+   * @param newX New x-values to be used
+   * @return resampled waveform
+   */
+  public abstract Waveform resample(final double[] newX);
+
+  /**
    * Extract the real-part of a waveform
    *
    * @return Waveform
@@ -383,6 +391,62 @@ public abstract class Waveform {
   public abstract Waveform multiply(final Value factor);
 
   /**
+   * Divide a waveform through a {@link Waveform}
+   *
+   * @param divisor waveform to be used as divisor
+   * @return quotient
+   */
+  public abstract Waveform divide(final Waveform divisor);
+
+  /**
+   * Divide a waveform through a double
+   *
+   * @param divisor value to be used as divisor
+   * @return quotient
+   */
+  public abstract Waveform divide(final double divisor);
+
+  /**
+   * Divide a waveform through a {@link BigDecimal}
+   *
+   * @param divisor value to be used as divisor
+   * @return quotient
+   */
+  public abstract Waveform divide(final BigDecimal divisor);
+
+  /**
+   * Divide a waveform through a {@link Complex}
+   *
+   * @param divisor value to be used as divisor
+   * @return quotient
+   */
+  public abstract Waveform divide(final Complex divisor);
+
+  /**
+   * Divide a waveform through a {@link RealValue}
+   *
+   * @param divisor value to be used as divisor
+   * @return quotient
+   */
+  public abstract Waveform divide(final Value divisor);
+
+  /**
+   * Divide a waveform through a {@link RealValue}
+   *
+   * @param divisor value to be used as divisor
+   * @return quotient
+   */
+  public abstract Waveform divide(final RealValue divisor);
+
+  /**
+   * Divide a waveform through a {@link ComplexValue}
+   *
+   * @param divisor value to be used as divisor
+   * @return quotient
+   */
+  public abstract Waveform divide(final ComplexValue divisor);
+
+  /**
    * Create a waveform with the same x-axis but a constant y value
    * 
    * @param value y value
@@ -407,9 +471,9 @@ public abstract class Waveform {
    */
   public Waveform createConstantWave(final RealValue value) {
 
-    double[] x = this.getX();
+    final double[] x = this.getX();
 
-    double[] y = new double[x.length];
+    final double[] y = new double[x.length];
 
     for (int i = 0; i < y.length; i++) {
       y[i] = value.getValue();
@@ -426,9 +490,9 @@ public abstract class Waveform {
    */
   public Waveform createConstantWave(final ComplexValue value) {
 
-    double[] x = this.getX();
+    final double[] x = this.getX();
 
-    Complex[] y = new Complex[x.length];
+    final Complex[] y = new Complex[x.length];
 
     for (int i = 0; i < y.length; i++) {
       y[i] = value.getValue();
@@ -446,9 +510,9 @@ public abstract class Waveform {
    */
   public Waveform createConstantWave(final BigDecimal value) {
 
-    double[] x = this.getX();
+    final double[] x = this.getX();
 
-    double[] y = new double[x.length];
+    final double[] y = new double[x.length];
 
     for (int i = 0; i < y.length; i++) {
       y[i] = value.doubleValue();
@@ -464,9 +528,9 @@ public abstract class Waveform {
    * @return wave
    */
   public Waveform createConstantWave(final double value) {
-    double[] x = this.getX();
+    final double[] x = this.getX();
 
-    double[] y = new double[x.length];
+    final double[] y = new double[x.length];
 
     for (int i = 0; i < y.length; i++) {
       y[i] = value;
@@ -483,9 +547,9 @@ public abstract class Waveform {
    */
   public Waveform createConstantWave(final Complex value) {
 
-    double[] x = this.getX();
+    final double[] x = this.getX();
 
-    Complex[] y = new Complex[x.length];
+    final Complex[] y = new Complex[x.length];
 
     for (int i = 0; i < y.length; i++) {
       y[i] = value;

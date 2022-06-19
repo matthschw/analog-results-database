@@ -247,7 +247,7 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public boolean lessThan(Waveform wave) {
+  public boolean lessThan(final Waveform wave) {
 
     System.err
         .println("Cannot compare a complex waveform with another waveform");
@@ -256,7 +256,7 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public boolean greaterThan(Waveform wave) {
+  public boolean greaterThan(final Waveform wave) {
 
     System.err
         .println("Cannot compare a complex waveform with another waveform");
@@ -265,7 +265,7 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public boolean lessThanOrEqualTo(Waveform wave) {
+  public boolean lessThanOrEqualTo(final Waveform wave) {
 
     System.err
         .println("Cannot compare a complex waveform with another waveform");
@@ -274,7 +274,7 @@ public final class ComplexWaveform extends Waveform {
   }
 
   @Override
-  public boolean greaterThanOrEqualTo(Waveform wave) {
+  public boolean greaterThanOrEqualTo(final Waveform wave) {
 
     System.err
         .println("Cannot compare a complex waveform with another waveform");
@@ -418,7 +418,8 @@ public final class ComplexWaveform extends Waveform {
     return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
   }
 
-  private ComplexWaveform resample(final double[] newX) {
+  @Override
+  public ComplexWaveform resample(final double[] newX) {
 
     // TODO Auto-generated method stub
     final Complex[] yNew = new Complex[newX.length];
@@ -524,9 +525,11 @@ public final class ComplexWaveform extends Waveform {
 
     if (factor instanceof ComplexWaveform) {
       return this.multiply((ComplexWaveform) factor);
-    } else {
+    } else if (factor instanceof RealWaveform) {
       return this.multiply(new ComplexWaveform((RealWaveform) factor));
     }
+
+    return null;
   }
 
   /**
@@ -590,6 +593,97 @@ public final class ComplexWaveform extends Waveform {
     }
 
     return new ComplexWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public ComplexWaveform divide(Waveform divisor) {
+
+    if (!this.sameAxis(divisor)) {
+      divisor = divisor.resample(this.getX());
+    }
+
+    final Complex[] y = new Complex[this.x.length];
+
+    if (divisor instanceof RealWaveform) {
+
+      final RealWaveform wave = (RealWaveform) divisor;
+
+      for (int i = 0; i < y.length; i++) {
+        y[i] = this.y[i].divide(wave.getY()[i]);
+      }
+
+    } else if (divisor instanceof ComplexWaveform) {
+
+      final ComplexWaveform wave = (ComplexWaveform) divisor;
+
+      for (int i = 0; i < y.length; i++) {
+        y[i] = this.y[i].divide(wave.getY()[i]);
+      }
+    }
+
+    return ComplexWaveform.buildComplexWaveform(this.x, y, this.getUnitX(),
+        this.getUnitY());
+  }
+
+  @Override
+  public ComplexWaveform divide(final double divisor) {
+
+    final Complex[] y = new Complex[this.x.length];
+
+    for (int i = 0; i < y.length; i++) {
+      y[i] = this.y[i].divide(divisor);
+    }
+
+    return ComplexWaveform.buildComplexWaveform(this.x, y, this.getUnitX(),
+        this.getUnitY());
+  }
+
+  @Override
+  public ComplexWaveform divide(final BigDecimal divisor) {
+
+    final Complex[] y = new Complex[this.x.length];
+
+    for (int i = 0; i < y.length; i++) {
+      y[i] = this.y[i].divide(divisor.doubleValue());
+    }
+
+    return ComplexWaveform.buildComplexWaveform(this.x, y, this.getUnitX(),
+        this.getUnitY());
+  }
+
+  @Override
+  public ComplexWaveform divide(final Complex divisor) {
+
+    final Complex[] y = new Complex[this.x.length];
+
+    for (int i = 0; i < y.length; i++) {
+      y[i] = this.y[i].divide(divisor);
+    }
+
+    return ComplexWaveform.buildComplexWaveform(this.x, y, this.getUnitX(),
+        this.getUnitY());
+  }
+
+  @Override
+  public Waveform divide(final Value divisor) {
+
+    if (divisor instanceof RealValue) {
+      return this.divide((RealValue) divisor);
+    } else if (divisor instanceof ComplexValue) {
+      return this.divide((ComplexValue) divisor);
+    }
+
+    return null;
+  }
+
+  @Override
+  public Waveform divide(final RealValue divisor) {
+    return this.divide(divisor.getValue());
+  }
+
+  @Override
+  public Waveform divide(final ComplexValue divisor) {
+    return this.divide(divisor.getValue());
   }
 
   @Override

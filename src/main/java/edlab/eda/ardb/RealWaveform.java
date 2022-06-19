@@ -66,7 +66,7 @@ public final class RealWaveform extends Waveform {
   }
 
   @Override
-  public boolean lessThan(Waveform wave) {
+  public boolean lessThan(final Waveform wave) {
 
     if (wave instanceof RealWaveform) {
 
@@ -94,7 +94,7 @@ public final class RealWaveform extends Waveform {
   }
 
   @Override
-  public boolean greaterThan(Waveform wave) {
+  public boolean greaterThan(final Waveform wave) {
 
     if (wave instanceof RealWaveform) {
 
@@ -122,7 +122,7 @@ public final class RealWaveform extends Waveform {
   }
 
   @Override
-  public boolean lessThanOrEqualTo(Waveform wave) {
+  public boolean lessThanOrEqualTo(final Waveform wave) {
 
     if (wave instanceof RealWaveform) {
 
@@ -151,7 +151,7 @@ public final class RealWaveform extends Waveform {
   }
 
   @Override
-  public boolean greaterThanOrEqualTo(Waveform wave) {
+  public boolean greaterThanOrEqualTo(final Waveform wave) {
 
     if (wave instanceof RealWaveform) {
 
@@ -315,73 +315,6 @@ public final class RealWaveform extends Waveform {
     }
   }
 
-  /**
-   * Divide a waveform by a value
-   *
-   * @param value Divisor
-   * @return Waveform
-   */
-  public RealWaveform divide(final double value) {
-
-    final double[] newX = new double[this.x.length];
-    final double[] newY = new double[this.y.length];
-
-    for (int i = 0; i < newY.length; i++) {
-      newX[i] = this.x[i];
-      newY[i] = this.y[i] / value;
-    }
-
-    return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
-  }
-
-  /**
-   * Divide a waveform by a value
-   *
-   * @param value Divisor
-   * @return Waveform
-   */
-  public RealWaveform divide(final BigDecimal value) {
-    return this.divide(value.round(MathContext.DECIMAL64).doubleValue());
-  }
-
-  /**
-   * Divide a waveform by a value
-   *
-   * @param value Divisor
-   * @return Waveform
-   */
-  public RealWaveform divide(final RealValue value) {
-
-    if (value.isNaN()) {
-      return null;
-    } else {
-      return this.divide(value.getValue());
-    }
-  }
-
-  /**
-   * Divide a waveform by another waveform
-   *
-   * @param wave Divisor Waveform
-   * @return Waveform
-   */
-  public RealWaveform divide(RealWaveform wave) {
-
-    if (!this.sameAxis(wave)) {
-      wave = wave.resample(this.getX());
-    }
-
-    final double[] newX = new double[this.x.length];
-    final double[] newY = new double[this.y.length];
-
-    for (int i = 0; i < newY.length; i++) {
-      newX[i] = this.x[i];
-      newY[i] = this.y[i] / wave.y[i];
-    }
-
-    return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
-  }
-
   @Override
   public RealValue getValue(final double pos) {
 
@@ -433,12 +366,7 @@ public final class RealWaveform extends Waveform {
     }
   }
 
-  /**
-   * Resample a waveform
-   *
-   * @param newX New x-values to be used
-   * @return resampled waveform
-   */
+  @Override
   public RealWaveform resample(final double[] newX) {
 
     final double[] yNew = new double[newX.length];
@@ -1264,6 +1192,92 @@ public final class RealWaveform extends Waveform {
     } else {
       return new ComplexWaveform(this).multiply(factor);
     }
+  }
+
+  @Override
+  public RealWaveform divide(final double value) {
+
+    final double[] newX = new double[this.x.length];
+    final double[] newY = new double[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i] / value;
+    }
+
+    return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public RealWaveform divide(final BigDecimal value) {
+    return this.divide(value.round(MathContext.DECIMAL64).doubleValue());
+  }
+
+  @Override
+  public RealWaveform divide(final RealValue value) {
+
+    if (value.isNaN()) {
+      return null;
+    } else {
+      return this.divide(value.getValue());
+    }
+  }
+
+  /**
+   * Divide a waveform by another waveform
+   *
+   * @param wave Divisor Waveform
+   * @return Waveform
+   */
+  public RealWaveform divide(RealWaveform wave) {
+
+    if (!this.sameAxis(wave)) {
+      wave = wave.resample(this.getX());
+    }
+
+    final double[] newX = new double[this.x.length];
+    final double[] newY = new double[this.y.length];
+
+    for (int i = 0; i < newY.length; i++) {
+      newX[i] = this.x[i];
+      newY[i] = this.y[i] / wave.y[i];
+    }
+
+    return buildRealWaveform(newX, newY, this.getUnitX(), this.getUnitY());
+  }
+
+  @Override
+  public Waveform divide(final Waveform divisor) {
+
+    if (divisor instanceof RealWaveform) {
+      return this.divide((RealWaveform) divisor);
+    } else if (divisor instanceof ComplexWaveform) {
+      return new ComplexWaveform(this).divide(divisor);
+    }
+
+    return null;
+  }
+
+  @Override
+  public Waveform divide(final Complex divisor) {
+    return new ComplexWaveform(this).divide(divisor);
+  }
+
+  @Override
+  public Waveform divide(final Value divisor) {
+
+    if (divisor instanceof RealValue) {
+      return this.divide((RealValue) divisor);
+    } else if (divisor instanceof ComplexValue) {
+      return this.divide((ComplexValue) divisor);
+    }
+
+    return null;
+  }
+
+  @Override
+  public Waveform divide(final ComplexValue divisor) {
+    return new ComplexWaveform(this).divide(divisor);
   }
 
   @Override
