@@ -198,7 +198,28 @@ public abstract class Waveform {
    * @param wave Waveform reference
    * @return <code>true</code> when valid, <code>false</code> otherwise
    */
+  public boolean lt(final Waveform wave) {
+    return this.lessThan(wave);
+  }
+
+  /**
+   * Identify if the y values of this waveform are less than of another waveform
+   * 
+   * @param wave Waveform reference
+   * @return <code>true</code> when valid, <code>false</code> otherwise
+   */
   public abstract boolean lessThan(final Waveform wave);
+
+  /**
+   * Identify if the y values of this waveform are greater than of another
+   * waveform
+   * 
+   * @param wave Waveform reference
+   * @return <code>true</code> when valid, <code>false</code> otherwise
+   */
+  public boolean gt(final Waveform wave) {
+    return this.greaterThan(wave);
+  }
 
   /**
    * Identify if the y values of this waveform are greater than of another
@@ -362,6 +383,118 @@ public abstract class Waveform {
   public abstract Waveform multiply(final Value factor);
 
   /**
+   * Create a waveform with the same x-axis but a constant y value
+   * 
+   * @param value y value
+   * @return wave
+   */
+  public Waveform createConstantWave(final Value value) {
+
+    if (value instanceof RealValue) {
+      return this.createConstantWave((RealValue) value);
+    } else if (value instanceof ComplexValue) {
+      return this.createConstantWave((ComplexValue) value);
+    }
+
+    return null;
+  }
+
+  /**
+   * Create a waveform with the same x-axis but a constant y value
+   * 
+   * @param value y value
+   * @return wave
+   */
+  public Waveform createConstantWave(final RealValue value) {
+
+    double[] x = this.getX();
+
+    double[] y = new double[x.length];
+
+    for (int i = 0; i < y.length; i++) {
+      y[i] = value.getValue();
+    }
+
+    return RealWaveform.buildRealWaveform(x, y, this.unitX, value.getUnit());
+  }
+
+  /**
+   * Create a waveform with the same x-axis but a constant y value
+   * 
+   * @param value y value
+   * @return wave
+   */
+  public Waveform createConstantWave(final ComplexValue value) {
+
+    double[] x = this.getX();
+
+    Complex[] y = new Complex[x.length];
+
+    for (int i = 0; i < y.length; i++) {
+      y[i] = value.getValue();
+    }
+
+    return ComplexWaveform.buildComplexWaveform(x, y, this.unitX,
+        value.getUnit());
+  }
+
+  /**
+   * Create a waveform with the same x-axis but a constant y value
+   * 
+   * @param value y value
+   * @return wave
+   */
+  public Waveform createConstantWave(final BigDecimal value) {
+
+    double[] x = this.getX();
+
+    double[] y = new double[x.length];
+
+    for (int i = 0; i < y.length; i++) {
+      y[i] = value.doubleValue();
+    }
+
+    return RealWaveform.buildRealWaveform(x, y, this.unitX, "");
+  }
+
+  /**
+   * Create a waveform with the same x-axis but a constant y value
+   * 
+   * @param value y value
+   * @return wave
+   */
+  public Waveform createConstantWave(final double value) {
+    double[] x = this.getX();
+
+    double[] y = new double[x.length];
+
+    for (int i = 0; i < y.length; i++) {
+      y[i] = value;
+    }
+
+    return RealWaveform.buildRealWaveform(x, y, this.unitX, "");
+  }
+
+  /**
+   * Create a waveform with the same x-axis but a constant y value
+   * 
+   * @param value y value
+   * @return wave
+   */
+  public Waveform createConstantWave(final Complex value) {
+
+    double[] x = this.getX();
+
+    Complex[] y = new Complex[x.length];
+
+    for (int i = 0; i < y.length; i++) {
+      y[i] = value;
+    }
+
+    return ComplexWaveform.buildComplexWaveform(x, y, this.unitX, "");
+  }
+
+  /**
    * Identify whether an object is an instance of this class
    *
    * @param o Object to be checked
@@ -369,6 +502,6 @@ public abstract class Waveform {
    *         <code>false</code> otherwise
    */
   public static boolean isInstanceOf(final Object o) {
-    return o instanceof Value;
+    return o instanceof Waveform;
   }
 }
