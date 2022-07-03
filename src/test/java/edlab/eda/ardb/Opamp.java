@@ -58,7 +58,7 @@ class Opamp {
     final RealResultsDatabase tran = RealResultsDatabase
         .buildResultDatabase((NutmegRealPlot) plots.get(resultIdentifier++));
 
-    RealWaveform in = tran.getRealWaveform("INP");
+    final RealWaveform in = tran.getRealWaveform("INP");
     RealWaveform out = tran.getRealWaveform("OUT");
 
     in.add(out);
