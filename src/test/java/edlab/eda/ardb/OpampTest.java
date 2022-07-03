@@ -182,5 +182,4 @@ class OpampTest {
     final double i_out_max = outshorth.getRealValue("DUT:O").getValue();
 
   }
-
 }
